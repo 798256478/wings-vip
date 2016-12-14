@@ -1,0 +1,51 @@
+
+
+.complete-holder {
+    position: relative;
+}
+
+.complete-dropdown {
+    border-color: #ececec;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    padding: 6px;
+    cursor: pointer;
+    z-index: 9999;
+    position: absolute;
+    /*top: 32px;
+    left: 0px;
+    */
+    margin-top: -6px;
+    background-color: #C9E3F5;
+    left:0px;
+    right:0px;
+}
+
+/*.angucomplete-searching {
+    color: #acacac;
+    font-size: 14px;
+}*/
+
+.complete-row {
+    padding: 8px 5px;
+    color: #000000;
+    margin-bottom: 4px;
+    height:35px;
+    font-size: 12px;
+    display: clear;
+}
+
+.complete-row>div
+{
+    float: left;
+}
+
+
+.complete-selected-row, .complete-row:hover {
+    background-color: #3FA0BF;
+    color: #ffffff;
+}
+
+
+

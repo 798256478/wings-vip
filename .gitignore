@@ -1,0 +1,9 @@
+/vendor
+/node_modules
+/public/components
+Homestead.yaml
+Homestead.json
+.env
+/.idea
+_ide_helper.php
+ftpsync.settings

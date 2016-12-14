@@ -1,0 +1,38 @@
+<div id="upload" ng-controller="ConfigController">
+    <rd-widget>
+        <rd-widget-header title="上传">
+        </rd-widget-header>
+        <rd-widget-body classes="auto">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-2">实验名称</label>
+                    <div class="col-md-3">
+                        <input class="form-control" type="text" ng-model="experiment.name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">实验类型</label>
+                    <div class="col-md-3">
+                        <select ng-model="experiment.type"  class="form-control" >
+                            <option value="score">计算分数</option>
+                            <option value="mean">意义</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">选择文件</label>
+                    <div class="col-md-3">
+                        <input type="file" ngf-select ng-model="form.file" name="file"
+                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                            ngf-max-size="2MB">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-md-offset-4">
+                        <button class="btn btn-primary" ng-disabled="state.config" ng-click="fileUpload(form.file)">确定</button>
+                    </div>
+                </div>
+            </form>
+        </rd-widget-body>
+    </rd-widget>
+</div>

@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="css/event.css">
+<div class="row" id="event" ng-controller="EventController">
+    <div class="col-lg-3">
+        <rd-widget>
+            <rd-widget-header icon="fa-gift" title="所有事件"></rd-widget-header>
+            <rd-widget-body classes="auto no-padding">
+                <div ng-repeat="a in eventList" on-finish-render>
+                    <ul class="list-group">
+                        <li class="list-group-item title">
+                            <span>{{a.label}}</span>
+                            <a href="" ng-click="addRule(a.class);" class="rule-add"><i class="fa fa-plus"></i></a>
+                        </li>
+                    </ul>
+                    <div class="list-group item">
+                        <button class="list-group-item" ng-repeat="b in a.ruleList"
+                            ng-click="editRules(a.class, b);">{{b.title}}</button>
+                    </div>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-9">
+        <rd-widget>
+            <rd-widget-header title="{{text}}"></rd-widget-header>
+            <rd-widget-body classes="auto">
+                <form class="form-horizontal" ng-if="rule.event_class">
+                    <div class="form-group">
+                        <label class="control-label col-md-1">名称</label>
+                        <div class="col-md-3">
+                            <input class="form-control" type="text" ng-model="rule.title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-1">条件</label>
+                        <div class="col-md-10">
+                            <div class="checkbox" ng-repeat="a in conditions" style="margin-bottom: 10px;">
+                                <label class="col-md-2 control-label" style="text-align:left;">
+                                    <input type="checkbox" ng-model="a.state"> {{a.label}}
+                                </label>
+                                <input type="hidden" ng-model="a.key">
+                                <div class="col-md-8" ng-if="a.term_type == 'int' && a.state">
+                                    <span class="control-label col-md-2">满</span>
+                                    <div class="col-md-4">
+                                        <input class="form-control input-sm" type="number" ng-model="a[a.key]" min="0">
+                                    </div>
+                                </div>
+                                <div class="col-md-8" ng-if="a.term_type.min && a.state">
+                                    <div ng-repeat="(key, value) in a.term_type">
+                                        <span class="control-label col-md-2">{{value.label}}</span>
+                                        <div class="col-md-4">
+                                            <input class="form-control input-sm" type="number" ng-model="a[a.key][key]" min="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-1">动作</label>
+                        <div class="col-md-10" ng-include="'partials/action.html'"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-2">
+                            <button type="button" class="btn btn-primary" ng-click="submit();">保存</button>
+                            <button type="button" class="btn btn-warning" ng-click="delRule(rule._id)" ng-disabled="!rule._id">删除</button>
+                        </div>
+                    </div>
+                </form>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>营销端</title>
+    <!-- STYLES -->
+    <!-- build:css lib/css/main.min.css -->
+    <link rel="stylesheet" type="text/css" href="/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/components/rdash-ui/dist/css/rdash.css">
+    <link rel="stylesheet" type="text/css" href="/components/sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="/marketer/css/common.css">
+    <!-- endbuild -->
+    <style media="screen">
+        ul.sidebar .sidebar-title{
+            font-size: 13px;
+        }
+    </style>
+    <!-- SCRIPTS -->
+    <!-- build:js lib/js/main.min.js -->
+    <script src="/components/lodash/dist/lodash.min.js"></script>
+    <script src="/components/jquery/dist/jquery.min.js"></script>
+    <script src="/components/angular/angular.min.js"></script>
+    <script src="/marketer/directives/date_picker_zh_cn.js"></script>
+    <script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/components/angular-animate/angular-animate.js"></script>
+    <script src="/components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="/components/ngSweetAlert/SweetAlert.min.js"></script>
+    <script src="/components/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="/components/angular-sortable-view/src/angular-sortable-view.min.js"></script>
+    <script src="/components/tinymce-dist/tinymce.js"></script>
+    <script src="/components/angular-ui-tinymce/dist/tinymce.min.js"></script>
+    <script src="/components/angular-paging/dist/paging.min.js"></script>
+    <!-- endbuild -->
+    <!-- Custom Scripts -->
+    <script src="directives/kendo.all.min.js"></script>
+    <script src="/marketer/routes.js"></script>
+    <script src="/marketer/controller/master-controller.js"></script>
+    <script src="/marketer/controller/login-controller.js"></script>
+    <script src="/marketer/controller/alert-controller.js"></script>
+    <script src="/marketer/controller/dashboard-controller.js"></script>
+    <script src="/marketer/controller/customer-controller.js"></script>
+    <script src="/marketer/controller/user-controller.js"></script>
+    <script src="/marketer/controller/ticket_template-controller.js"></script>
+    <script src="/marketer/controller/mass-controller.js"></script>
+    <script src="/marketer/controller/property_template-controller.js"></script>
+    <script src="/marketer/controller/commodity-controller.js"></script>
+    <script src="/marketer/controller/event-controller.js"></script>
+    <script src="/marketer/controller/order-controller.js"></script>
+    <script src="/marketer/controller/orderDetails-controller.js"></script>
+    <script src="/marketer/controller/deliver-controller.js"></script>
+    <script src="/marketer/controller/refund-controller.js"></script>
+    <script src="/marketer/controller/deal_refund-controller.js"></script>
+    <script src="/marketer/controller/shop_config-controller.js"></script>
+    <script src="/marketer/controller/setting-controller.js"></script>
+    <script src="/marketer/controller/template_message-controller.js"></script>
+    <script src="/marketer/controller/action-controller.js"></script>
+    <script src="/marketer/controller/redeemCode-controller.js"></script>
+    <script src="/marketer/controller/redeemCodeStatistics-controller.js"></script>
+    <script src="/marketer/controller/statistics-controller.js"></script>
+    <script src="/marketer/controller/commodities_statistics-controller.js"></script>
+    <script src="/marketer/controller/commodity_statistics_details-controller.js"></script>
+    <script src="/marketer/controller/login_records-controller.js"></script>
+    <script src="/marketer/controller/operating_records-controller.js"></script>
+    <script src="/marketer/controller/backup-controller.js"></script>
+    <script src="/marketer/controller/notice-controller.js"></script>
+    <script src="/marketer/directives/widget.js"></script>
+    <script src="/marketer/directives/loading.js"></script>
+    <script src="/marketer/directives/auto_width.js"></script>
+
+
+    <script src="/common/services/dashboard-service.js"></script>
+    <script src="/common/services/auth-service.js"></script>
+    <script src="/common/services/user-service.js"></script>
+    <script src="/common/services/card-service.js"></script>
+    <script src="/common/services/ticket-service.js"></script>
+    <script src="/common/services/ticket_template-service.js"></script>
+    <script src="/common/services/mass-service.js"></script>
+    <script src="/common/services/property_template-service.js"></script>
+    <script src="/common/services/commodity-service.js"></script>
+    <script src="/common/services/event-service.js"></script>
+    <script src="/common/services/order-service.js"></script>
+    <script src="/common/services/refund-service.js"></script>
+    <script src="/common/services/shop_config-service.js"></script>
+    <script src="/common/services/upload-service.js"></script>
+    <script src="/common/services/setting-service.js"></script>
+    <script src="/common/services/redeemCode-service.js"></script>
+    <script src="/common/services/redeemCodeStatistics-service.js"></script>
+    <script src="/common/services/statistics-service.js"></script>
+    <script src="/common/services/operating_records-service.js"></script>
+    <script src="/common/services/backup-service.js"></script>
+
+    <script src="/common/services/yuda/sync-service.js"></script>
+
+    <script src="/common/services/health/questionnaire-service.js"></script>
+    <script src="/common/services/health/gene-service.js"></script>
+    <script src="/common/services/health/config-service.js"></script>
+    <script src="/common/services/health/sitedata-service.js"></script>
+    <script src="/common/services/health/projectdata-service.js"></script>
+    <script src="/common/services/health/experiment-service.js"></script>
+    <script src="/common/services/health/barcode-service.js"></script>
+    <script src="/common/services/health/health_customer-service.js"></script>
+    <script src="/common/services/health/reservation-service.js"></script>
+
+
+    <script src="/marketer/controller/health/questionnaire-controller.js"></script>
+    <script src="/marketer/controller/health/gene-controller.js"></script>
+    <script src="/marketer/controller/health/config-controller.js"></script>
+    <script src="/marketer/controller/health/sitedata-controller.js"></script>
+    <script src="/marketer/controller/health/projectdata-controller.js"></script>
+    <script src="/marketer/controller/health/riskdata-controller.js"></script>
+    <script src="/marketer/controller/health/experiment-controller.js"></script>
+    <script src="/marketer/controller/health/barcode-controller.js"></script>
+    <script src="/marketer/controller/health/health_customer-controller.js"></script>
+    <script src="/marketer/controller/health/reservation-controller.js"></script>
+
+
+    <script src="/marketer/controller/yuda/sync-controller.js"></script>
+
+  <!--<script type="text/javascript" src="js/dashboard.min.js"></script>-->
+</head>
+<body ng-controller="MasterController">
+<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar">
+            <li class="sidebar-main">
+                <a ng-click="toggleSidebar()">营销端<span class="menu-icon glyphicon glyphicon-transfer"></span>
+                </a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#">仪表盘 <span class="menu-icon fa fa-tachometer"></span></a>
+            </li>
+            <!--<li class="sidebar-title"><span>会员</span></li>-->
+            <li class="sidebar-list">
+                <a href="#/customer">会员信息 <span class="menu-icon fa fa-users"></span></a>
+            </li>
+
+            <li class="sidebar-title"><span>资产</span></li>
+            <li class="sidebar-list">
+                <a href="#/ticket_template">优惠券 <span class="menu-icon fa fa-ticket"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/propertytemplate">服务 <span class="menu-icon fa fa-comments-o"></span></a>
+            </li>
+
+            <li class="sidebar-title"><span>商城</span></li>
+            <li class="sidebar-list">
+                <a href="#/shop_config">商城配置 <span class="menu-icon fa fa-indent"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/commodity">商品管理 <span class="menu-icon fa fa-shopping-cart"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/order">订单管理 <span class="menu-icon fa fa-indent"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/refund">退款管理 <span class="menu-icon fa fa-indent"></span></a>
+            </li>
+
+            <li class="sidebar-title"><span>营销</span></li>
+            <li class="sidebar-list">
+                <a href="#/redeemcode">兑换码 <span class="menu-icon fa fa-key"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/event">事件 <span class="menu-icon fa fa-flash"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/mass">群发 <span class="menu-icon fa fa-paper-plane"></span></a>
+            </li>
+
+            <li class="sidebar-title"><span>统计</span></li>
+            <li class="sidebar-list">
+                <a href="#/statistics">综合分析 <span class="menu-icon fa fa-line-chart"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/commodities_statistics">商城 <span class="menu-icon fa fa-building"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/redeemcodestatistics">兑换码 <span class="menu-icon fa fa-line-chart"></span></a>
+            </li>
+
+            <div ng-if="moduleList.indexOf('health') > 0" ng-include="'health/index.html'"></div>
+
+
+
+            <li class="sidebar-title"><span>设置</span></li>
+            <li class="sidebar-list">
+                <a href="#/user">用户权限 <span class="menu-icon fa fa-user"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/setting">全局设置 <span class="menu-icon fa fa-cogs"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/templatemessage">模板消息 <span class="menu-icon fa fa-cogs"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/backup">数据备份 <span class="menu-icon fa fa-database"></span></a>
+            </li>
+
+            <li class="sidebar-title"><span>记录</span></li>
+            <li class="sidebar-list">
+                <a href="#/login_records">用户登录 <span class="menu-icon fa fa-sign-in"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/operating_records">会员操作 <span class="menu-icon fa fa-book"></span></a>
+            </li>
+            <li class="sidebar-list">
+                <a href="#/sync">订单同步 <span class="menu-icon fa fa-book"></span></a>
+            </li>
+
+        </ul>
+    </div>
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper">
+        <div style="min-width: 1300px;" class="page-content">
+            <!-- Header Bar -->
+            <div class="row header">
+                <div class="col-xs-12">
+                    <div class="user pull-right">
+                        <div class="item dropdown" uib-dropdown>
+                        <a href class="dropdown-toggle" uib-dropdown-toggle>
+                            <img src="/common/imgs/avatar.jpg">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+                            <li class="dropdown-header">
+                            {{AuthService.current_user.display_name ? AuthService.current_user.display_name : "未登录"}}
+                            </li>
+                            <li class="divider"></li>
+                            <li class="link">
+                            <a href="#">
+                                修改密码
+                            </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="link">
+                            <a href ng-click="logout()">
+                                登出
+                            </a>
+                            </li>
+                        </ul>
+                        </div>
+                        <div class="item dropdown" uib-dropdown>
+                        <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
+                            <i class="fa fa-bell-o"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+                            <li class="dropdown-header">
+                            消息
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                            <a href="#">Server Down!</a>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+                    <div class="meta">
+                        <div class="page" style="font-size: 23px;margin-top: 5px;margin-left: 20px;">
+                        仪表盘
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Header Bar -->
+
+            <!-- Main Content -->
+            <div ui-view></div>
+
+        </div><!-- End Page Content -->
+    </div><!-- End Content Wrapper -->
+</div><!-- End Page Wrapper -->
+<!-- 模态框（Modal） -->
+<script type="text/ng-template" id="affirm.html">
+    <div class="modal-header">
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body">
+        <form name="modalForm" autocomplete="off">
+            <fieldset ng-repeat="item in items" ng-switch="item.type">
+                <div class="form-group" ng-switch-when="affirm">
+                    <label>{{item.title}}</label>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn" ng-click="cancel()">{{items[0]['a'] ? items[0]['a'] : '返回'}}</button>
+        <button type="button" class="btn btn-danger" ng-disabled="modalForm.$invalid" ng-click="ok()">{{items[0]['b'] ? items[0]['b'] : '删除'}}</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body">
+        <form name="modalForm" autocomplete="off">
+            <fieldset ng-repeat="item in items" ng-switch="item.type">
+                <div class="form-group" ng-switch-when="text">
+                    <label>{{item.title}}</label>
+                    <input type="text" class="form-control" name="{{item.name}}" ng-model="item.value"
+                        placeholder="{{item.show ? item.show : item.title}}">
+                </div>
+                <div class="form-group" ng-switch-when="affirm">
+                    <label>{{item.title}}</label>
+                </div>
+                <div class="form-group" ng-switch-when="number">
+                    <label>{{item.title}}</label>
+                    <input type="number" class="form-control" name="{{item.name}}" ng-model="item.value"
+                        placeholder="{{item.show ? item.show : item.title}}" min="0" required>
+                </div>
+                <div class="form-group" ng-switch-when="ticket">
+                    <label>{{item.title}}</label>
+                    <select class="form-control" name="{{item.name}}" ng-model="item.value"
+                        ng-options="a.id as a.title group by a.card_type for a in item.options" required>
+                    </select>
+                </div>
+                <div class="form-group" ng-switch-when="property">
+                    <label>{{item.title}}</label>
+                    <select class="form-control" name="{{item.name}}" ng-model="item.value"
+                        ng-options="a.id as a.title for a in item.options" required>
+                    </select>
+                </div>
+                <div class="form-group" ng-switch-when="level">
+                    <label>{{item.title}}</label>
+                    <select class="form-control" name="{{item.name}}" ng-model="item.value"
+                        ng-options="a.id as a.name for a in item.options" required>
+                    </select>
+                </div>
+                <div class="form-group" ng-switch-when="recipient">
+                    <label>{{item.title}}</label>
+                    <select class="form-control" ng-model="item.value" required>
+                        <option ng-repeat="a in item.recipient_options" value="{{a}}">
+                            {{item.recipient[a]}}
+                        </option>
+                    </select>
+                </div>
+                <style media="screen">
+                    .active{
+                        color: #00C;
+                    }
+                </style>
+                <div class="form-group" ng-switch-when="list">
+                    <label>{{item.title}}</label>
+                    <div class="list-div">
+                        <div class="icons" ng-repeat="a in item.options">
+                            <i class="{{a}} fa-3x" ng-click="listSelect(a)" ng-class="{'active':a == selectKey}"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group image" ng-switch-when="image">
+                    <label>{{item.title}}</label>
+                    <button type="file" ngf-select="uploadImage($file, $invalidFiles)" accept="image/*"
+                        ngf-max-size="2MB">选择图片</button>
+                    <img ng-if="item.value" ng-src="{{item.value}}" alt="" />
+                    <a href="" ng-if="item.value" ng-click="delImg(item.value)">删除</a>
+                </div>
+                <div class="form-group" ng-switch-when="commission">
+                    <label class="radio-inline">
+                        <input type="radio" name="commissions" ng-model="item.commission" ng-value="1">
+                         返佣百分比
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="commissions" ng-model="item.commission" ng-value="2">
+                         返佣金额
+                    </label>
+                    <div class="col-md-12" ng-if="item.commission == 1" style="padding-left:0;padding-top:10px;">
+                        <div class="col-md-3" style="padding-left: 0;">
+                            <input class="form-control" type="number" ng-model="item.value"
+                            ng-init="item.value = item.value * 100" min="0" max="99">
+                        </div>
+                        <span style="line-height: 35px;">%</span>
+                    </div>
+                    <div class="col-md-12" ng-if="item.commission == 2" style="padding-left:0;padding-top:10px;">
+                        <div class="col-md-3" style="padding-left: 0;">
+                            <input class="form-control" type="number" ng-model="item.value" min="0">
+                        </div>
+                        <span style="line-height: 35px;">元</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-switch-when="action">
+                    <label>赠送详情</label>
+                    <div class="col-md-12" ng-include="'partials/action.html'"></div>
+                </div>
+                <div class="form-group" ng-switch-when="notice">
+                    <label>消息推送</label>
+                    <div class="col-md-12" ng-include="'partials/notice.html'"></div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn" ng-click="cancel()">关闭</button>
+        <button type="button" class="btn btn-primary" ng-disabled="modalForm.$invalid" ng-click="ok()">保存</button>
+    </div>
+</script>
+<!------------------>
+</body>
+</html>

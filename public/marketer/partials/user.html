@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="/marketer/css/customer.css">
+<div id="user" class="row" ng-controller="UserController">
+    <div class="col-lg-4">
+        <rd-widget>
+            <rd-widget-header icon="menu-icon fa fa-user" title="用户">
+                <a href="" ng-click="clearData();"><i class="fa fa-plus fa-2x"></i></a>
+            </rd-widget-header>
+            <rd-widget-body classes="auto no-padding">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>用户名</th>
+                                <th>工号</th>
+                                <th>身份</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="a in userList" on-finish-render>
+                                <td>
+                                    <a ng-click="getUser(a.id)" href="">{{a.display_name ? a.display_name : "[anonym]"}}</a>
+                                </td>
+                                <td>{{a.login_name}}</td>
+                                <td>{{a.roles=='admin'?'管理员':a.roles=='cashier'?'收银':a.roles=='marketer'?'营销':'领班'}}</td>
+                                <td>{{a.created_at}}</td>
+                                <td><a href="" ng-click="delete(a.id, $event);">删除</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-8">
+        <div ng-show="true">
+            <div class="panel panel-default">
+                <div class="panel-heading">用户设置</div>
+                <div class="panel-body">
+                    <form name="form.userForm" class="form-horizontal" ng-submit="submit(form.userForm.$valid)" autocomplete="off">
+                        <div class="form-group" ng-class="{ 'has-error' : (form.userForm.display_name.$invalid && !form.userForm.display_name.$pristine) || error.length}">
+                            <label class="control-label col-xs-1">用户姓名</label>
+                            <div class="col-xs-4">
+                                <input type="text" class="form-control" name="display_name" ng-model="user.display_name" ng-maxlength=9 required>
+                                <p ng-show="form.userForm.display_name.$invalid && !form.userForm.display_name.$pristine" class="help-block">
+                                    姓名必填且长度小于9个字
+                                </p>
+                                <p ng-if="error.display_name" class="help-block">
+                                    {{error.display_name[0]}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : form.userForm.login_name.$invalid && !form.userForm.login_name.$pristine }">
+                            <label class="control-label col-xs-1">登录账号</label>
+                            <div class="col-xs-4">
+                                <input type="text" class="form-control" name="login_name" ng-model="user.login_name" required ng-pattern="/[0-9]/">
+                                <p ng-show="form.userForm.login_name.$invalid && !form.userForm.login_name.$pristine" class="help-block">
+                                    账号必填且只能为数字
+                                </p>
+                                <p ng-if="error.login_name" class="help-block">
+                                    {{error.login_name[0]}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : form.userForm.roles.$invalid && !form.userForm.roles.$pristine }">
+                            <label class="control-label col-xs-1">身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;份</label>
+                            <div class="col-xs-4">
+                                <select class="form-control" name="roles" ng-model="user.roles" required>
+                                    <option value="admin">管理员</option>
+                                    <option value="cashier">收银</option>
+                                    <option value="captain">领班</option>
+                                    <option value="marketer">营销</option>
+                                </select>
+                                <p ng-show="form.userForm.roles.$invalid && !form.userForm.roles.$pristine" class="help-block">
+                                    用户身份必选
+                                </p>
+                                <p ng-if="error.roles" class="help-block">
+                                    {{error.roles[0]}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : form.userForm.password.$invalid && !form.userForm.password.$pristine }">
+                            <label class="control-label col-xs-1">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+                            <div class="col-xs-4">
+                                <input type="text" class="form-control" name="password" ng-model="user.password" ng-pattern="/[0-9]/">
+                                <p ng-show="form.userForm.password.$invalid && !form.userForm.password.$pristine" class="help-block">
+                                    密码必填且只能为数字
+                                </p>
+                                <p ng-if="error.password" class="help-block">
+                                    {{error.password[0]}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xs-offset-1">
+                            <button type="submit" class="btn btn-primary left" ng-disabled="form.userForm.$invalid">{{user.id ? "修改" : "新增"}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

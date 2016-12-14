@@ -1,0 +1,9 @@
+<form name="balance_exchange_form" ng-controller="BalanceExchangeController">
+    <div class="balance_exchange_wrapper clear">
+        <div class="item" ng-repeat="(bonus,balance) in balance_exchanges">
+            <div class="balance-div"><span>￥</span><span class="balance" ng-bind="balance"></span></div>
+            <div class="bonus-div"><span class="bonus" ng-bind="bonus"></span><span>积分</span></div>
+            <div class="exchange-div"><a class="exchange" ng-click="submit(bonus,balance)">兑换</button></div>
+        </div>
+    </div>
+</form>

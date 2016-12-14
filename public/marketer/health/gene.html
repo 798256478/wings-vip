@@ -1,0 +1,212 @@
+<link rel="stylesheet" type="text/css" href="/marketer/css/health.css">
+<div class="row" id="Gene" ng-controller="GeneController">
+    <div class="col-md-6">
+        <rd-widget>
+            <rd-widget-header title="基因">
+                 <a href="" ng-click="gene_module_add()"><i class="fa fa-plus fa-2x"></i></a>
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <div  class="search-div">
+                    <label class="control-label">SNP编号</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" ng-model="search.code" placeholder="SNP编号">
+                    </div>
+                    <div class="icon">
+                        <span class="glyphicon glyphicon-search" ng-click="get_genes()"></span>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>作用</th>
+                            <th>位点数</th>
+                            <th>是否有益</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                     <tbody>
+                        <tr ng-repeat="gene in genes" on-finish-render>
+                            <td width="100px"><span ng-bind="gene.name"></span></td>
+                            <td><span ng-bind="gene.default_effect"></span></td>
+                            <td width="100px"><span ng-bind="gene.site_count"></span></td>
+                            <td width="100px"><span ng-bind="gene.positive_str"></span></td>
+                            <td width="50px"><a  href="" ng-click="gene_module_edit(gene)">修改</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                 <div class="table-page col-md-6 col-md-offset-3">
+                    <paging
+                        page="pages.pageindex"
+                        page-size="pages.pagesize"
+                        total="pages.total"
+                        scroll-top="true"
+                        hide-if-empty="true"
+                        show-prev-next="true"
+                        text-next="下一页"
+                        text-prev="上一页"
+                        text-title-page="第 {pages.pagesize} 页"
+                        text-title-next="下一页"
+                        text-title-prev="上一页">
+                    </paging>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-md-6 item-module">
+         <rd-widget>
+            <rd-widget-header title="添加">
+            </rd-widget-header>
+            <rd-widget-body classes="">
+                <div>
+                    <h4>基因信息 
+                        <a  ng-if="focus == 'site'"  ng-click="gene_module_edit(current_gene)">修改</a>
+                    </h4>
+                    <form name="form.gene" class="form-horizontal" ng-show="focus == 'gene'" >
+                        <div class="form-group">
+                            <label class="control-label col-md-2">基因名称</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="gene_name" ng-model="current_gene.name" placeholder="基因名称"
+                                    ng-maxlength=50 required>
+                                <p ng-show="form.gene.gene_name.$invalid && !form.gene.gene_name.$pristine" class="help-block">
+                                    基因标题必填且长度小于50个字
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">基因作用</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="default_effect" ng-model="current_gene.default_effect" placeholder="基因作用"
+                                    ng-maxlength=50 required>
+                                <p ng-show="form.gene.default_effect.$invalid && !form.gene.default_effect.$pristine" class="help-block">
+                                    基因作用必填且长度小于50个字
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">是否有益</label>
+                            <div class="col-md-10 toggle">
+                                <i class="fa fa-toggle-on active" ng-if="current_gene.default_is_positive == 1" ng-click="change_positive(current_gene.default_is_positive);"></i>
+                                <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="current_gene.default_is_positive == 0" ng-click="change_positive(current_gene.default_is_positive);"></i>
+                            </div>
+                        </div>
+                        <div class="form-group submit-button-div">
+                            <a class="btn" ng-click="gene_save(0)">保存</a>
+                            <a class="btn"  ng-click="gene_save(1)">保存并编辑位点</a>
+                            <a class="btn"  ng-if="current_gene.id != 0" ng-click="update_focus('site')">添加位点</a>
+                        </div>
+                    </form>
+                    <form  class="form-horizontal" ng-if="focus == 'site'">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">基因名称</label>
+                            <div class="col-md-10">
+                                <span ng-bind="current_gene.name"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">基因作用</label>
+                            <div class="col-md-10">
+                                <span ng-bind="current_gene.default_effect"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">是否有益</label>
+                            <div class="col-md-10">
+                                <span ng-bind="current_gene.positive_str"></span>
+                            </div>
+                        </div>
+                           
+                    </form>
+                </div>
+                <div ng-show="current_gene.sites.length > 0 || focus == 'site'">
+                    <h4>位点信息</h4>
+                    <form name="form.site" class="form-horizontal"  ng-show="focus =='site'">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">SNP编号</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="code" ng-model="current_site.code" placeholder="SNP编号"
+                                    required>
+                                <p ng-show="form.site.code.$invalid && !form.site.code.$pristine" class="help-block">
+                                    SNP编号必填
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">rs&nbsp;&nbsp;编&nbsp;&nbsp;&nbsp;码</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="rs_code" ng-model="current_site.rs_code" placeholder="SNP编号"
+                                    required>
+                                <p ng-show="form.site.rs_code.$invalid && !form.site.rs_code.$pristine" class="help-block">
+                                    SNP编号必填
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">位&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="mutation" ng-model="current_site.mutation" placeholder="位点"
+                                    required>
+                                <p ng-show="form.site.mutation.$invalid && !form.site.mutation.$pristine" class="help-block">
+                                    位点必填
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">变异位点</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="SNPSite" ng-model="current_site.SNPSite" placeholder="变异位点"
+                                    required>
+                                <p ng-show="form.site.snpsite.$invalid && !form.site.snpsite.$pristine" class="help-block">
+                                    变异位点必填
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">位点类型</label>
+                            <div class="col-md-3">
+                                <select ng-model="current_site.type"  class="form-control" >
+                                    <option value="snp">snp位点</option>
+                                    <option value="para">属性位点</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">DNA&nbsp;&nbsp;&nbsp;链</label>
+                            <div class="col-md-10">
+                               <input name="DNASingleType" type="radio" value="0" ng-model="current_site.DNASingleType" ng-checked="true" required>正义链</label>
+                               <input name="DNASingleType" type="radio" value="1" ng-model="current_site.DNASingleType">反义链</label>
+                            </div>
+                        </div>
+                        <div class="form-group submit-button-div">
+                            <a class="btn" ng-click="sites_save()">保存</a>
+                        </div>
+                    </form>
+                    <div class="left25">
+                        <table class="table" ng-show="current_gene.sites.length > 0">
+                            <thead>
+                                <tr>
+                                    <th>SNP编号</th>
+                                    <th>rs编号</th>
+                                    <th>位点</th>
+                                    <th>变异位点</th>
+                                    <th>DNA链</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="site in current_gene.sites" on-finish-render>
+                                    <td><span ng-bind="site.code"></span></td>
+                                    <td><span ng-bind="site.rs_code"></span></td>
+                                    <td><span ng-bind="site.mutation"></span></td>
+                                    <td><span ng-bind="site.SNPSite"></span></td>
+                                    <td><span ng-bind="site.DNASing_Str"></span></td>
+                                    <td><a class="btn" ng-click="site_module_edit(site)">修改</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

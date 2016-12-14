@@ -1,0 +1,172 @@
+<link rel="stylesheet" href="/marketer/css/customer.css">
+<div id="customer" class="row" ng-controller="CustomerController">
+    <div class="col-lg-4">
+        <rd-widget>
+            <rd-widget-header icon="fa-users" title="新会员(会员总数：{{cardTotal}})">
+                <input type="text" placeholder="查找" class="form-control input-sm"
+                    ng-model="searchValue" ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}"
+                    ng-change="Search(searchValue)"/>
+            </rd-widget-header>
+            <rd-widget-body classes="auto no-padding">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>昵称</th>
+                                <th>会员号</th>
+                                <th>激活时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="a in cardList" on-finish-render>
+                                <td><a ng-click="getCustomer(a.id)" href="">{{a.nickname ? a.nickname : "[anonym]"}}</a></td>
+                                <td>{{a.card_code}}</td>
+                                <td>{{a.created_at}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-8">
+        <rd-widget>
+            <rd-widget-header icon="fa-users" title="详情">
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <div ng-show="Card">
+                    <h2 class="page-header" style="margin-top:0;">
+                        {{Card.cardSummaries.nickname ? Card.cardSummaries.nickname : "[anonym]"}}&nbsp;&nbsp;
+                        <small style="color:#cc9900">{{Card.cardSummaries.card_code}}</small>
+                        <small>&nbsp;&nbsp;&nbsp;&nbsp;{{Card.cardSummaries.mobile}}</small>
+                    </h2>
+                    <div class="row" style="margin-bottom: 0;">
+                        <div class="col-xs-3 right-border">
+                            <div>
+                                <p>余额</p>
+                                <p class="show-value">{{Card.cardSummaries.balance}}</p>
+                            </div>
+                            <div>
+                                <p>积分</p>
+                                <p class="show-value">{{Card.cardSummaries.bonus}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-9" style="margin-bottom:5px;">
+                            <div class="row">
+                                <div class="col-xs-1"></div>
+                                <div class="col-xs-10 mytable">
+                                    <div class='row'>
+                                        <span class="col-xs-2"></span>
+                                        <span class="col-xs-4 mytbth">总消费</span>
+                                        <span class="col-xs-3 mytbth">总到店</span>
+                                        <span class="col-xs-3 mytbth">总用券</span>
+                                    </div>
+                                    <div class="value-line row">
+                                        <span class="col-xs-2">总计</span>
+                                        <span class="col-xs-4">{{Card.cardSummaries.total_expense}}</span>
+                                        <span class="col-xs-3">{{Card.cardSummaries.total_visit}}</span>
+                                        <span class="col-xs-3">{{Card.tickets.total}}</span>
+                                    </div>
+                                    <div class="value-line row">
+                                        <span class="col-xs-2">次均</span>
+                                        <span class="col-xs-4">{{Card.times}}</span>
+                                        <span class="col-xs-3">--</span>
+                                        <span class="col-xs-3">{{Card.tickets.times}}</span>
+                                    </div>
+                                    <div class="value-line row">
+                                        <span class="col-xs-2">近30天</span>
+                                        <span class="col-xs-4" ng-class="{valred: 'red' == Card.color.cost, valgreen: 'green' == Card.color.cost}">
+                                            {{Card.past30Day.cost}}
+                                        </span>
+                                        <span class="col-xs-3" ng-class="{valred: 'red' == Card.color.arrive, valgreen: 'green' == Card.color.arrive}">
+                                            {{Card.past30Day.arrive}}
+                                        </span>
+                                        <span class="col-xs-3" ng-class="{valred: 'red' == Card.color.ticket, valgreen: 'green' == Card.color.ticket}">
+                                            {{Card.tickets.past30Day}}
+                                        </span>
+                                    </div>
+                                    <div class="value-line row">
+                                        <span class="col-xs-2">30天均</span>
+                                        <span class="col-xs-4">{{Card.avgMonth.avgExpense}}</span>
+                                        <span class="col-xs-3">{{Card.avgMonth.avgVisit}}</span>
+                                        <span class="col-xs-3">{{Card.tickets.avgMonth}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="third-panel">
+                        <h4 class="page-header">客户信息</h4>
+                        <div class="third-panel-body">
+                            <div class="row myform">
+                                <div class="col-xs-4">姓名：<span>{{Card.cardSummaries.name}}</span></div>
+                                <div class="col-xs-4">性别：<span ng-switch="Card.cardSummaries.sex">
+                                        <span ng-switch-when="1">男</span>
+                                        <span ng-switch-when='2'>女</span>
+                                        <span ng-switch-when='0'>未设置</span>
+                                    </span>
+                                </div>
+                                <div class="col-xs-4">生日：<span>{{Card.cardSummaries.birthday}}</span></div>
+                                <div class="col-xs-4">标签：<span>{{Card.cardSummaries.habit}}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="third-panel">
+                        <h4 class="page-header">优惠券</h4>
+                        <div class="third-panel-body" ng-if="TicketList.length > 0">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>类型</th>
+                                        <th>名称</th>
+                                        <th>获得时间</th>
+                                        <th>到期时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="a in TicketList" ng-switch="a.ticket_template.card_type">
+                                        <td ng-switch-when="CASH">代金券</td>
+                                        <td ng-switch-when="DISCOUNT">折扣券</td>
+                                        <td ng-switch-when="GIFT">礼品券</td>
+                                        <td ng-switch-when="GROUPON">团购券</td>
+                                        <td ng-switch-when="GENERAL_COUPON">优惠券</td>
+                                        <td>{{a.ticket_template.title}}</td>
+                                        <td>{{a.created_at}}</td>
+                                        <td>{{a.ticket_template.end_timestamp}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="third-panel-body" ng-if="TicketList.length == 0">
+                            <span style="text-align:center;">暂无优惠券</span>
+                        </div>
+                    </div>
+                    <div class="third-panel">
+                        <h4 class="page-header">记录</h4>
+                        <div class="third-panel-body" ng-if="Card.records.length > 0">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>时间</th>
+                                        <th>操作</th>
+                                        <th>摘要</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="record in Card.records">
+                                        <td>{{record.display_time}}</td>
+                                        <td>{{record.action}}</td>
+                                        <td>{{record.summary}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="third-panel-body" ng-if="Card.records.length == 0">
+                            <span style="text-align:center;">暂无服务</span>
+                        </div>
+                    </div>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

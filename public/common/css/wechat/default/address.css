@@ -1,0 +1,182 @@
+body{
+    background-color: #eee;
+}
+.container{
+    padding: 0;
+}
+.group{
+    background-color: #fff;
+    padding: 0 19px;
+    margin-bottom: 10px;
+}
+
+/*表单*/
+.group .one{
+    border-bottom: 1px solid #dfdfdf;
+    padding: 18px 0;
+}
+
+.group .one:last-child{
+    border: none;
+}
+
+.group .one .title{
+    width: 22%;
+    margin-right: 20px;
+}
+
+.group .one label{
+    margin-bottom: 0;
+}
+
+.group .list-input{
+    padding: 0;
+    border: none;
+    outline: none;
+    display: inline-block;
+    width: auto;
+    background-color: inherit;
+    float: right;
+    cursor: pointer;
+}
+.group label{
+    vertical-align: top;
+}
+
+.group .detail-address{
+    border: none;
+    outline: none;
+    float: right;
+    resize: none;
+    overflow-y: visible;
+    min-height: 20px;
+    display: inline-block;
+}
+
+.group .detail-address:empty:before{
+    content: attr(placeholder);
+    color: #bbb;
+}
+
+.group .one .is-default{
+    margin-left: 5px;
+}
+
+/*底部添加新地址*/
+.add-address{
+    z-index: 100;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 45px;
+}
+.add-address .add-btn{
+    background-color: #6AA84F;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    font-size: 23px;
+    line-height: 31px;
+}
+
+.add-delete{
+    width: 90%;
+    position: relative;
+    top:27px;
+    left:5%;
+}
+
+.add-delete .btn{
+    width: 100%;
+    margin-bottom: 12px;
+    background-color: #6AA84F;
+    color: #fff;
+    font-size: 18px;
+    line-height: 26px;
+    height: 40px;
+    border-radius: 4px;
+}
+
+.add-delete .btn:first-child{
+    background-color: red;
+}
+
+/*底部添加新地址*/
+.add-address{
+    z-index: 100;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 45px;
+}
+.add-address .btn{
+    background-color: #6AA84F;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    font-size: 23px;
+    line-height: 31px;
+}
+
+/*地址列表*/
+.address-list{
+    padding: 0 19px;
+}
+
+.address-list .one-address{
+    width: 100%;
+    padding: 15px 5px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+.address-list .one-address .name-tel{
+    font-size: 17px;
+}
+
+.address-list .one-address .name,.address-list .one-address .tel{
+    width: 42%;
+    float: left;
+    display: inline-block;
+}
+
+.address-list .one-address .default-address{
+    color: red;
+}
+
+.address-list .one-address .edit-icon{
+    float: right;
+    width: 16%;
+    font-size: 17px;
+    text-align: center;
+    color: #5D5C5C;
+    display: inline-block;
+}
+
+.address-list .one-address .address-text{
+    color: #888888;
+}
+
+.no-address{
+    display: block;
+    margin: 200px auto 0 auto;
+    width: 68%;
+    text-align: center;
+    font-size: 18px;
+}
+
+/**************************************************mobiscroll样式修改*****************************************/
+.dwfl{
+    width: 33%;
+}
+
+.mbsc-mobiscroll .dw-li{
+    font-size: 12px;
+}
+
+.dwc{
+    width: 100%;
+}
+
+

@@ -1,0 +1,205 @@
+html {
+    height: 100%;
+}
+body {
+    font-family: "Microsoft YaHei","\5fae\8f6f\96c5\9ed1","\5b8b\4f53",sans-serif !important;
+}
+.left {
+    float: left;
+}
+.right{
+    float: right;
+}
+.none-style {
+    outline: none;
+    text-decoration: none;
+}
+.none-style:hover {
+    text-decoration: none;
+}
+.clear{
+    clear:both;
+}
+/**
+ * widget customer
+ */
+#page-wrapper.open {
+    padding-left: 200px;
+}
+ #page-wrapper:not(.open) #sidebar-wrapper {
+    left: -40px;
+    margin-left: -100px;
+}
+#page-wrapper.open #sidebar-wrapper {
+    left: 150px;
+}
+#sidebar-wrapper {
+    width: 200px;
+}
+ul.sidebar li a {
+    width: 200px;
+}
+.widget .widget-body.large-x {
+    height: 560px;
+    overflow-y: auto;
+}
+.widget .widget-body.large-xx {
+    height: 790px;
+    overflow-y: auto;
+}
+.widget .widget-header {
+    background-color: #D7D7D7;
+    color: #444;
+    font-size: 16px;
+}
+.fa-2x{
+    font-size: 1.5em;
+}
+.pull-right .fa-2x {
+    padding-top: 5px;
+}
+.uib-daypicker button {
+    margin-left: 0 !important;
+}
+.uib-datepicker button {
+    margin-left: 0 !important;
+}
+/*--------------------------------------------*/
+
+img.thumb {
+    padding-top: 10px;
+    width: 150px;
+    height: 100px;
+}
+button.thumb {
+    width: 55px;
+    margin-top: 65px;
+}
+.table-page {
+    text-align: center;
+}
+.table-page paging ul {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+/**
+ * uib tabset set header left
+ */
+
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+    display: block;
+}
+.ng-isolate-scope > .nav-tabs {
+    border-bottom: 0;
+}
+.tab-content > .tab-pane, .pill-content > .pill-pane {
+    display: none;
+}
+.tab-content > .active, .pill-content > .active {
+    display: block;
+    float: left;
+}
+.ng-isolate-scope > .nav-tabs > li {
+    float: none;
+}
+.ng-isolate-scope > .nav-tabs > li > a {
+    width: 45px;
+    margin-right: 0;
+    margin-bottom: 3px;
+    outline: none;
+    padding: 8px 5px;
+}
+.ng-isolate-scope > .nav-tabs > li.list-click > a {
+    border: 0;
+}
+.ng-isolate-scope > .nav-tabs {
+    float: left;
+    margin-right: 19px;
+    border-right: 1px solid #ddd;
+}
+.ng-isolate-scope > .nav-tabs > li > a {
+    margin-right: -1px;
+    background-color: #999;
+    color: #FFF;
+    border-radius: 0;
+}
+.ng-isolate-scope > .nav-tabs > li > a:hover, .ng-isolate-scope > .nav-tabs > li > a:focus {
+    border-color: #eeeeee #dddddd #eeeeee #ffffff;
+    background-color: #AAA;
+}
+.ng-isolate-scope > .nav-tabs .active > a, .ng-isolate-scope > .nav-tabs .active > a:hover, .ng-isolate-scope > .nav-tabs .active > a:focus {
+    border-color: #EEE transparent #EEE #EEE;
+    border-right-color: #EEE;
+    background-color: #EEE;
+    color: #000;
+}
+.ng-isolate-scope > .tab-content > .tab-pane .active {
+    border-color: #ddd transparent #ddd #ddd;
+    border-left-color: #ffffff;
+}
+.ng-isolate-scope > .tab-content > .tab-pane > .tab-text {
+    padding-top: 10px;
+}
+
+/**
+ * angular ui bootstrap modal
+ */
+
+.modal-body .list-div {
+    width: 100%;
+}
+.modal-body .list-div .icons {
+    width: 70px;
+    height: 70px;
+    float: left;
+    border: 1px solid #EEE;
+    padding: 10px;
+    text-align: center;
+}
+.modal-body .list-div .icons i {
+    cursor: pointer;
+}
+.modal-body .list-div .icons i:active {
+    border: 2px solid #FFF;
+}
+.modal-body .image {
+    margin-top: 20px;
+}
+.modal-body .image button {
+    display: block;
+}
+.modal-body .image img {
+    margin-top: 10px;
+}
+
+/**
+ * state switch button
+ */
+
+.toggle .active, .inactive {
+    font-size: 30px;
+    cursor: pointer;
+}
+.toggle i.active {
+    color: #5cb85c
+}
+.toggle i.inactive {
+    color: #d9534f
+}
+
+.third-panel {
+    width: 100%;
+    padding: 8px;
+}
+.third-panel .page-header {
+    margin: 20px 0 10px;
+}
+.third-panel-body{
+    padding: 0 0 10px 15px;
+}
+.list-group-item:first-child{
+    border-radius: 0;
+    border-top: 0;
+}

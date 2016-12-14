@@ -1,0 +1,590 @@
+<style>
+
+.refund,
+.order-detail-div {
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+/************************************左侧退款信息************************************/
+.infoMain {
+  min-height: 450px;
+  border-right: 1px solid #e5e5e5;
+}
+
+.infoMain label {
+  font-weight: normal;
+}
+
+.refundinfo-title {
+  margin: 25px -18px 3px;
+}
+
+.commodity-group,
+.orderinfo,
+.refundinfo {
+  padding: 10px 0;
+}
+
+.commodity-group,
+.orderinfo {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.orderinfo .title,
+.refundinfo .title {
+  margin-right: 10px;
+  color: #999;
+}
+
+.commodityinfo .title {
+  margin-top: 8px;
+}
+
+.commodityinfo .scale {
+  margin-top: 10px;
+  color: #999;
+}
+
+.child-commodity-group {
+  position: relative;
+  margin-left: 5px;
+}
+
+.child-commodity {
+  margin-top: 10px;
+}
+
+.child-commodity-info {
+  height: 50px;
+}
+
+.child-commodity .title {
+  margin-top: 5px;
+}
+
+.child-commodity img {
+  position: relative;
+  z-index: 1;
+  float: left;
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+}
+
+.child-commodity .scale {
+  color: #999;
+}
+
+.child-commodity .count {
+  position: relative;
+  top: -25px;
+  color: #aaa;
+}
+
+.suite_children {
+	position: relative;
+	margin-top: 15px;
+}
+
+.suite_children {
+	font-size: 13px;
+}
+
+.suite_children .child-commodity {
+	margin-top: 6px;
+}
+
+.suite_children .child-commodity img{
+	width: 40px;
+  	height: 40px;
+}
+
+.suite_children .child-commodity-info {
+  height: 40px;
+}
+
+.suite_children .child-commodity .title {
+  margin-bottom: 2px;
+  font-size: 12px;
+}
+
+.suite_children .tree {
+    position: absolute;
+    z-index: 0;
+    top: -20px;
+    left: 0px;
+    width: 2px;
+    height: 100%;
+    border-radius: 0 0 0 4px;
+    background: #ccc;
+}
+
+.suite_children .tree-branch {
+    position: relative;
+    top: 20px;
+    left: -15px;
+    width: 16px;
+    height: 1px;
+    background: #ccc;
+}
+
+.suite_children .child-commodity {
+  margin-left: 15px;
+}
+
+.orderinfo .fa-btc {
+  position: relative;
+  top: -1px;
+}
+
+.orderinfo .number {
+  margin-left: 25px;
+}
+
+/**********************************************右侧表单*******************************************/
+.form-horizontal .control-label {
+  padding-top: 5px;
+}
+
+.contentMain {
+  min-height: 450px;
+  padding: 15px;
+}
+
+.refundcontent-title {
+  margin-bottom: 15px;
+}
+
+.refundcontent {
+  padding-left: 35px;
+}
+
+.form-group input,
+.form-group label,
+.form-group span {
+  float: left;
+}
+
+.form-group input[type='radio'],
+.form-group input[type='checkBox'] {
+  margin: 10px 16px;
+}
+
+.form-group span {
+  margin: 6px -5px;
+  margin-right: 25px;
+}
+
+.btn {
+  margin-left: 75px;
+}
+
+.contentMain .refundinfo {
+  margin-left: 30px;
+  line-height: 30px;
+}
+
+.contentMain .title {
+  float: left;
+}
+
+.contentMain .instructions {
+  max-width: 35%;
+}
+
+/****************************************物流信息支付信息订单详情************************************/
+.party-title-div {
+  margin-left: 18px;
+  color: #333;
+  font-size: 18px;
+}
+
+.party-detail-div {
+  margin: 15px 20px;
+}
+
+.party-detail-div > span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.party-detail-div > span:last-child {
+  margin-bottom: 0;
+}
+
+.party-detail-div > div {
+  margin-bottom: 10px;
+}
+
+.party-detail-div > div:last-child {
+  margin-bottom: 0;
+}
+
+.party-detail-div .party-detail-one-key {
+  margin-right: 5px;
+}
+
+/*******************************************订单详情表格部分********************************************/
+.party-div {
+  padding: 20px 22px 23px 7px;
+  padding-right: 0;
+  color: #999;
+}
+
+.table {
+  border-spacing: 0 !important;
+  border-collapse: separate !important;
+}
+
+.table td {
+  vertical-align: middle !important;
+}
+
+.table th {
+  background-color: #d7d7d7;
+  text-align: center;
+}
+
+.one-order-content .suit img {
+  width: 50px;
+  height: 50px;
+  vertical-align: top;
+}
+
+.one-order-content .suit .caption {
+  display: inline-block;
+  margin-left: 5px;
+  text-align: left;
+}
+
+.one-order-content:last-child td {
+  border-bottom: 1px solid #ddd;
+}
+
+.one-order-content td:first-child {
+  border-left: 1px solid #ddd;
+}
+
+.one-order-content .commodity-image {
+  border-left: 1px solid #ddd;
+}
+
+.one-order-content .one-order-merger-td:last-child {
+  border-right: 1px solid #ddd;
+}
+
+.one-order-content .price-td,
+.one-order-content .amount-td {
+  text-align: center;
+}
+
+.one-order-content .one-order-merger-td {
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  text-align: center;
+}
+
+.one-order-content .commodity-img-div {
+  float: left;
+  width: 50px;
+  height: 50px;
+}
+
+.one-order-content .commodity-img-div img {
+  width: 100%;
+  height: 100%;
+}
+
+.one-order-content .commodity-name-div {
+  float: left;
+  margin-left: 9px;
+}
+
+.one-order-content .commodity-name-div .commodity-name {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.one-order-content .commodity-name-div .commodity-name .refund {
+  color: red;
+  font-size: 12px !important;
+}
+
+.one-order-content .commodity-name-div .no-commodity-name {
+  display: block;
+  height: 60px;
+  line-height: 60px;
+}
+
+.one-order-content .commodity-name-div .commodity-specification-span {
+  display: block;
+  color: #888;
+  font-size: 13px;
+}
+
+.one-order-content .fa-btc {
+  position: relative;
+  top: -1px;
+}
+
+</style>
+<div class="col-lg-12 main" ng-controller="DealRefundController">
+	<div class="refund col-lg-12"  ng-if='refundData'>
+		<div class="col-lg-4 infoMain">
+			<h4 class="refundinfo-title">退款信息</h4>
+			<div class="commodity-group">
+				<div class="child-commodity" ng-repeat='a in commodityData'>
+					<img ng-src="{{a.commodity_specification_history.commodity_history.image.length>0 ? a.commodity_specification_history.commodity_history.image[0]:'/common/imgs/noimg.png'}}" alt="">
+					<div class="child-commodity-info">
+						<label for="" class="title">{{a.commodity_specification_history.commodity_history.name}}</label>
+						<p ng-if="a.commodity_specification_history.name" class="scale">规格：{{a.commodity_specification_history.name}}</p>	
+					</div>
+	                <div class="count pull-right">x{{a.order.suit_amount?a.order.suit_amount * a.amount:a.amount}}</div>
+	                <div class="suite_children" ng-if="a.commodity_specification_history.suite_child_histories.length>0">
+						<div class="tree"></div>
+						<div class="child-commodity" ng-repeat="b in a.commodity_specification_history.suite_child_histories">
+							<div class="tree-branch"></div>
+							<img ng-src="{{b.commodity_history.image.length>0 ? b.commodity_history.image[0]:'/common/imgs/noimg.png'}}" alt="">
+							<div class="child-commodity-info">
+								<label for="" class="title">{{b.commodity_history.name}}</label>
+								<p ng-if="a.commodity_specification_history.name" class="scale">规格：{{b.name}}</p>	
+							</div>
+			                <div class="count pull-right">x{{b.pivot.count}}</div>
+						</div>
+	                </div>
+				</div>
+			</div>
+			<div class="orderinfo">
+				<div><span for="" class="title">订单编号：</span><label for="">{{refundData.order.number}}</label></div>
+				<div><span for="" class="title">买&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;家：</span><label for="">{{refundData.order.card.nickname}}</label></div>
+				<div><span for="" class="title">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格：</span>
+					<label for="">
+		                <i class="fa fa-cny"></i>{{refundData.order_detail?refundData.order_detail.commodity_specification_history.price:refundData.order.total_fee | currency:""}}
+		                <span>+</span>
+		                <i class="fa fa-btc"></i>{{refundData.order_detail?refundData.order_detail.commodity_specification_history.bonus_require:refundData.order.bonus_require}}
+					</label>
+				</div>
+				<div><span for="" class="title">订单状态：</span><label for="">{{orderState[refundData.order.state]}}</label></div>
+				<div><span for="" class="title">申请时间：</span><label for="">{{refundData.created_at}}</label></div>
+			</div>
+			<div class="refundinfo">
+				<div><span for="" class="title">联&nbsp;&nbsp;系&nbsp;&nbsp;人：</span><label for="">{{refundData.name}}</label></div>
+				<div><span for="" class="title">联系电话：</span><label for="">{{refundData.phone}}</label></div>
+				<div><span for="" class="title">退货原因：</span><label for="">{{refund_reason[refundData.reason]}}</label></div>
+			</div>
+		</div>
+		<div class="col-lg-8 contentMain" ng-if="refundData.state=='APPLY'">
+			<h4 class="refundcontent-title">退款处理</h4>
+			<form name="form.refundForm" class="form-horizontal" ng-submit="submit(form.refundForm.$valid)" novalidate autocomplete="off">
+				<div class="col-lg-12 refundcontent">
+					<div class="form-group">
+						<label for="" class="control-label">退款处理:</label>
+						<input type="radio" ng-model="refund.state" value='REFUND' ng-checked="true" required><span class="radio-label">同意退款</span>
+						<input type="radio" ng-model="refund.state" value='REFUSED' required><span class="radio-label">拒绝退款</span>
+					</div>
+					<div class="form-group" ng-if="refund.state=='REFUND'">
+						<label for="" class="control-label">退款金额:</label>
+						<div class="col-lg-5">
+							<input type="number" class="form-control" ng-model='refund.money' required="{{refund.state=='REFUND'}}" min="0">
+						</div>
+					</div>
+					<div class="form-group" ng-if="refund.state=='REFUND'">
+						<label for="" class="control-label">其&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;他:</label>
+						<input type="checkBox" ng-model='refund.is_refund_other'><span>积分、券等附加价值是否返回</span>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label">说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明:</label>
+						<div class="col-lg-5">
+							<textarea name="" id="" cols="30" rows="6" class="form-control" ng-model='refund.instructions'></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<input type="submit" value='确认' class="btn btn-default" ng-disabled="form.refundForm.$invalid">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-lg-8 contentMain" ng-if="refundData.state!='APPLY'&&refundData">
+			<h4 class="refundcontent-title">退款详情</h4>
+			<div class="refundinfo">
+				<div><span for="" class="title">处理时间：</span><label>{{refundData.hand_time}}</label></div>
+				<div><span for="" class="title">处理结果：</span><label for="">{{refundState[refundData.state]}}</label></div>
+				<div ng-if="refundData.state=='REFUND'"><span for="" class="title" >退款金额：</span>
+				<i class="fa fa-cny"></i><label for="">{{refundData.money}}</label></div>
+				<div ng-if="refundData.state!='CLOSE'"><span for="" class="title">说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明：</span><label for="" class="instructions">{{refundData.instructions?refundData.instructions:'无'}}</label></div>
+			</div>
+		</div>
+	</div>
+	<!--订单详情-->
+	<div class="col-lg-12 order-detail-div party-div"  ng-if='refundData'>
+		<div class="pay-method-title party-title-div">
+			<span class="pay-method-span ">订单详情</span>
+		</div>
+		<div class=" party-detail-div">
+			<table class="table">
+				<thead>
+					<tr>
+						<th ng-if="suit">套装</th>
+						<th>商品</th>
+						<th>单价</th>
+						<th>数量</th>
+						<th>买家</th>
+						<th>类型</th>
+						<th>状态</th>
+						<th>渠道</th>
+						<th>实收款</th>
+						<th ng-if="a.state!='NOT_PAY'&& a.state!='CLOSED' &&
+						(order.balance_present>0 || order.bonus_present>0)">赠送</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr class="one-order-content" ng-repeat="a in refundData.order.order_details" on-finish-render>
+					<td class="clearfix commodity-image">
+						<div class="commodity-img-div">
+							<img ng-src="{{a.commodity_specification_history.commodity_history.image.length>0 ? a.commodity_specification_history.commodity_history.image[0]:'/common/imgs/noimg.png'}}"
+							     alt="">
+						</div>
+						<div class="commodity-name-div">
+							<span class="commodity-name">
+								{{a.commodity_specification_history.commodity_history.title}}
+								<span class="refund" >
+									{{a.is_refund && a.refund.length>0 ?'('+ refundState[a.refund[0].state]+')':''}}
+								</span>
+							</span>
+							<span class="commodity-specification-span" ng-if="a.commodity_specification_history.name">
+								<span class="commodity-specification-key">规格:</span>
+								<span class="commodity-specification-val">{{a.commodity_specification_history.name}}</span>
+							</span>
+						</div>
+					</td>
+					<td class="price-td">
+							<span ng-if="a.commodity_specification_history.price>0">
+                                <i class="fa fa-cny"></i>{{a.commodity_specification_history.price | currency:""}}
+                            </span>
+                            <span ng-if="a.commodity_specification_history.price>0 && a.commodity_specification_history.bonus_require>0">
+                                +
+                            </span>
+                            <span ng-if="a.commodity_specification_history.bonus_require>0">
+                                <i class="fa fa-btc"></i>{{a.commodity_specification_history.bonus_require}}
+                            </span>
+					</td>
+					<td class="amount-td">{{a.amount}}</td>
+
+					<td class="one-order-merger-td" ng-if="$first" rowspan="{{refundData.order.order_details.length}}">
+						{{refundData.order.card.nickname}}({{refundData.order.card.card_code}})
+					</td>
+					<td class="one-order-merger-td" ng-if="$first" rowspan="{{refundData.order.order_details.length}}">
+						{{orderType[refundData.order.type]}}
+					</td>
+					<td class="one-order-merger-td" ng-if="$first" rowspan="{{refundData.order.order_details.length}}">
+						{{orderState[refundData.order.state]}}
+					</td>
+					<td class="one-order-merger-td" ng-if="$first" rowspan="{{refundData.order.order_details.length}}">
+						{{orderChannel[refundData.order.channel]}}
+					</td>
+					<td class="one-order-merger-td" ng-if="$first "
+					    rowspan="{{refundData.order.order_details.length}}">
+							<span ng-if="refundData.order.state!='NOT_PAY'&& refundData.order.state!='CLOSED'">
+								<span ng-if="refundData.order.total.price>0">
+                                    <i class="fa fa-cny"></i>{{refundData.order.total.price | currency:""}}
+                                </span>
+                                <span ng-if="refundData.order.total.price>0 && refundData.order.total.bonus>0">
+                                    +
+                                </span>
+                                <span ng-if="refundData.order.total.bonus>0">
+                                    <i class="fa fa-btc"></i>{{refundData.order.total.bonus}}
+                                </span>
+							</span>
+					</td>
+					<td class="one-order-merger-td " ng-if="$first && a.state!='NOT_PAY'&& a.state!='CLOSED' &&
+					(refundData.order.balance_present>0 || refundData.order.bonus_present>0)" rowspan="{{refundData.order.order_details.length}}">
+						<span ng-if="refundData.order.balance_present>0">
+                            <i class="fa fa-cny"></i>{{refundData.order.balance_present | currency:""}}
+                        </span>
+                        <span ng-if="refundData.order.balance_present>0 && refundData.order.bonus_present>0">
+                            +
+                        </span>
+                        <span ng-if="refundData.order.bonus_present>0">
+                            <i class="fa fa-btc"></i>{{refundData.order.bonus_present}}
+                        </span>
+					</td>
+				</tr>
+				<!--没有商品-->
+				<tr class="one-order-content" ng-if="refundData.order.order_details.length<=0">
+					<td class="clearfix commodity-image">
+						<div class="commodity-img-div">
+							<img src="/common/imgs/noimg.png" alt="">
+						</div>
+						<div class="commodity-name-div">
+							<span class=" no-commodity-name">{{refundData.order.body}}</span>
+						</div>
+					</td>
+					<td class="price-td">
+						<span ng-if="refundData.order.money_pay_amount>0">
+                            <i class="fa fa-cny"></i>{{refundData.order.money_pay_amount | currency:""}}
+                        </span>
+                        <span ng-if="refundData.order.money_pay_amount>0 && refundData.order.bonus_pay_amount>0">
+                            +
+                        </span>
+                        <span ng-if="refundData.order.bonus_pay_amount>0">
+                            <i class="fa fa-btc"></i>{{refundData.order.bonus_pay_amount}}
+                        </span>
+					</td>
+					<td class="amount-td">1</td>
+					<td class="one-order-merger-td">{{refundData.order.card.nickname}}({{refundData.order.card.card_code}})</td>
+					<td class="one-order-merger-td">
+						{{orderType[refundData.order.type]}}
+					</td>
+					<td class="one-order-merger-td">
+						{{orderState[refundData.order.state]}}
+					</td>
+					<td class="one-order-merger-td">
+						{{orderChannel[refundData.order.channel]}}
+					</td>
+					<td class="one-order-merger-td">
+						<span ng-if="a.state!='NOT_PAY'&& a.state!='CLOSED'">
+							<span ng-if="refundData.order.money_pay_amount>0">
+                                <i class="fa fa-cny"></i>{{refundData.order.money_pay_amount | currency:""}}
+                            </span>
+                            <span ng-if="refundData.order.money_pay_amount>0 && refundData.order.bonus_pay_amount>0">
+                                +
+                            </span>
+                            <span ng-if="refundData.order.bonus_pay_amount>0">
+                                <i class="fa fa-btc"></i>{{refundData.order.bonus_pay_amount}}
+                            </span>
+						</span>
+					</td>
+					<td class="one-order-merger-td operation-td" ng-if="a.state!='NOT_PAY'&& a.state!='CLOSED' &&
+					(order.balance_present>0 || order.bonus_present>0)">
+						<span >
+							<span ng-if="refundData.order.balance_present>0">
+                                <i class="fa fa-cny"></i>{{refundData.order.balance_present | currency:""}}
+                            </span>
+                            <span ng-if="refundData.order.balance_present>0 && refundData.order.bonus_present>0">
+                                +
+                            </span>
+                            <span ng-if="refundData.order.bonus_present>0">
+                                <i class="fa fa-btc"></i>{{refundData.order.bonus_present}}
+                            </span>
+						</span>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<span class="party-detail-one">
+				<span class="party-detail-one-key">订单编号:</span>
+				<span class="party-detail-one-val">{{refundData.order.number}}</span>
+			</span>
+			<span class="party-detail-one">
+				<span class="party-detail-one-key">创建时间:</span>
+				<span class="party-detail-one-val">{{refundData.order.created_at}}</span>
+			</span>
+			<span class="party-detail-one">
+				<span class="party-detail-one-key">支付时间:</span>
+				<span class="party-detail-one-val">{{refundData.order.pay_time?refundData.order.pay_time:'暂无'}}</span>
+			</span>
+		</div>
+	</div>
+</div>

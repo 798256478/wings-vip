@@ -1,0 +1,525 @@
+.container{
+    background-color: #fafafa;
+    padding-bottom: 45px;
+     cursor: pointer;
+}
+
+/***************************************公共控件******************************************/
+.unslider{
+    position: relative;
+}
+
+.unslider-nav {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+
+.unslider-nav ol li {
+    width: 8px;
+    height: 8px;
+}
+
+/***************************************商品购物车控件******************************************/
+
+.item-cart-bar{
+    background-color: #fff;
+    font-size: 16px;
+}
+
+.item-cart-bar .quantity{
+    color: #000;
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.item-cart-bar>.subtract,
+.item-cart-bar>.add{
+    padding: 3px 5px;
+    color: #0092DB;
+    cursor: pointer;
+}
+
+
+.item-cart-bar>.subtract,
+.item-cart-bar>.quantity{
+    display: none;
+}
+
+.item-cart-bar .multi-add{
+    display: inline-block;
+    margin: 2px;
+    padding: 2px 5px;
+    color: #fff;
+    background-color: #0092DB;
+    border-radius: 5px;
+    font-size: 12px;
+    height: 20px;
+}
+
+.item-cart-bar .multi-add>.quantity{
+    display: none;
+    background-color: #fff;
+    width: 14px;
+    height: 14px;
+    color: #000;
+    border-radius: 7px;
+    text-align: center;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.selected .caption .item-cart-bar>.subtract,
+.selected .caption .item-cart-bar>.quantity,
+.selected[data-specification-id] .item-cart-bar>.subtract,
+.selected[data-specification-id] .item-cart-bar>.quantity,
+.selected .item-cart-bar .multi-add>.quantity{
+    display: inline-block;
+}
+
+
+/***************************************规格列表******************************************/
+.specifications-wrapper {
+    position: fixed;
+    z-index: 1000;
+    left: 7%;
+    top: 170px;
+    width: 86%;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.specifications-header {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    font-size: 17px;
+}
+
+.specification-list {
+    list-style-type: none;
+    padding: 0 0 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.specifications-footer .close-btn {
+    display: block;
+    width: 120px;
+    height: 35px;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    margin: 15px auto 0 auto;
+    background-color: #0092DB;
+}
+
+.specification{
+    padding: 15px 5px 0 5px;
+}
+
+.specification::before{
+    display: table;
+    content: " ";
+}
+
+.specification::after{
+    display: table;
+    content: " ";
+    clear: both;
+}
+
+.specification .specification-title{
+    display: inline-block;
+    float:left;
+    font-size: 14px;
+    color: #555;
+    width: 100px;
+}
+
+.specification .price-bar {
+    display: inline-block;
+    float:left;
+    width: 90px;
+    margin-top: 0;
+}
+
+.specification .item-cart-bar{
+    position: static;
+    float: right;
+}
+
+
+/*************************************购物车Bar******************************************/
+
+.cart-mask,
+.main-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height:100%;
+    width:100%;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.main-mask{
+    z-index: 500;
+}
+
+.cart-bar{
+    z-index: 100;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 45px;
+    background-color: rgba(0,0,0,0.75);
+    color: #fff;
+}
+
+.cart-bar .menu-icon,
+.cart-bar .cart-icon{
+    font-size: 28px;
+    line-height: 45px;
+    padding: 0 10px;
+}
+
+.cart-bar>.split{
+    font-size: 20px;
+    position: relative;
+    top: -4px;
+    color: #aaa;
+}
+
+.cart-bar .total-price i,
+.cart-bar .total-bonus-require i{
+    font-size:17px;
+}
+
+.cart-bar .total-price .value,
+.cart-bar .total-bonus-require .value{
+    font-size:20px;
+}
+
+.cart-bar .total-bonus-require i{
+    position: relative;
+    top: -2px;
+}
+
+.cart-bar .total-price-and-bonus{
+    font-size: 18px;
+    padding: 0 2px;
+    color: #777;
+}
+
+.cart-bar .total-price.null-value,
+.cart-bar .total-bonus-require.null-value{
+    color: #777;
+}
+
+.cart-bar .order-submit{
+    float: right;
+    height:45px;
+    width: 100px;
+    background-color: 0092DB;
+    color: #FFF;
+    font-size: 19px;
+    line-height: 45px;
+    text-align: center;
+}
+
+/*************************************购物车菜单******************************************/
+
+.shop-menu{
+    position: absolute;
+    bottom: 45px;
+    left: 0px;
+    width: 50%;
+    background-color: rgba(0,0,0,0.75);
+    padding: 20px 40px 0 20px;
+    color: #fff;
+    font-size: 15px;
+}
+
+.shop-menu>div{
+    margin-bottom: 10px;
+    padding-right: 40px;
+}
+
+.shop-menu a{
+    color: #fff;
+}
+
+.shop-menu a:visited {
+    color: #fff;
+}
+
+.shop-menu .home{
+    font-size: 17px;
+}
+
+.shop-menu .split{
+    border-top: 1px solid #fff;
+}
+
+/*************************************购物车列表******************************************/
+
+.cart-list-wrapper{
+    position: absolute;
+    bottom: 45px;
+    left: 0px;
+    width: 100%;
+}
+
+.cart-list-wrapper .cart-header{
+    padding: 10px 12px;
+    height: 40px;
+    background-color: #ddd;
+}
+
+.cart-list-wrapper .cart-header>h3{
+    float: left;
+    height: 20px;
+    border-left: solid 4px #0092DB;
+    color: #444;
+    margin: 0;
+    font-size: 15px;
+    padding: 3px 7px;
+}
+
+.cart-list-wrapper .cart-header>.clear-btn{
+    float: right;
+    height: 20px;
+    color: #555;
+}
+
+.cart-list-wrapper .cart-list{
+    margin: 0;
+    background-color: #fff;
+    padding: 5px 10px;
+}
+
+.cart-list .cart-item{
+    font-size: 15px;
+    padding: 15px 5px;
+    border-top: solid 1px #aaa;
+}
+
+.cart-list .cart-item:first-child{
+    border-top:none;
+}
+
+.cart-list .name{
+    color: #555;
+    display: inline-block;
+    width: 175px;
+}
+
+.cart-list .price>i{
+    padding-right: 3px;
+    font-size:13px;
+}
+
+.cart-list .price-and-bonus{
+    color: #aaa;
+    padding: 0 4px;
+}
+
+.cart-list .bonus-require>i{
+    padding-right: 3px;
+    position: relative;
+    top: -1px;
+    font-size:13px;
+}
+
+.cart-list .item-cart-bar{
+    position: static;
+    float: right;
+}
+
+/*******************************商品分类******************************************/
+.showcase {
+    padding: 5px;
+}
+
+.showcase .header {
+    border-bottom: 1px solid #ccc;
+    margin: 5px 7px;
+    padding-bottom: 4px;
+}
+
+.showcase .header .fa-stack {
+    padding: 0 5px;
+    color: #888;
+}
+
+.showcase .header .title {
+    display: inline-block;
+    padding: 5px;
+    font-size: 16px;
+    vertical-align: bottom;
+    color: #444;
+    
+}
+
+.showcase .header .title_split{
+    display: inline-block;
+    position: relative;
+    top: 6px;
+    height: 14px;
+    border-left: 1px solid #aaa;
+}
+
+.showcase .header .title_en {
+    display: inline-block;
+    position: relative;
+    padding: 5px;
+    font-size: 14px;
+    top: 4px;
+    color: #777;
+}
+
+.showcase .item{
+    position: relative;
+    min-height: 1px;
+    float: left;
+    width: 100%;
+    padding: 5px;
+}
+
+.showcase .item .thumbnail{
+    border-radius:0;
+    margin-bottom:0;
+}
+
+.showcase .item .caption{
+    position: relative;
+    padding: 4px 4px 0 4px;
+}
+
+.showcase .item-title{
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-size:13px;
+}
+
+.showcase .sub-title{
+    display: none;
+    margin-top:5px;
+    margin-bottom: 0;
+    color: #aaa;
+    font-size:13px;
+}
+
+.showcase .caption .price-bar {
+    margin-top: 7px;
+}
+
+.showcase .price-and-bonus{
+    color: #aaa;
+}
+
+.showcase .bonus-require>i{
+    position: relative;
+    top: -1px;
+}
+
+.showcase .caption .item-cart-bar{
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+}
+
+
+/***************************************双列橱窗******************************************/
+.showcase.double .item{
+    width: 50%;
+}
+
+/***************************************详情橱窗******************************************/
+.showcase.details .item>.thumbnail{
+    height: 80px;
+}
+
+.showcase.details .item-img{
+    float: left;
+    margin-right: 8px;
+    height: 70px;
+    width: 70px;
+}
+
+.showcase.details .item-title{
+    margin-top: 2px;
+}
+
+.showcase.details .sub-title{
+    display: block;
+}
+
+/***************************************商品页******************************************/
+
+.item-page{
+    background-color: #ddd;
+}
+
+.item-page .item-images img {
+    width:100%;
+    height:100vw;
+}
+
+.item-page .group.info{
+    margin-top: 0;
+    position: relative;
+}
+
+.item-page .info .item-title{
+    font-size: 16px;
+    border: none;
+    margin: 0 0 7px 0;
+    color:#000;
+}
+
+.item-page .info .sub-title{
+    margin: 0;
+    font-size: 14px;
+    color: #777;
+}
+
+.item-page .info .price-bar{
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.item-page .info .item-cart-bar {
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+    font-size: 18px;
+}
+
+.item-page .group{
+    margin: 5px -15px;
+    padding: 10px 15px;
+    background-color: #fff;
+}
+
+.item-page .group>h3{
+    font-size: 16px;
+    margin: 0;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+    color: #555;
+}
+
+.item-page .specification-list {
+    border: none;
+    padding: 0;
+}
+
+.item-page .specification .specification-title,
+.item-page .specification .price-bar {
+    width: 120px
+}
+
+.item-page .details-content{
+    margin: 10px 5px;
+}
+

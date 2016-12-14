@@ -1,0 +1,83 @@
+<!--<link rel="stylesheet" type="text/css" href="/marketer/css/health.css">-->
+
+<style>
+	.screen {
+		padding-left: 20px;
+	}
+	.noData{
+		font-size: 30px;
+		width: 200px;
+		margin: 50px auto;
+		display: block;
+		color: #dfdfdf;
+	}
+</style>
+
+<div class="row"  ng-controller="SyncController">
+	<div class="col-md-12">
+		<rd-widget>
+			<rd-widget-header title="所有记录">
+			</rd-widget-header>
+			<rd-widget-body classes="auto no-padding">
+				<div class="row">
+					<div class="col-md-12" style="margin-top: 15px;">
+						<form class="form form-horizontal screen">
+							<div class="checkbox ">
+								<input type="checkbox" ng-model="screen.isRepair" ng-true-value="true" ng-false-value="false" >
+								显示已同步
+							</div>
+						</form>
+					</div>
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+							<tr>
+								<th>订单编号</th>
+								<th>卡号</th>
+								<th>时间</th>
+								<th>状态码</th>
+								<th>错误码</th>
+								<th>状态</th>
+								<th>操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="a in syncFailList" on-finish-render>
+								<td>{{a.order.number}}</td>
+								<td>{{a.card.card_code}}</td>
+								<td>{{a.time}}</td>
+								<td>{{a.http_code}}</td>
+								<td>{{a.error_code}}</td>
+								<td>{{a.state === 'SUCCEED' ? '同步成功' : '同步失败'}}</td>
+								<td><a href="" ng-if="a.state === 'FAIL'" ng-click="againSync(a.id)">重新发送</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<a href="" ng-if="a.state === 'FAIL'" ng-click="syncSuccess(a.id)">已解决</a>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+						<div ng-show="syncFailList.length==0">
+							<span class="noData">暂无数据</span>
+						</div>
+					</div>
+					<div class="table-page col-md-6 col-md-offset-3">
+						<paging
+								page="pages.nowPage"
+								page-size="15"
+								total="pages.total"
+								scroll-top="true"
+								hide-if-empty="true"
+								show-prev-next="true"
+								text-next="下一页"
+								text-prev="上一页"
+								text-title-page="第 {page} 页"
+								text-title-next="下一页"
+								text-title-prev="上一页">
+						</paging>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+</div>
+
+

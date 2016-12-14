@@ -1,0 +1,281 @@
+<link rel="stylesheet" href="/marketer/css/order_details.css">
+
+<div class="row" id="order" ng-controller="OrderDetailsController">
+	<div class="col-md-12 details">
+		<div class="col-md-12 state-div party-div">
+			<div ng-class="{'state-going-div':order.state=='NOT_PAY','state-complete-div':order.state=='PAY_SUCCESS'||
+				order.state=='DELIVERED'||order.state=='FINISH'}">
+				<span class="state-span">买家下单</span>
+				<span class="connect-line">.................................................</span>
+			</div>
+			<div ng-class="{'state-going-div':order.state=='PAY_SUCCESS','state-dns-div':order.state=='NOT_PAY',
+				'state-complete-div':order.state=='DELIVERED'||order.state=='FINISH'}">
+				<span class="state-span">买家付款</span>
+				<span class="connect-line">..................................................</span>
+			</div>
+			<div ng-class="{'state-going-div':order.state=='DELIVERED','state-complete-div':order.state=='FINISH',
+				'state-dns-div':order.state=='NOT_PAY'||order.state=='PAY_SUCCESS'}">
+				<span class="state-span">卖家发货</span>
+				<span class="connect-line">..................................................</span>
+			</div>
+			<div class="state-finish-div" ng-class="{'state-dns-div':order.state=='NOT_PAY'||order.state=='PAY_SUCCESS'||order.state=='DELIVERED',
+				'state-complete-div':order.state=='FINISH'}">
+				<span class="state-span">订单完成</span>
+			</div>
+		</div>
+		<!--状态-->
+		<div class="col-md-12 state-text-div party-div">
+			<div class="state-text-one">
+				<span class="state-icon">
+					<i ng-if="order.state=='FINISH'" class="fa fa-check-circle-o"></i>
+					<i ng-if="order.state!='FINISH'" class="fa fa-sign-out"></i>
+				</span>
+				<span class="state-text-key">订单状态:</span>
+				<span class="state-text-val">{{orderState[order.state]}}</span>
+			</div>
+			<div class="state-text-two">
+				<span class="state-text-explain">
+					如果卖家表示未收到货或者收到的货物有问题,请及时联系买家积极处理,友好协商。
+				</span>
+			</div>
+		</div>
+		<!--配送地址-->
+		<div class="col-md-12 address-div party-div" ng-if="order.is_need_delivery">
+			<div class="address-title-div party-title-div">
+				<span class="address-title-span ">配送信息</span>
+			</div>
+			<div class="address-detail-div party-detail-div">
+				<span class="address-info">
+					<span class="address-info-key party-detail-one-key">收货地址:</span>
+					<span class="address-info-val party-detail-one-val">{{order.address}}</span>
+				</span>
+				<span class="address-company">
+					<span class="address-company-key party-detail-one-key">物流信息:</span>
+					<span class="address-company-val party-detail-one-val" ng-if="order.express_type=='SELF'">
+						自己派送
+					</span>
+					<span class="address-company-val party-detail-one-val" ng-if="order.express_type=='EXPRESS'">
+						{{order.express_company}}&nbsp;&nbsp;&nbsp;&nbsp;{{order.express_code}}
+					</span>
+					<span class="address-company-val party-detail-one-val" ng-if="order.express_type!='SELF' && order.express_type!='EXPRESS'">
+						暂无
+					</span>
+				</span>
+			</div>
+		</div>
+		<!--支付方式-->
+		<div class="col-md-12 pay-method-div party-div" ng-if="order.order_payments.length>0">
+			<div class="pay-method-title party-title-div">
+				<span class="pay-method-span ">支付方式</span>
+			</div>
+			<div class="pay-detail-div party-detail-div">
+				<div ng-repeat="a in order.order_payments" on-finish-render>
+					<span class="party-detail-one" ng-if="a.type!='BONUS'">
+						<span class="party-detail-one-key">{{a.name}}:</span>
+						<span class="party-detail-one-val">{{a.amount | currency:""}}元</span>
+					</span>
+				</div>
+				<span class="party-detail-one" ng-if="order.total.bonus>0">
+						<span class="party-detail-one-key">积分:</span>
+						<span class="party-detail-one-val">
+							{{order.total.bonus}}
+							<small ng-if="order.total.deduction.bonus">
+								(其中{{order.total.deduction.bonus}}积分抵扣{{order.total.deduction.price}}元)
+							</small>
+						</span>
+				</span>
+			</div>
+		</div>
+		<!--订单详情-->
+		<div class="col-md-12 order-detail-div party-div">
+			<div class="pay-method-title party-title-div">
+				<span class="pay-method-span ">订单详情</span>
+			</div>
+			<div class=" party-detail-div">
+				<table class="table">
+					<thead>
+					<tr>
+						<!--<th ng-if="suit">套装</th>-->
+						<th>商品</th>
+						<th>单价</th>
+						<th>数量</th>
+						<th>买家</th>
+						<th>类型</th>
+						<th>状态</th>
+						<th>渠道</th>
+						<th>实收款</th>
+						<th ng-if="a.state!='NOT_PAY'&& a.state!='CLOSED' &&
+						(order.balance_present>0 || order.bonus_present>0)">赠送</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr class="one-order-content" ng-repeat="a in order.order_details" on-finish-render>
+						<!--<td class="one-order-merger-td suit" ng-if="$first && suit"-->
+						    <!--rowspan="{{order.order_details.length}}">-->
+							<!--<div>-->
+								<!--<img ng-src="{{suit.commodity.image.length>0 ? suit.commodity.image[0] : '/common/imgs/noimg.png'}}" alt="">-->
+								<!--<div class="caption">-->
+									<!--<div>{{suit.commodity.title}}</div>-->
+									<!--<div>-->
+									<!--<span ng-if="suit.price>0">-->
+                                        <!--<i class="fa fa-cny"></i>{{suit.price | currency:""}}-->
+	                                <!--</span>-->
+	                                <!--<span ng-if="suit.price>0 && suit.bonus_require>0">-->
+	                                    <!--+-->
+	                                <!--</span>-->
+	                                <!--<span ng-if="suit.bonus_require>0">-->
+	                                    <!--<i class="fa fa-btc"></i>{{suit.bonus_require}}-->
+	                                <!--</span>-->
+									<!--</div>-->
+									<!--<div>×{{order.suit_amount}}</div>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</td>-->
+						<td class="clearfix commodity-image">
+							<div class="commodity-img-div">
+								<img ng-src="{{a.commodity_specification_history.commodity_history.image.length>0 ? a.commodity_specification_history.commodity_history.image[0]:'/common/imgs/noimg.png'}}"
+								     alt="">
+							</div>
+							<div class="commodity-name-div">
+								<span class="commodity-name">
+									{{a.commodity_specification_history.commodity_history.name}}
+									<span class="refund" >
+										{{a.is_refund && a.refund.length>0 ?'('+ refundState[a.refund[0].state]+')':''}}
+									</span>
+								</span>
+								<span class="commodity-specification-span" ng-if="a.commodity_specification_history.name">
+									<span class="commodity-specification-key">规格:</span>
+									<span class="commodity-specification-val">{{a.commodity_specification_history.name}}</span>
+								</span>
+							</div>
+						</td>
+						<td class="price-td">
+								<span ng-if="a.commodity_specification_history.price>0">
+                                    <i class="fa fa-cny"></i>{{a.commodity_specification_history.price | currency:""}}
+                                </span>
+                                <span ng-if="a.commodity_specification_history.price>0 && a.commodity_specification_history.bonus_require>0">
+                                    +
+                                </span>
+                                <span ng-if="a.commodity_specification_history.bonus_require>0">
+                                    <i class="fa fa-btc"></i>{{a.commodity_specification_history.bonus_require}}
+                                </span>
+						</td>
+						<td class="amount-td">{{a.amount}}</td>
+
+						<td class="one-order-merger-td" ng-if="$first" rowspan="{{order.order_details.length}}">
+							{{order.card.nickname}}({{order.card.card_code}})
+						</td>
+						<td class="one-order-merger-td" ng-if="$first" rowspan="{{order.order_details.length}}">
+							{{orderType[order.type]}}
+						</td>
+						<td class="one-order-merger-td" ng-if="$first" rowspan="{{order.order_details.length}}">
+							{{orderState[order.state]}}
+						</td>
+						<td class="one-order-merger-td" ng-if="$first" rowspan="{{order.order_details.length}}">
+							{{orderChannel[order.channel]}}
+						</td>
+						<td class="one-order-merger-td" ng-if="$first "
+						    rowspan="{{order.order_details.length}}">
+								<span ng-if="order.state!='NOT_PAY'&& order.state!='CLOSED'">
+									<span ng-if="order.total.price>0">
+	                                    <i class="fa fa-cny"></i>{{order.total.price | currency:""}}
+	                                </span>
+	                                <span ng-if="order.total.price>0 && order.total.bonus>0">
+	                                    +
+	                                </span>
+	                                <span ng-if="order.total.bonus>0">
+	                                    <i class="fa fa-btc"></i>{{order.total.bonus}}
+	                                </span>
+								</span>
+						</td>
+						<td class="one-order-merger-td " ng-if="$first && a.state!='NOT_PAY'&& a.state!='CLOSED' &&
+						(order.balance_present>0 || order.bonus_present>0)" rowspan="{{order.order_details.length}}">
+							<span ng-if="order.balance_present>0">
+                                <i class="fa fa-cny"></i>{{order.balance_present | currency:""}}
+                            </span>
+                            <span ng-if="order.balance_present>0 && order.bonus_present>0">
+                                +
+                            </span>
+                            <span ng-if="order.bonus_present>0">
+                                <i class="fa fa-btc"></i>{{order.bonus_present}}
+                            </span>
+						</td>
+					</tr>
+					<!--没有商品-->
+					<tr class="one-order-content" ng-if="order.order_details.length<=0">
+						<td class="clearfix commodity-image">
+							<div class="commodity-img-div">
+								<img src="/common/imgs/noimg.png" alt="">
+							</div>
+							<div class="commodity-name-div">
+								<span class=" no-commodity-name">{{order.body}}</span>
+							</div>
+						</td>
+						<td class="price-td">
+							<span ng-if="order.money_pay_amount>0">
+                                <i class="fa fa-cny"></i>{{order.money_pay_amount | currency:""}}
+                            </span>
+                            <span ng-if="order.money_pay_amount>0 && order.bonus_pay_amount>0">
+                                +
+                            </span>
+                            <span ng-if="order.bonus_pay_amount>0">
+                                <i class="fa fa-btc"></i>{{order.bonus_pay_amount}}
+                            </span>
+						</td>
+						<td class="amount-td">1</td>
+						<td class="one-order-merger-td">{{order.card.nickname}}({{order.card.card_code}})</td>
+						<td class="one-order-merger-td">
+							{{orderType[order.type]}}
+						</td>
+						<td class="one-order-merger-td">
+							{{orderState[order.state]}}
+						</td>
+						<td class="one-order-merger-td">
+							{{orderChannel[order.channel]}}
+						</td>
+						<td class="one-order-merger-td">
+							<span ng-if="a.state!='NOT_PAY'&& a.state!='CLOSED'">
+								<span ng-if="order.money_pay_amount>0">
+                                    <i class="fa fa-cny"></i>{{order.money_pay_amount | currency:""}}
+                                </span>
+                                <span ng-if="order.money_pay_amount>0 && order.bonus_pay_amount>0">
+                                    +
+                                </span>
+                                <span ng-if="order.bonus_pay_amount>0">
+                                    <i class="fa fa-btc"></i>{{order.bonus_pay_amount}}
+                                </span>
+							</span>
+						</td>
+						<td class="one-order-merger-td operation-td" ng-if="a.state!='NOT_PAY'&& a.state!='CLOSED' &&
+						(order.balance_present>0 || order.bonus_present>0)">
+							<span >
+								<span ng-if="order.balance_present>0">
+                                    <i class="fa fa-cny"></i>{{order.balance_present | currency:""}}
+                                </span>
+                                <span ng-if="order.balance_present>0 && order.bonus_present>0">
+                                    +
+                                </span>
+                                <span ng-if="order.bonus_present>0">
+                                    <i class="fa fa-btc"></i>{{order.bonus_present}}
+                                </span>
+							</span>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<span class="party-detail-one">
+					<span class="party-detail-one-key">订单编号:</span>
+					<span class="party-detail-one-val">{{order.number}}</span>
+				</span>
+				<span class="party-detail-one">
+					<span class="party-detail-one-key">创建时间:</span>
+					<span class="party-detail-one-val">{{order.created_at}}</span>
+				</span>
+				<span class="party-detail-one">
+					<span class="party-detail-one-key">支付时间:</span>
+					<span class="party-detail-one-val">{{order.pay_time?order.pay_time:'暂无'}}</span>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

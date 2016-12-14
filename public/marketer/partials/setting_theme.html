@@ -1,0 +1,64 @@
+<style media="screen">
+    .customer-color>div{
+        padding: 0;
+        margin-bottom: 10px;
+    }
+    .customer-color>div>span{
+        font-weight: 600;
+        text-align: right;
+        padding: 0;
+        line-height: 2;
+    }
+    .small{
+        padding-top: 10px;
+        padding-left: 4px;
+    }
+    .page-header {
+        margin-top: 10px;
+    }
+</style>
+<div class="form-group">
+    <div class="col-md-10">
+        <h5 class="page-header">模板选择</h5>
+        <div class="clearfix col-md-offset-1 customer-color">
+            <div class="theme" ng-repeat="a in themeList" ng-click="setTheme(a.key);"
+                ng-class="{'active':a.key == setting.value.key}">
+                <div class="theme-screenshot">
+                    <img ng-src="{{a.image}}" alt="" />
+                </div>
+                <span class="more-details">{{a.texts.SLOGAN.default}}</span>
+                <h3 class="theme-title">{{a.title}}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-10">
+        <h5 class="page-header">颜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色</h5>
+        <div class="clearfix col-md-offset-1 customer-color">
+            <div class="col-md-6" ng-repeat="(key, value) in setting.value.colors">
+                <span class="col-md-2">{{themeList[setting.value.selIndex].colors[key].title}}</span>
+                <div class="col-md-2">
+                    <input kendo-color-picker ng-model="setting.value.colors[key]" class="form-control" style="width: 100px"
+                        k-buttons="false" k-preview="true" k-input="true" />
+                </div>
+                <div class="col-md-4 small">
+                    {{themeList[setting.value.selIndex].colors[key].description}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-10">
+        <h5 class="page-header">自定义文本</h5>
+        <div class="clearfix col-md-offset-1 customer-color">
+            <div class="col-md-12" ng-repeat="(key, value) in setting.value.texts">
+                <span class="col-md-1">{{themeList[setting.value.selIndex].texts[key].title}}</span>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" ng-model="setting.value.texts[key]">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

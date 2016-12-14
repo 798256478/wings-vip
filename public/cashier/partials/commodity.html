@@ -1,0 +1,21 @@
+<div>
+     <div class="commodity">
+        <div  class="left"><img src="{{commodity.image.length>0?commodity.image[0]:'/common/imgs/noimg.png'}}"></div>
+         <div class="center">
+            <strong class="name" ng-bind="commodity.name"></strong>
+            <small class="code" ng-bind="commodity.code"></small>
+         </div>
+     </div>
+     <div class="clear"></div>
+     <div class="specification" ng-repeat="model in commodity.specifications"  >
+        <div class="name" ng-bind="model.name.length>0?model.name:''"></div>
+        <div class="price">￥<span ng-bind="model.price"></span>+<span ng-bind="model.bonus_require"></span></div>
+        <div class="quantity" ng-bind="model.quantity"></div>
+        <div class="button-group" >
+            <i class="fa-minus fa  " ng-click="reduction(model.id) " ng-show="carts[model.id].num>0" ></i>
+            <span ng-bind="carts[model.id].num>0?carts[model.id].num:''"></span>
+            <i class="fa-plus fa " ng-click="add(commodity,model)"></i>
+        </div>
+    </div>
+</div>
+

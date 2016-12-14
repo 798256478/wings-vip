@@ -1,0 +1,88 @@
+<style>
+	.widget .widget-body.no-padding{
+		width: 100%;
+	}
+
+	.control-label{
+		margin:5px 0 0 7px;
+	}
+
+	.widget-body{
+		position: relative;
+	}
+
+	.widget-body .table-cont{
+		position: absolute;
+		height: 100%;
+		width: 100%
+	}
+
+	.noInfo{
+		position: relative;
+		top: -80px;
+		height: 80%;
+    	display: -webkit-box;
+    	width: 100%;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+    	color: #ccc;
+    	font-size: 30px; 	
+	}
+
+</style>
+<div class="row" id="good_code" ng-controller="ReservationController">
+	<div class="col-md-12">
+		<rd-widget>
+			<div class="col-md-12" style="margin: 15px 5px;padding-left:12px">
+				<div class="col-md-2 pull-right">
+					<input type="text" placeholder="查找" class="form-control input-sm"
+				       ng-model="searchValue"
+				       ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}"
+				       ng-change="search(searchValue)"/>
+				</div>
+			</div>
+			<rd-widget-body classes="no-padding auto-nohead">
+				<div class="row table-cont">
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+							<tr>
+								<th>条码</th>
+								<th>姓名</th>
+								<th>性别</th>
+								<th>手机号</th>
+								<th>预约时间</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="a in reservationList" on-finish-render>
+								<td><span >{{a.barcode.code}}</span></td>
+								<td>{{a.name}}</td>
+								<td>{{a.sex==0?'女':'男'}}</td>
+								<td><span >{{a.phone}}</span></td>
+								<td>{{a.time}}</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div ng-if="total<=0" class="noInfo">暂无预约信息</div>
+					<div class="table-page col-md-6 col-md-offset-3">
+						<paging
+								page="filter.nowPage"
+								page-size="15"
+								total="total"
+								scroll-top="true"
+								hide-if-empty="true"
+								show-prev-next="true"
+								text-next="下一页"
+								text-prev="上一页"
+								text-title-page="第 {page} 页"
+								text-title-next="下一页"
+								text-title-prev="上一页">
+						</paging>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+</div>

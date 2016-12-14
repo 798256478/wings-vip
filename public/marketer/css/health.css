@@ -1,0 +1,93 @@
+.item-module{
+    
+}
+.search-div{
+    height: 34px;
+    width: 100%;
+    vertical-align: middle;
+    line-height: 34px;
+    /*margin-bottom: 15px;*/
+}
+
+
+.search-div *{
+    float: left;
+}
+.search-div .icon{
+    color: #337AB7;
+    font-size: 26px;
+    cursor: pointer;
+    widows: 50px;
+}
+.item-module .rd-widget-body>div{
+    margin-bottom: 30px;
+}
+.item-module .module-div{
+    margin-bottom: 20px;
+}
+
+.item-module h4{
+    display: inline-block;
+    border-bottom: 1px solid #D5D7DE;
+    width: 100%;
+    font-size: 22px;
+    padding-bottom: 10px;
+}
+
+/*.item-module h4 + *{
+    margin-left: 20px;
+}*/
+.item-module h4 a {
+    cursor: pointer;
+    font-size:  14px;
+    margin-left: 10px;
+}
+
+.item-module h4 .tips {
+    font-size:  12px;
+    margin-left: 10px;
+    color: red;
+}
+.item-module table td a {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.item-module table td a:first-child {
+    margin-left: 0px;
+}
+
+
+.item-module .submit-button-div{
+    margin-left: 25px;
+}
+
+.left15{
+    margin-left: 15px;
+}
+
+.left25{
+    margin-left: 25px;
+}
+
+.right15{
+    margin-right: 15px;
+}
+
+.right25{
+    margin-right: 25px;
+}
+
+.float-right{
+    float: right;
+}
+
+.experiment .item-module form{
+   margin-left: 20px;
+}
+.experiment .item-module .site-title>div{
+    margin-bottom: 0px;
+}
+
+
+

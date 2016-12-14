@@ -1,0 +1,30 @@
+#event .list-group-item.title {
+    font-size: 14px;
+    background-color: #eee;
+}
+#event .list-group {
+    margin-bottom: 0;
+}
+#event .list-group button {
+    margin-left: 0;
+    padding-left: 10%;
+}
+#event table>thead>tr:first-child>th {
+    border-bottom-width: 1px;
+    text-align: center;
+}
+#event table>thead>tr:last-child>th {
+    border-bottom-width: 2px;
+    text-align: left;
+}
+#event .list-group>.title>span{
+    width: 50%;
+    display: inline-block;
+}
+#event .list-group>.title>a{
+    margin-left: 44%;
+    font-size: 16px;
+}
+#event .form-group .table{
+    margin: 15px;
+}

@@ -1,0 +1,54 @@
+
+<div class="writeoff-wapper" ng-controller="WriteOffController">
+    <div class="content-none"  ng-if="!cardInfo||(cardInfo.tickets.length==0&&cardInfo.properties.length==0)">
+        <div class="icon">
+            <span class="glyphicon glyphicon-piggy-bank" ></span>
+        </div>
+        尚无可核销的优惠券、卡券~
+    </div>
+    <div class="property-group" ng-if="cardInfo.properties.length>0">
+        <div class="gift f-clear" ng-click="write_off('property',property.id,property.property_template.title)" ng-repeat="property in cardInfo.properties">
+            <div class="left">
+                <small class="type">卡</small>
+                <small class="date-info" ng-bind="property.property_template.expiry_date"></small>
+                <strong class="title" ng-bind="property.property_template.title"></strong>
+                <span class="sub-title">剩 <span  ng-bind="property.quantity"></span></span>
+            </div>
+            <div class="right {{property.property_template.color}}">
+                <span class="action">核销</span>
+                <div class="point p1"></div>
+                <div class="point p2"></div>
+                <div class="point p3"></div>
+                <div class="point p4"></div>
+                <div class="point p5"></div>
+                <div class="point p6"></div>
+                <div class="point p7"></div>
+                <div class="point p8"></div>
+            </div>
+        </div>
+    </div>
+    <div class="gift-group" ng-if="cardInfo.tickets.length>0">
+        <div class="gift f-clear " ng-click="write_off('ticket',ticket.id,ticket.ticket_template.title)" ng-repeat="ticket in cardInfo.tickets">
+            <div class="left"  >
+                <small class="type" ng-bind="ticket.ticket_template.card_type"></small>
+                <small class="date-info" >
+                    <small ng-bind="ticket.ticket_template.begin_display_time"></small>-
+                    <small ng-bind="ticket.ticket_template.end_display_time"></small>
+                </small>
+                <strong class="title" ng-bind="ticket.ticket_template.title"></strong>
+                <span class="sub-title" ng-bind="ticket.ticket_template.sub_title"></span>
+            </div>
+            <div class="right {{ticket.ticket_template.color}}">
+                <span class="action">核销</span>
+                <div class="point p1"></div>
+                <div class="point p2"></div>
+                <div class="point p3"></div>
+                <div class="point p4"></div>
+                <div class="point p5"></div>
+                <div class="point p6"></div>
+                <div class="point p7"></div>
+                <div class="point p8"></div>
+            </div>
+        </div>
+    </div>
+</div>

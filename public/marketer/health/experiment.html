@@ -1,0 +1,33 @@
+<link rel="stylesheet" type="text/css" href="/marketer/css/health.css">
+<div class="row experiment"   ng-controller="ExperimentController">
+    <div class="col-md-2">
+        <rd-widget>
+            <rd-widget-header title="实验">
+                <a href="" ng-click="experiment_module_export()"><i class="fa fa-arrow-circle-down  fa-2x"></i></a>
+                <a href="" ng-click="experiment_module_add()"><i class="fa fa-plus fa-2x"></i></a>
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <!--<th>样本类别</th>-->
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                     <tbody>
+                        <tr ng-repeat="experiment in  experiments" on-finish-render>
+                            <td ><span ng-bind="experiment.name"></span></td>
+                            <!--<td ><span ng-bind="experiment.sampleType"></span></td>-->
+                            <td width="50px"><a  href="" ng-click="experiment_module_edit(experiment)">修改</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-md-10 item-module">
+        <div ng-include="'health/experiment_add.html'"  ng-show="type == 'hand'"></div>
+        <div ng-include="'health/config.html'"  ng-show="type == 'export'"></div>
+    </div>
+</div>

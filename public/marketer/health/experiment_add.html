@@ -1,0 +1,344 @@
+
+<rd-widget>
+    <rd-widget-header title="添加">
+    </rd-widget-header>
+    <rd-widget-body classes="" > 
+
+        <div class="module-div">
+            <h4>实验信息 
+                <a  ng-if="focus != 'experiment'"  ng-click="experiment_module_edit(current_experiment)">修改</a>
+            </h4>
+            <form name="form.experiment" class="form-inline" ng-if="focus == 'experiment'" >
+                <div class="form-group">
+                    <label class="control-label">实验名称</label>
+                    <input type="text" class="form-control" name="name" ng-model="current_experiment.name" placeholder="实验名称"
+                        ng-maxlength=50 required>
+                </div>
+                <div  ng-show="form.experiment.name.$invalid && !form.experiment.name.$pristine" class="help-block form-group">
+                        实验名称必填
+                </div>
+                <div class="form-group">
+                    <label class="control-label">样本类别</label>
+                    <input type="text" class="form-control" name="sampleType" ng-model="current_experiment.sampleType" placeholder="实验名称"
+                        ng-maxlength=50 required>
+                </div>
+                 <div ng-show="form.experiment.sampleType.$invalid && !form.experiment.sampleType.$pristine" class="help-block form-group">
+                        样本类别必填
+                 </div>
+                 <div class="form-group">
+                    <label class="control-label">实验类型</label>
+                    <select ng-model="current_experiment.type"  class="form-control" >
+                        <option value="score">计算分数</option>
+                        <option value="mean">意义</option>
+                    </select>
+                </div>
+                <div class="form-group submit-button-div">
+                    <a class="btn" ng-click="experiment_save(0)">保存</a>
+                    <a class="btn"  ng-click="experiment_save(1)">保存并编辑项目</a>
+                </div>
+            </form>
+            <form  class="form-inline" ng-if="focus != 'experiment'">
+                <div class="form-group">
+                    <label class="control-label">实验名称</label>&nbsp;&nbsp;
+                    <span ng-bind="current_experiment.name"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="form-group">
+                    <label class="control-label">样本类别</label>&nbsp;&nbsp;
+                    <span >{{current_experiment.sampleType == 'score'?'计算分数':'意义'}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="form-group">
+                    <label class="control-label">实验类别</label>&nbsp;&nbsp;
+                    <span ng-bind="current_experiment.type"></span>
+                </div>
+            </form>
+
+        </div>
+        <div class="module-div" ng-show="focus == 'project' || focus == 'experiment' ">
+            <h4 >项目信息
+                    <a ng-show="focus =='project'" ng-click="project_save(0)">保存</a>
+                    <a ng-show="current_experiment.id !=0 " ng-click="project_module_add(0,'')" >添加父级</a>
+            </h4>
+            <form name="form.project" class="form-inline" style="margin-bottom:5px"  ng-show="focus =='project'">
+                <div class="form-group" ng-if="current_project.parent != 0 && current_project.parent != null "> 
+                    <label class="control-label">父&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span ng-bind="current_project.parent_name"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="form-group">
+                    <label class="control-label ">项目名称</label>
+                    <input type="text" class="form-control" name="projectname" ng-model="current_project.name" placeholder="项目名称"
+                        required>
+                </div>
+                <div ng-show="form.project.projectname.$invalid && !form.project.projectname.$pristine" class="help-block form-group">
+                        SNP编号必填
+                </div>
+                <div class="form-group">
+                    <label class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;排&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;序</label>
+                    <input type="text" class="form-control" name="order" ng-model="current_project.order" placeholder="排序"
+                        required>
+                </div>
+                <div ng-show="form.project.order.$invalid && !form.project.order.$pristine" class="help-block form-group">
+                    位点必填
+                </div>
+            </form>
+            <div class="left15 right25">
+                <table class="table" >
+                    <thead>
+                        <tr>
+                            <th>父级</th>
+                            <th width="300px">子级名称</th>
+                            <th width="150px">子级位点个数</th>
+                            <th width="100px">子级排序</th>
+                            <th width="200px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="project in current_experiment.projects" on-finish-render ng-show="current_experiment.projects.length > 0">
+                            <td>
+                                <span ng-bind="project.name"></span>
+                                <a  ng-click="project_module_edit(project,'')">修改</a>
+                                <a  ng-click="project_module_add(project.id,project.name)" >添加子级</a>
+                                <a  ng-click="risk_module_add(project)">风险程度</a>
+                            </td>
+                            <td colspan="4" width="750px" >
+                                <table>
+                                    <tr ng-repeat="subProject in project.subs" ng-if="project.subs.length > 0">
+                                        <td width="300px"><span ng-bind="subProject.name"></span></td>
+                                        <td width="150px"><span ng-bind="subProject.sitecount"></span></td>
+                                        <td width="100px"><span ng-bind="subProject.order"></span></td>
+                                        <td width="200px">
+                                            <a  ng-click="project_module_edit(subProject,project.name)">修改</a>
+                                            <a  ng-click="site_module_add(subProject,project.name)">编辑位点</a>
+                                            <a  ng-click="risk_module_add(subProject)">风险程度</a>
+                                        </td>
+                                    </tr> 
+                                    <tr  ng-if="project.subs.length == 0">
+                                        <td width="300px">无</td>
+                                        <td width="150px">无</td>
+                                        <td width="100px">无</td>
+                                        <td width="200px">
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                            </td>
+                        </tr>
+                        <tr  ng-show="!current_experiment.projects||current_experiment.projects.length == 0">
+                            <td colspan="5">暂无项目信息</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+        
+        <div class="module-div" ng-show=" focus == 'site'">
+            <h4>
+                <span ng-bind="current_project.name"></span>
+                <a  ng-click="sites_save()">保存</a>
+                <a  ng-click="project_module_add()">返回</a>
+                <span class="tips">在左侧查询并选定基因，可以添加该基因下的所有位点。</span>
+            </h4>
+            <div class="row site-title">
+                    <div class="col-md-3">
+                        <div  class="search-div">
+                            <label class="control-label">基因</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="sitepages.code" placeholder="基因">
+                            </div>
+                            <div class="icon">
+                                <span class="glyphicon glyphicon-search" ng-click="get_genes()"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div>选中的位点</div>
+                    </div>
+            </div>
+            <div class="row right25">
+                <div class="col-md-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th  width="70px">名称</th>
+                                <th  作用</th>
+                                <th width="80px">位点数</th>
+                                <th width="50px">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="gene in genes" on-finish-render>
+                                <td><span ng-bind="gene.name"></span></td>
+                                <td><span ng-bind="gene.default_effect"></span></td>
+                                <td ><span ng-bind="gene.site_count"></span></td>
+                                <td ><a  href="" ng-click="gene_add(gene)">添加</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="table-page col-md-6 col-md-offset-3">
+                        <paging
+                            page="pages.pageindex"
+                            page-size="pages.pagesize"
+                            total="pages.total"
+                            scroll-top="true"
+                            hide-if-empty="true"
+                            show-prev-next="true"
+                            text-next="下一页"
+                            text-prev="上一页"
+                            text-title-page="第 {pages.page} 页"
+                            text-title-next="下一页"
+                            text-title-prev="上一页">
+                        </paging>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <table class="table" ng-show="project_genes.length > 0" >
+                        <thead>
+                            <tr>
+                                <th width="100px">基因名称</th>
+                                <th >基因作用</th>
+                                <th width="200px">SNP编号</th>
+                                <th width="100px">变异位点</th>
+                                <th width="120px">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="project_gene in project_genes" on-finish-render>
+                                <td width="100px"><span ng-bind="project_gene.gene.name"></span></td>
+                                <td  ><textarea style="min-width:200px"  ng-model="project_gene.effect" rows="{{1.5*project_gene.project_sites.length}}"></textarea></td>
+                                <td width="420px" colspan="3" >
+                                    <table>
+                                        <tr  ng-repeat="project_site in project_gene.project_sites" >
+                                            <td width="200px"><span ng-bind="project_site.code"></span></td>
+                                            <td width="100px"><input type="text" class="form-control" name="mutation" ng-model="project_site.mutation" style="width:40px"/></td>
+                                            <td width="120px">
+                                                <a class="btn" ng-click="site_weight_module_add(project_site)">编辑</a>
+                                                <a class="btn" ng-click="sites_remove(project_gene.gene.name,project_site.code)" ng-if="project_site.isdelete==true">删除</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+             <div class="row right25" ng-show="current_project_site != null">
+                 <h4>
+                    <span ng-bind="current_project_site.code"></span>
+                    <a  ng-click="site_weight_save()">保存</a>
+                </h4>
+                  <table class="table" >
+                        <thead>
+                            <tr>
+                                <th width="80px">基因型</th>
+                                <th  width="80px">分数</th>
+                                <th width="80px">等级</th>
+                                <th >意义</th>
+                            </tr>
+                        </thead>
+                         <tbody>
+                            <tr ng-repeat="(key,item) in current_project_site.weight" on-finish-render>
+                                <td width="80px"><span ng-bind="key"></span></td>
+                                <td  width="80px"><input type="text" class="form-control" name="mutation" ng-model="item.score"/></td>
+                                <td  width="80px"><input type="text" class="form-control" name="mutation" ng-model="item.tag" /></td>
+                                <td ><input type="text" class="form-control" name="mutation" ng-model="item.mean" /></td>
+                            </tr>
+                        </tbody>
+                  </table>
+             </div>
+        </div>
+        
+        <div class="module-div" ng-show="focus == 'risk'" on-finish-render>
+            <h4>
+                <span ng-bind="current_project.name"></span>
+                <small>单项风险</small>
+                <a  ng-click="risk_save()" ng-show="project_risks.length > 0">保存</a>
+                <a  ng-click="project_module_add()">返回</a>
+            </h4>
+            <div class="right25 left15">
+                <span ng-repeat="risk in risks">
+                    <input type="checkbox"  name="{{risk}}" ng-checked="isSelected(risk)" ng-click="updateRisk($event,risk)">
+                        {{ risk }}&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+                <a href="" ng-click="addRisk()"><i class="fa fa-plus fa-2x"></i></a>
+            </div>
+            <br>
+            <table class="table table-bordered right25 left15" >
+                <thead>
+                    <tr>
+                        <th width="150px">名称</th>
+                        <th width="100px">风险水平</th>
+                        <th width="100px">最小值</th>
+                        <th width="100px">最大值</th>
+                        <th >特点</th>
+                        <th >建议</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in project_risks"  ng-show="project_risks.length > 0">
+                        <td><input type="text" class="form-control" name="tag" ng-model="item.tag"></td>
+                        <td>
+                            <select ng-model="item.level"  class="form-control" ng-selected="item.level">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </td>
+                        <td> <input type="text" class="form-control" name="min" ng-model="item.min"></td>
+                        <td><input type="text" class="form-control" name="max" ng-model="item.max"></td>
+                        <td><textarea ng-model="item.character" rows="5" cols="50"  ></textarea></td>
+                        <td><textarea ng-model="item.instructions" rows="5" cols="50" ></textarea></td>
+                    </tr>
+                    <tr  ng-show="!project_risks||project_risks.length == 0">
+                        <td colspan="4">暂无风险信息</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="module-div" ng-show="focus == 'risk'" on-finish-render>
+            <h4>
+                <span ng-bind="current_project.name"></span>
+                <small>环境风险</small>
+                <a  ng-click="circumrisk_save()" ng-show="project_circumrisks.length > 0">保存</a>
+                <a  ng-click="project_module_add()">返回</a>
+            </h4>
+            <div class="right25 left15">
+                <span ng-repeat="circumrisk in circumrisks">
+                    <input type="checkbox"  name="{{circumrisk}}" ng-checked="isSelectedCircumRisk(circumrisk)" ng-click="updateCircuRisk($event,circumrisk)">
+                        {{ circumrisk }}&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+                <a href="" ng-click="addCircumRisk()"><i class="fa fa-plus fa-2x"></i></a>
+            </div>
+            <br>
+            <table class="table table-bordered right25 left15" >
+                <thead>
+                    <tr>
+                        <th width="150px">名称</th>
+                        <th width="100px">风险水平</th>
+                        <th width="100px">最小值</th>
+                        <th width="100px">最大值</th>
+                        <th >建议</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in project_circumrisks"  ng-show="project_circumrisks.length > 0">
+                        <td><input type="text" class="form-control" name="tag" ng-model="item.tag"></td>
+                        <td>
+                            <select ng-model="item.level"  class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </td>
+                        <td> <input type="text" class="form-control" name="min" ng-model="item.min"></td>
+                        <td><input type="text" class="form-control" name="max" ng-model="item.max"></td>
+                        <td><textarea ng-model="item.instructions" rows="10" cols="100" ></textarea></td>
+                    </tr>
+                    <tr  ng-show="!project_circumrisks||project_circumrisks.length == 0">
+                        <td colspan="4">暂无环境风险信息</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </rd-widget-body>
+</rd-widget>

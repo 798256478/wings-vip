@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="app">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=0">
+	<title>收银端</title>
+	<link rel="stylesheet" type="text/css" href="/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/components/sweetalert/dist/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="/cashier/css/cashier.css">
+    <link rel="stylesheet" type="text/css" href="/common/modules/complete.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/wechat-color.css">
+    <link rel="stylesheet" type="text/css" href="/common/modules/payment.css">
+</head>
+<body ng-controller="MasterController">
+	<div class="root-box">
+        <div class="main">
+            <div class="navbar navbar-inverse">
+                <div class="navbar-brand">
+                    电子会员卡收银端
+                </div>
+            </div>
+            <div class="desktop">
+                <div ng-show="DesktopManager.isLocked" class="desktop-covering">
+                    Locked...
+                </div>
+                <div class="card-includer" ng-show="DesktopManager.startWork" ng-include="'partials/card.html'"></div>
+                <!--<div class="card-includer"  ng-include="'partials/card.html'"></div>-->
+            </div>
+        </div>
+        <div class="right-aside">
+            <div class="auth-includer" ng-include="'partials/auth.html'"></div>
+            <div class="keyboard-includer" ng-include="'partials/keyboard.html'"></div>
+        </div>
+	</div>
+    
+    <script src="/components/lodash/dist/lodash.min.js"></script>
+    <script src="/components/jquery/dist/jquery.min.js"></script>
+    <script src="/components/angular/angular.min.js"></script>
+    <script src="/components/bootstrap/dist/js/bootstrap.min.js""></script>
+    <script src="/components/angular-touch/angular-touch.min.js"></script>
+    <script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/components/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/common/modules/mn-keyboard.js"></script>
+    <script src="/common/modules/complete.js"></script>
+    <script src="/common/modules/payment.js"></script>
+    
+	<script src="/cashier/route.js"></script>
+	<script src="/cashier/controllers/master-controller.js"></script>
+    <script src="/cashier/controllers/auth-controller.js"></script>
+    <script src="/cashier/controllers/card-controller.js"></script>
+    <script src="/cashier/controllers/balance-controller.js"></script>
+    <script src="/cashier/controllers/balancebuy-controller.js"></script>
+    <script src="/cashier/controllers/balanceexchange-controller.js"></script>
+    <script src="/cashier/controllers/consume-controller.js"></script>
+    <script src="/cashier/controllers/mall-controller.js"></script>
+    <script src="/cashier/controllers/writeoff-controller.js"></script>
+    <script src="/cashier/controllers/initialize-controller.js"></script>
+    
+    <script src="/cashier/services/desktop-manager.js"></script>
+    <script src="/common/services/auth-service.js"></script>
+    <script src="/common/services/user-service.js"></script>
+    <script src="/common/services/card-service.js"></script>
+    <script src="/common/services/setting-service.js"></script>
+    <script src="/common/services/commodity-service.js"></script>
+</body>
+</html>

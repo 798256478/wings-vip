@@ -1,0 +1,180 @@
+<link rel="stylesheet" href="/common/css/wechat-color.css">
+<style media="screen">
+    .list-div{
+        height: 150px;
+        overflow-x: auto;
+        border: 1px solid #DDD;
+        margin-top: 10px;
+        margin-left: 15px;
+        border-radius: 5px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .list-div div{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+</style>
+<div class="row" id="property" ng-controller="RedeemCodeController">
+    <div class="col-lg-3">
+        <rd-widget>
+            <rd-widget-header icon="fa-comments-o" title="所有兑换码">
+                <a href="" ng-click="addRedeemCode()"><i class="fa fa-plus fa-2x"></i></a>
+            </rd-widget-header>
+            <rd-widget-body classes="auto no-padding">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="a in redeemCodeList" on-finish-render>
+                                <td><a ng-click="getRedeemCode(a._id)" href="">{{a.title}}</a></td>
+                                <td>{{a.created_at}}</td>
+                                <td><a href="" ng-click="delete(a._id, $event)">删除</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-9">
+        <rd-widget>
+            <rd-widget-header title="{{text}}">
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <div ng-if="redeemCode">
+                    <form name="form.redeemCodeForm" class="form-horizontal" ng-submit="submit(form.redeemCodeForm.$valid)" autocomplete="off">
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="control-label col-md-1">标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" name="title" ng-model="redeemCode.title" placeholder="服务标题"
+                                        ng-maxlength=20 required>
+                                    <p ng-show="form.redeemCodeForm.title.$invalid && !form.redeemCodeForm.title.$pristine" class="help-block">
+                                        标题必填且长度小于20个字
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-1">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型</label>
+                                <div class="col-md-6">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="type" ng-disabled="redeemCode._id" ng-model="redeemCode.is_many"
+                                            ng-value="false" ng-click="changeState(false)"> 分享码
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="type" ng-disabled="redeemCode._id" ng-model="redeemCode.is_many"
+                                            ng-value="true" ng-click="changeState(true)"> 一对一码
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="redeemCode.is_many && redeemCode._id">
+                                <label class="control-label col-md-1">新&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;增</label>
+                                <div class="col-md-11">
+                                    <div class="col-md-2" style="padding-left:0;">
+                                        <input type="number" class="form-control" name="count" ng-model="count">
+                                    </div>
+                                    <label class="control-label">个</label>
+                                    <button type="button" class="btn btn-info" ng-click="count = getCodes(count)">生成</button>
+                                    <span>
+                                        (现有：{{redeemCode.stock_quantity}}个码)
+                                    </span>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10 list-div">
+                                    <div class="col-md-1" ng-repeat="a in redeemCode.codes">
+                                        {{a}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="!redeemCode.is_many">
+                                <label class="control-label col-md-1">兑&nbsp;&nbsp;换&nbsp;码</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="notice" ng-model="redeemCode.codes[0]" required>
+                                    <p ng-show="form.redeemCodeForm.notice.$invalid && !form.redeemCodeForm.notice.$pristine"
+                                        class="help-block">
+                                        兑换码必填
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="!redeemCode.is_many">
+                                <label class="control-label col-md-1">开始时间</label>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" name="begin_timestamp"
+                                            uib-datepicker-popup="{{datePicker.format}}"
+                                            datepicker-options="datePicker.dateOptions" is-open="beginDate.opened"
+                                            current-text="今天" clear-text="清除" close-text="关闭"
+                                            ng-required="true" ng-model="redeemCode.begin_timestamp" readonly>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="selectBeginDate()">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="control-label col-md-1">结束时间</label>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" name="end_timestamp"
+                                            uib-datepicker-popup="{{datePicker.format}}"
+                                            datepicker-options="datePicker.dateOptions" is-open="endDate.opened"
+                                            current-text="今天" clear-text="清除" close-text="关闭"
+                                            ng-required="true" ng-model="redeemCode.end_timestamp" readonly>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="selectEndDate()">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label ng-if="!redeemCode._id && redeemCode.is_many" class="control-label col-md-1">初始数量</label>
+                                <label ng-if="redeemCode._id || !redeemCode.is_many" class="control-label col-md-1">库&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存</label>
+                                <div class="col-md-3">
+                                    <input type="number" class="form-control" name="notice" ng-disabled="redeemCode.is_many && redeemCode._id"
+                                        ng-model="redeemCode.stock_quantity" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-1">动&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作</label>
+                                <div class="col-md-10" ng-include="'partials/action.html'"></div>
+                            </div>
+                            <div class="col-md-offset-1" style="margin-top:-15px;">
+                                <button type="submit" class="btn btn-primary left" ng-disabled="form.redeemCodeForm.$invalid">提交</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div class="third-panel">
+                        <h4 class="page-header">已兑换：{{redeemCode.redeemed_quantity}}</h4>
+                        <div class="third-panel-body">
+                            <table class="table table-bordered" style="margin-top: 30px;">
+                                <thead>
+                                    <tr>
+                                        <th ng-if="redeemCode.is_many">兑换码</th>
+                                        <th>用户</th>
+                                        <th>兑换时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="a in redeemCode.records">
+                                        <td ng-if="redeemCode.is_many">{{a.code}}</td>
+                                        <td>{{a.card.nickname}}</td>
+                                        <td>{{getDate(a.redeem_time)}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

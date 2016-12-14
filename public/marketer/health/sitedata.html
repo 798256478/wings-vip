@@ -1,0 +1,88 @@
+<div class="row" id="upload" ng-controller="SiteDataController">
+    <div class="col-md-12">
+        <rd-widget>
+            <rd-widget-header title="上传检测数据">
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-1">选择实验</label>
+                        <div class="col-md-2">
+                            <select class="form-control" ng-options="a.id as a.name for a in experimentList"
+                                ng-model="form.experimentId"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-1">选择文件</label>
+                        <div class="col-md-2">
+                            <input type="file" ngf-select ng-model="form.file" name="file"
+                                accept=".csv,.xlsx,.xls" ngf-max-size="2MB">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-1">检&nbsp;&nbsp;验&nbsp;员</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" ng-model="form.inspector">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-1">审&nbsp;&nbsp;核&nbsp;员</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" ng-model="form.assessor">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-1">检测日期</label>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <input class="form-control" type="text"
+                                    uib-datepicker-popup="{{datePicker.format}}" min-date="datePicker.minDate"
+                                    datepicker-options="datePicker.dateOptions" is-open="timeDate.opened"
+                                    current-text="今天" clear-text="清除" close-text="关闭"
+                                    ng-required="true" ng-model="form.time" readonly>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="selectDate()">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-md-offset-2">
+                        <button class="btn btn-primary" ng-disabled="state.data" ng-click="uploadData(form.file)" >确定</button>
+                    </div>
+                </form>
+                <style media="screen">
+                    .wrong{
+                        font-size: 16px;
+                    }
+                </style>
+                <div class="row" style="margin-top: 60px;">
+                    <div class="col-md-12" ng-if="error.data">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">补全为空的数据</div>
+                            <div class="panel-body">
+                                <form name="form.wrongForm" class="form-horizontal">
+                                    <div class="wrong row" ng-repeat="(key, value) in error.data" ng-if="value.empty">
+                                        <div class="col-lg-12 col-md-12">
+                                            检测编码：{{key}}
+                                        </div>
+                                        <div class="col-lg-2 col-md-3 col-sm-4" ng-repeat="val in value.empty">
+                                            <span class="control-label col-sm-7">{{val.assay_id}}</span>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" text-transform="uppercase"
+                                                ng-model="val.call" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary"
+                                     ng-disabled="state.edit" ng-click="saveData();">提交</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

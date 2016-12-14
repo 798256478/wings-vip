@@ -1,0 +1,320 @@
+<link rel="stylesheet" href="/common/css/wechat-color.css">
+<link rel="stylesheet" href="/marketer/css/ticket_template.css">
+<div class="row" id="ticket_template" ng-controller="TicketTemplateController">
+    <div class="col-xs-3">
+        <div class="row tabs-left">
+            <rd-widget>
+                <rd-widget-header icon="fa-comments-o" title="所有商品"></rd-widget-header>
+                <rd-widget-body classes="auto-height no-padding">
+                    <uib-tabset vertical="true" class="tabs-left" active="active.val">
+                        <uib-tab ng-repeat="(typekey, typeval) in TicketTemplateTypeList" select="">
+                            <uib-tab-heading>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td width="25%">&nbsp;</td>
+                                            <td width="50%">
+                                                {{typeval}}
+                                            </td>
+                                            <td width="25%">&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </uib-tab-heading>
+                            <div class="list-group clear">
+                                <button type="button" class="new btn btn-block" style="margin:5px 0;" ng-if="typekey != 'All'" ng-click="createNew(typekey)">
+                                    <span class="fa fa-plus"></span>
+                                </button>
+                                <div class="ticket" ng-repeat="a in TicketTemplateList" ng-if="typekey == 'All' || a.card_type == typekey" id="tp{{a.id}}" on-finish-render>
+                                    <summary class="{{a.color}}" ng-click="getTicketTemplate(a.id)">
+                                        <small class="img"><img ng-src="{{setting.value.logo_url}}" alt="" /></small>
+                                        <span class="brand_name">{{setting.value.brand_name}}</span>
+                                        <span class="title">{{a.title}}</span>
+                                    </summary>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </rd-widget-body>
+            </rd-widget>
+        </div>
+    </div>
+    <div class="col-xs-9">
+        <rd-widget>
+            <rd-widget-header icon="fa-ticket" title="{{formState + nowType}}">
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <div class="row">
+                    <div class="col-xs-4" style="padding: 0; margin-left: -15px;">
+                        <div class="card_preview {{coupon.color}}">
+                            <div class="card_body">
+                                <p class="msg_title">
+                                    {{nowType}}
+                                </p>
+                                <div class="card_section">
+                                    <div class="shop_panel">
+                                        <div class="logo_area">
+                                            <span class="logo">
+                                                <img ng-src="{{setting.value.logo_url}}" alt="" />
+                                            </span>
+                                            <p>{{setting.value.brand_name}}</p>
+                                        </div>
+                                        <div class="msg_area">
+                                            <div class="ticket_msg">
+                                                <p class="ticket_name">{{coupon.title}}</p>
+                                                <p>{{coupon.sub_title}}</p>
+                                                <button type="button" class="btn {{coupon.color}}">立即使用</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="msg_card_cell msg_text">
+                                    <ul class="list">
+                                        <li class="msg_card_section">
+                                            <div class="li_panel">
+                                                <div class="li_content">
+                                                    <p>{{nowType}}详情</p>
+                                                </div>
+                                                <i class="fa fa-angle-right"></i>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="msg_card_cell shop_detail">
+                                    <ul class="list">
+                                        <li class="msg_card_section js_preview">
+                                            <div class="li_panel" href="">
+                                                <div class="li_content">
+                                                    <p>适用门店</p>
+                                                </div>
+                                                <i class="fa fa-angle-right"></i>
+                                            </div>
+                                        </li>
+                                        <li class="msg_card_section js_preview last_li">
+                                            <div class="li_panel" href="">
+                                                <div class="li_content">
+                                                    <p>公众号</p>
+                                                </div>
+                                                <i class="fa fa-angle-right"></i>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="msg_card_cell custom_detail">
+                                    <ul class="list">
+                                        <li class="msg_card_section last_li">
+                                            <div class="li_panel">
+                                                <div class="li_content">
+                                                    <p>
+                                                        <span class="supply_area">
+                                                            <span class="js_custom_url_tips_pre">{{setting.value.custom_url_sub_title}}</span>
+                                                            <i class="fa fa-angle-right"></i>
+                                                        </span>
+                                                        <span class="js_custom_url_name_pre">{{setting.value.custom_url_name}}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8" style="padding: 0; margin-left: 12px;">
+                        <form name="form.couponForm" class="form-horizontal" ng-submit="submit(form.couponForm.$valid)" autocomplete="off">
+                            <fieldset ng-disabled="!nowType">
+                                <div class="form-group">
+                                    <label class="control-label col-xs-2">标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题</label>
+                                    <div class="col-xs-4">
+                                        <input type="text" class="form-control" name="title" ng-model="coupon.title" placeholder="标题"
+                                            ng-disabled="coupon.id" ng-maxlength=9 required>
+                                        <p ng-show="form.couponForm.title.$invalid && !form.couponForm.title.$pristine" class="help-block">
+                                            标题必填且长度小于9个字
+                                        </p>
+                                    </div>
+                                    <label class="control-label col-xs-2">颜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色</label>
+                                    <div class="col-xs-3">
+                                        <select class="form-control {{coupon.color}}" name="color" ng-model="coupon.color" required>
+                                            <option value=""></option>
+                                            <option class="Color010" value="Color010"></option>
+                                            <option class="Color020" value="Color020"></option>
+                                            <option class="Color030" value="Color030"></option>
+                                            <option class="Color040" value="Color040"></option>
+                                            <option class="Color050" value="Color050"></option>
+                                            <option class="Color060" value="Color060"></option>
+                                            <option class="Color070" value="Color070"></option>
+                                            <option class="Color080" value="Color080"></option>
+                                            <option class="Color081" value="Color081"></option>
+                                            <option class="Color082" value="Color082"></option>
+                                            <option class="Color090" value="Color090"></option>
+                                            <option class="Color100" value="Color100"></option>
+                                            <option class="Color101" value="Color101"></option>
+                                            <option class="Color102" value="Color102"></option>
+                                        </select>
+                                        <p ng-show="form.couponForm.color.$invalid && !form.couponForm.color.$pristine" class="help-block">
+                                            颜色必选
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-2">线上使用</label>
+                                    <div class="col-xs-4 toggle">
+                                        <i class="fa fa-toggle-on active" ng-if="coupon.disable_online == false" ng-click="coupon.disable_online = changeState(coupon.disable_online);"></i>
+                                        <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="coupon.disable_online == true" ng-click="coupon.disable_online = changeState(coupon.disable_online);"></i>
+                                        <p ng-if="error.status" class="help-block">{{error.status[0]}}</p>
+                                    </div>
+                                    <label class="control-label col-xs-2">店内使用</label>
+                                    <div class="col-xs-4 toggle">
+                                        <i class="fa fa-toggle-on active" ng-if="coupon.disable_shop == false" ng-click="coupon.disable_shop = changeState(coupon.disable_shop);"></i>
+                                        <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="coupon.disable_shop == true" ng-click="coupon.disable_shop = changeState(coupon.disable_shop);"></i>
+                                        <p ng-if="error.status" class="help-block">{{error.status[0]}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error' : form.couponForm.sub_title.$invalid && !form.couponForm.sub_title.$pristine }">
+                                    <label class="control-label col-xs-2">副&nbsp;&nbsp;标&nbsp;题</label>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" name="sub_title" ng-model="coupon.sub_title" placeholder="副标题"
+                                            ng-disabled="coupon.id" ng-maxlength=18>
+                                        <p ng-show="form.couponForm.sub_title.$invalid && !form.couponForm.sub_title.$pristine" class="help-block">
+                                            副标题过长
+                                        </p>
+                                    </div>
+                                </div>
+                                <div ng-switch="coupon.card_type">
+                                    <div ng-switch-when="CASH">
+                                        <div class="form-group" ng-class="{'has-error':form.couponForm.cash_reduce_cost.$invalid && !form.couponForm.cash_reduce_cost.$pristine || form.couponForm.cash_least_cost.$invalid && !form.couponForm.cash_least_cost.$pristine }">
+                                            <label class="control-label col-xs-2">减免金额</label>
+                                            <div class="col-xs-3">
+                                                <input type="number" class="form-control" name="cash_reduce_cost" stringtonumber
+                                                    ng-model="coupon.cash_reduce_cost"
+                                                    ng-disabled="coupon.id" placeholder="减免金额" required>
+                                                <p ng-show="form.couponForm.cash_reduce_cost.$invalid && !form.couponForm.cash_reduce_cost.$pristine"
+                                                    class="help-block">
+                                                    必填且必须数字
+                                                </p>
+                                            </div>
+                                            <label class="control-label col-xs-2">优惠条件</label>
+                                            <div class="col-xs-3">
+                                                <input type="number" class="form-control" name="cash_least_cost" stringtonumber
+                                                    ng-model="coupon.cash_least_cost"
+                                                    ng-disabled="coupon.id" placeholder="优惠条件" required>
+                                                <p ng-show="form.couponForm.cash_least_cost.$invalid && !form.couponForm.cash_least_cost.$pristine"
+                                                    class="help-block">
+                                                    必填且必须数字
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="DISCOUNT">
+                                        <div class="form-group" ng-class="{'has-error':form.couponForm.discount_discount.$invalid && !form.couponForm.discount_discount.$pristine }">
+                                            <label class="control-label col-xs-2">折扣额度</label>
+                                            <div class="col-xs-3">
+                                                <input type="number" class="form-control" name="discount_discount" stringtonumber
+                                                    ng-model="coupon.discount_discount"
+                                                    ng-disabled="coupon.id" placeholder="1-99(5折为50)">
+                                                <p ng-show="form.couponForm.discount_discount.$invalid && !form.couponForm.discount_discount.$pristine"
+                                                    class="help-block">
+                                                    必填且必须数字
+                                                </p>
+                                            </div>
+                                            <label class="control-label" style="margin-left:5px;">折</label>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="GIFT">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-2">优惠说明</label>
+                                            <div class="col-xs-9">
+                                                <textarea class="form-control" name="gift_gift" ng-model="coupon.gift_gift"
+                                                    ng-disabled="coupon.id" rows="4" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="GROUPON">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-2">优惠说明</label>
+                                            <div class="col-xs-9">
+                                                <input type="text" class="form-control" name="groupon_deal_detail"
+                                                    ng-model="coupon.groupon_deal_detail"
+                                                    ng-disabled="coupon.id" placeholder="团购名称" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="GENERAL_COUPON">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-2">优惠说明</label>
+                                            <div class="col-xs-9">
+                                                <textarea class="form-control" name="general_coupon_default_detail"
+                                                    ng-model="coupon.general_coupon_default_detail"
+                                                    ng-disabled="coupon.id" rows="4" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-2">有&nbsp;&nbsp;效&nbsp;期</label>
+                                    <div class="col-xs-4">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" name="begin_timestamp"
+                                                uib-datepicker-popup="{{datePicker.format}}" min-date="datePicker.minDate"
+                                                datepicker-options="datePicker.dateOptions" is-open="beginDate.opened"
+                                                current-text="今天" clear-text="清除" close-text="关闭"
+                                                ng-required="true" ng-model="coupon.begin_timestamp" readonly>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="selectBeginDate()">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <label class="control-label" style="padding-left:15px;">至</label>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" name="end_timestamp"
+                                                uib-datepicker-popup="{{datePicker.format}}" min-date="datePicker.minDate"
+                                                datepicker-options="datePicker.dateOptions" is-open="endDate.opened"
+                                                current-text="今天" clear-text="清除" close-text="关闭"
+                                                ng-required="true" ng-model="coupon.end_timestamp" readonly>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="selectEndDate()">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error' : form.couponForm.notice.$invalid && !form.couponForm.notice.$pristine }">
+                                    <label class="control-label col-xs-2">操作提示</label>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" name="notice" ng-maxlength=16
+                                            ng-model="coupon.notice" ng-disabled="coupon.id" required>
+                                        <p ng-show="form.couponForm.notice.$invalid && !form.couponForm.notice.$pristine"
+                                            class="help-block">
+                                            操作提示必填且长度小于16字
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error' : form.couponForm.description.$invalid && !form.couponForm.description.$pristine }">
+                                    <label class="control-label col-xs-2">使用须知</label>
+                                    <div class="col-xs-9">
+                                        <textarea class="form-control" name="description" ng-model="coupon.description"
+                                            ng-maxlength=2000 rows="4"></textarea>
+                                        <p ng-show="form.couponForm.description.$invalid && !form.couponForm.description.$pristine"
+                                            class="help-block">
+                                            使用须知必填且长度小于2000字
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-5 col-xs-offset-2" style="padding-left:0;">
+                                    <button type="submit" class="btn btn-primary" ng-disabled="form.couponForm.$invalid">提交</button>
+                                    <button type="button" class="btn btn-warning" ng-disabled="!coupon.id" ng-click="delete(coupon.id, $event)">删除</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

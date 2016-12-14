@@ -1,0 +1,214 @@
+<style media="screen">
+    .card{
+        position: relative;
+        color: #DDD;
+        border-radius: 10px;
+        height: 160px;
+        width: 315px;
+        display: inline-block;
+    }
+    .card .top {
+        padding-top: 15px;
+    }
+    .card .left{
+        float: left;
+        width: 100px;
+        text-align: center;
+    }
+    .card .right {
+        float: left;
+        padding: 20px 0 20px 5px;
+    }
+    .card .icon{
+        width: 70px;
+        height: 70px;
+        background-color: #fff;
+        margin-top: 25px;
+        padding: 2px;
+    }
+    .card .title {
+        display: block;
+        font-size: 20px;
+        font-weight: 400;
+    }
+    .card .subtitle {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 11px;
+    }
+    .card .code {
+        font-size: 19px;
+        font-weight: 400;
+    }
+    .card .code>small {
+        font-size: 12px;
+    }
+</style>
+<div class="form-group">
+    <label class="control-label col-md-1">会员卡ID</label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" name="card_id" ng-model="setting.value.card_id"
+            placeholder="ID" required>
+        <p ng-show="form.settingForm.card_id.$invalid && !form.settingForm.card_id.$pristine" class="help-block">
+            会员卡微信ID必填
+        </p>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-1">LOGO</label>
+    <div class="col-md-9">
+        <input type="hidden" class="form-control" name="logo" ng-model="setting.value.logo" required>
+        <img ng-src="{{setting.value.logo ? setting.value.logo : '/common/imgs/noimg.png'}}" style="width: 150px; height:150px;" alt="" />
+        <button type="file" class="btn btn-default" style="vertical-align: bottom;"
+            ngf-select="uploadLogo($file, $invalidFiles)" accept="image/*" ngf-max-size="2MB">更改图片</button>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-1">店&nbsp;&nbsp;铺&nbsp;名</label>
+    <div class="col-md-4">
+        <input type="text" class="form-control" name="title" ng-model="setting.value.title"
+            placeholder="店铺名" required>
+        <p ng-show="form.settingForm.title.$invalid && !form.settingForm.title.$pristine" class="help-block">
+            店铺名必填
+        </p>
+    </div>
+    <label class="control-label col-md-1">会员卡颜色</label>
+    <div class="col-md-4">
+        <select class="form-control {{setting.value.color}}" name="color" ng-model="setting.value.color" required>
+            <option value=""></option>
+            <option class="Color010" value="Color010"></option>
+            <option class="Color020" value="Color020"></option>
+            <option class="Color030" value="Color030"></option>
+            <option class="Color040" value="Color040"></option>
+            <option class="Color050" value="Color050"></option>
+            <option class="Color060" value="Color060"></option>
+            <option class="Color070" value="Color070"></option>
+            <option class="Color080" value="Color080"></option>
+            <option class="Color081" value="Color081"></option>
+            <option class="Color082" value="Color082"></option>
+            <option class="Color090" value="Color090"></option>
+            <option class="Color100" value="Color100"></option>
+            <option class="Color101" value="Color101"></option>
+            <option class="Color102" value="Color102"></option>
+        </select>
+        <p ng-show="form.couponForm.color.$invalid && !form.couponForm.color.$pristine" class="help-block">
+            会员卡颜色必选
+        </p>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-1">副&nbsp;&nbsp;标&nbsp;题</label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" name="sub_title" ng-model="setting.value.sub_title"
+            placeholder="会员卡副标题" required>
+        <p ng-show="form.settingForm.sub_title.$invalid && !form.settingForm.sub_title.$pristine" class="help-block">
+            店铺副标题
+        </p>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-1">使用提示</label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" name="notice" ng-model="setting.value.notice"
+            placeholder="使用提示" required>
+        <p ng-show="form.settingForm.notice.$invalid && !form.settingForm.notice.$pristine" class="help-block">
+            提示必填
+        </p>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-1">使用须知</label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" name="description" ng-model="setting.value.description"
+            placeholder="使用须知" required>
+        <p ng-show="form.settingForm.description.$invalid && !form.settingForm.description.$pristine" class="help-block">
+            使用须知必填
+        </p>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-1">积分清零</label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" name="bonus_cleared" ng-model="setting.value.bonus_cleared"
+            placeholder="积分清零规则" required>
+        <p ng-show="form.settingForm.bonus_cleared.$invalid && !form.settingForm.bonus_cleared.$pristine" class="help-block">
+            积分清零规则必填
+        </p>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-1">积分规则</label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" name="bonus_rules" ng-model="setting.value.bonus_rules"
+            placeholder="积分规则" required>
+        <p ng-show="form.settingForm.bonus_rules.$invalid && !form.settingForm.bonus_rules.$pristine" class="help-block">
+            积分规则必填
+        </p>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-1">会员特权</label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" name="prerogative" ng-model="setting.value.prerogative"
+            placeholder="会员特权" required>
+        <p ng-show="form.settingForm.prerogative.$invalid && !form.settingForm.prerogative.$pristine" class="help-block">
+            会员特权必填
+        </p>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-1">会员等级</label>
+    <div class="col-md-9">
+        <div style="margin-bottom: 10px;">
+            <div class="card flip {{setting.value.color}}" style="background : url({{cardLevel.image}});padding-left:0;">
+                <div class="top clearfix">
+                    <div class="left">
+                        <img class="icon img-circle" src="/common/imgs/avatar.jpg"></img>
+                    </div>
+                    <div class="right">
+                        <strong class="title">{{setting.value.title}}</strong>
+                        <small class="subtitle">{{setting.value.sub_title}}</small>
+                        <strong class="code"><small> No.</small> 00000000</strong>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-left: 10px; width: 560px; display:inline-block; padding-top: 20px;">
+                <div class="form-group">
+                    <label class="control-label col-md-2">等级名称</label>
+                    <div class="col-md-10" style="padding-left: 10px;">
+                        <input type="text" class="form-control" ng-model="cardLevel.name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">卡面图片</label>
+                    <div class="col-md-4" style="padding-left: 10px;">
+                        <button type="file" class="btn btn-default" style="vertical-align: bottom;"
+                            ngf-select="uploadCardImage($file, $invalidFiles)" accept="image/*" ngf-max-size="2MB">更改图片</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">描述</label>
+                    <div class="col-md-10" style="padding-left: 10px;">
+                        <input type="text" class="form-control" ng-model="cardLevel.description">
+                    </div>
+                </div>
+                <div class="col-md-4 col-md-offset-8">
+                    <button ng-if="!cardLevel.id" type="button" class="btn btn-info" ng-click="addLevel();">添加</button>
+                    <button ng-if="cardLevel.id" type="button" class="btn btn-info" ng-click="editLevel();">修改</button>
+                    <button type="button" class="btn btn-warning" ng-click="resetCardLevel();">重置</button>
+                </div>
+            </div>
+        </div>
+        <div class="sortable-container" sv-root sv-part="setting.value.levels">
+            <div ng-repeat="item in setting.value.levels" sv-element="opts" class="sortable">
+                {{item.name}}
+                <span style="float:right;"><a style="color:red;padding-left: 10px;" href="" ng-click="delLevel(item.id);">删除</a></span>
+                <span style="float:right;"><a style="color:blue;" href="" ng-click="getLevel(item.id);">编辑</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+
+    </div>
+
+</div>

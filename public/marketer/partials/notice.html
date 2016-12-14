@@ -1,0 +1,107 @@
+<style media="screen">
+    .col-md-12{
+        margin-bottom: 7px;
+    }
+    .setBottom{
+        vertical-align: bottom;
+    }
+    .inline {
+        display: inline-block;
+    }
+    .endTime{
+        line-height: 30px;
+        margin-left: 70px;
+    }
+    .label{
+        color: #000;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+        width: 100px;
+        float: left;
+        text-align: left;
+        padding-left: 20px;
+    }
+    .div-margin{
+        margin-left: 30px;
+        margin-bottom: 10px;
+    }
+    .content{
+        display: inline-block;
+        width: 350px;
+        height: 30px;
+        margin: 0 5px 5px 5px;
+    }
+</style>
+<div class="row" ng-controller="NoticeController">
+    <form name="form.noticeForm" class="form-horizontal" novalidate autocomplete="off">
+        <div class="form-group">
+            <label class="label">站&nbsp;&nbsp;内&nbsp;信</label>
+            <div class="col-md-2 toggle">
+                <i class="fa fa-toggle-on active" ng-if="notice.APP.status == true" ng-click="notice.APP.status = changeState(notice.APP.status);"></i>
+                <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="notice.APP.status == false" ng-click="notice.APP.status = changeState(notice.APP.status);"></i>
+            </div>
+            <div class="col-md-11 div-margin">
+                <img ng-src="{{notice.APP.image ? notice.APP.image : '/common/imgs/wechat/default/notice.png'}}" style="width: 150px; height:150px;" alt="" />
+                <button type="file" class="setBottom btn btn-default" ngf-select="uploadNoticeImage($file, $invalidFiles)" accept="image/*"
+                    ngf-max-size="2MB">更改图片</button>
+                <a href class="setBottom" ng-if="notice.APP.image" ng-click="delNoticeImg(notice.APP.image)">删除</a>
+                <span class="setBottom endTime">到期时间</span>
+                <input type="text" class="form-control inline setBottom" style="width: 150px;" ng-model="notice.APP.expires_date"
+                    uib-datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.dateOptions"
+                    is-open="datePicker.isopen" current-text="今天" clear-text="清除" close-text="关闭"
+                    ng-click="datePicker.isopen = changeState(datePicker.isopen)" readonly>
+            </div>
+            <div class="col-md-11 div-margin">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <div class="btn-group">
+                            <button id="single-button" type="button" class="btn btn-default">站内信详情</button>
+                        </div>
+                    </div>
+                    <input type="text" ng-model="notice.APP.content" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="label">短&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信</label>
+            <div class="col-md-2 toggle">
+                <i class="fa fa-toggle-on active" ng-if="notice.SMS.status == true" ng-click="notice.SMS.status = changeState(notice.SMS.status);"></i>
+                <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="notice.SMS.status == false" ng-click="notice.SMS.status = changeState(notice.SMS.status);"></i>
+            </div>
+            <div class="col-md-11 div-margin">
+                <span>尊敬的{店铺名}会员，由于</span><input class="content form-control" type="text" ng-model="notice.SMS.content1">
+                <span>,</span><br><span>我们为您</span><input class="content form-control" type="text" ng-model="notice.SMS.content2">
+                <span>。感谢您的支持。</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="label">微信消息</label>
+            <div class="col-md-2 toggle">
+                <i class="fa fa-toggle-on active" ng-if="notice.WECHAT.status == true" ng-click="notice.WECHAT.status = changeState(notice.WECHAT.status);"></i>
+                <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="notice.WECHAT.status == false" ng-click="notice.WECHAT.status = changeState(notice.WECHAT.status);"></i>
+            </div>
+            <div class="col-md-11 div-margin">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <div class="btn-group" uib-dropdown is-open="status.isopen">
+                            <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle>
+                                {{notice.WECHAT.sendtype}}
+                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem">
+                                    <a href ng-click="selectWechatType('文本消息');">文本消息</a>
+                                </li>
+                                <li role="menuitem">
+                                    <a href ng-click="selectWechatType('图文消息');">图文消息</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input type="text" ng-model="notice.WECHAT.content" class="form-control" placeholder="{{notice.WECHAT.placeholder}}">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

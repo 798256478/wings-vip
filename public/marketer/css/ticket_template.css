@@ -1,0 +1,209 @@
+#ticket_template .ticket_template_setting {
+    width: 100%;
+    text-align: center;
+}
+#ticket_template .ticket_template_setting button {
+    width: 80%;
+}
+.panel-collapse {
+    background-color: #eee;
+}
+p {
+    margin: 0;
+}
+.panel a{
+    outline: none;
+}
+.panel-body .ticket {
+    cursor: pointer;
+}
+.panel.ng-isolate-scope .panel-heading div {
+    cursor: pointer;
+}
+.panel.panel-open .panel-body {
+    max-height: 500px;
+    overflow-x: auto;
+}
+button.new {
+    margin-bottom: 15px;
+}
+.card_preview {
+    margin: 0 auto;
+    width: 318px;
+    padding-bottom: 150px;
+    overflow: hidden;
+    background: #f6f6f8 url('/common/imgs/ticket_preview.png') no-repeat center 5px;
+}
+.card_preview .card_body {
+    margin: 64px 10px 10px;
+}
+.card_preview .msg_title {
+    text-align: center;
+    height: 62px;
+    line-height: 85px;
+    font-size: 11px;
+    color: #fff;
+    display: none;
+}
+.card_preview .card_section {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px dashed #e7e7eb;
+    position: relative;
+    background-color: #fff;
+    border-radius: 5px 5px 0 0;
+}
+.card_preview .card_section .shop_panel {
+    padding: 21px 12px 12px;
+    min-height: 137px;
+    height: auto;
+    text-align: center;
+}
+.card_preview .logo_area {
+    position: relative;
+    margin-bottom: 7px;
+    line-height: 42px;
+    color: #8d8d8d;
+    margin-top: -40px;
+}
+.card_preview .logo {
+    display: block;
+    width: 40px;
+    height: 40px;
+    padding-top: 0;
+    margin: 0 auto;
+    border-radius: 22px;
+    float: none;
+    border: 1px solid #e7e7eb;
+}
+.card_preview .logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+.card_preview .card_section .ticket_msg {
+    margin-bottom: 6px;
+}
+.card_preview .card_section .ticket_msg .ticket_name {
+    font-weight: normal;
+    font-size: 28px;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+.card_preview .card_section .ticket_msg button {
+    background-color: $f4f5f9;
+    border-width: 0;
+}
+.card_preview .msg_card_cell {
+    background-color: #fff;
+}
+.card_preview .list {
+    margin: 0 10px;
+}
+.card_preview ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+.card_preview .msg_card_section {
+    position: relative;
+}
+.card_preview .list li .li_panel {
+    display: block;
+    padding: 11px 30px 11px 0;
+    border-bottom: 1px solid #e7e7eb;
+}
+.card_preview .list li.last_li .li_panel {
+    border-bottom: 0;
+}
+.card_preview .msg_card_cell .li_panel i {
+    position: absolute;
+    top: 31%;
+    right: 5px;
+    width: 16px;
+    height: 15px;
+}
+.card_preview .list li .supply_area {
+    color: #8d8d8d;
+    float: right;
+}
+.card_preview .msg_card_cell.custom_detail {
+    margin-top: 1em;
+    border-radius: 5px;
+}
+.msg_card_cell.custom_detail .list li:last-child .li_panel {
+    border-bottom-width: 0;
+}
+
+/**
+ * ticket list
+ */
+.ng-isolate-scope > .nav-tabs > li table {
+    width: 100%;
+}
+.ng-isolate-scope > .nav-tabs > li table td{
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px !important;
+}
+.ng-isolate-scope > .nav-tabs > li table td *{
+    font-size: 16px !important;
+}
+.ng-isolate-scope > .nav-tabs > li {
+    width: 12%;
+}
+.tab-content > .active, .pill-content > .active {
+    width: 82%;
+}
+.ng-isolate-scope > .nav-tabs {
+    margin-right: 10px;
+}
+.ticket {
+    cursor: pointer;
+}
+.ticket:first-child {
+    margin-top: 10px;
+}
+.ticket summary {
+    display: block;
+    clear: both;
+    height: 55px;
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 95px;
+    background-color: #fff;
+    padding-top: 20px;
+    margin-bottom: 10px;
+}
+.ticket summary:focus {
+	outline: none;
+}
+.ticket summary:active{
+    border: 2px solid #EEE;
+}
+.ticket summary .img {
+    position: absolute;
+    top: 22.5px;
+    left: 13px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #e7e7eb;
+}
+.ticket summary .img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+.ticket summary .brand_name {
+    display: block;
+    font-size: 12px;
+    margin-left: 80px;
+}
+.ticket summary .title {
+    display: block;
+    font-size: 22px;
+    margin-left: 80px;
+}

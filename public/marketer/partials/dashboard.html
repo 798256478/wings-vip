@@ -1,0 +1,409 @@
+<style>
+	.row.header {
+    	margin-bottom: 10px;
+	}
+
+	.widget .widget-body.small,.widget .widget-body.medium,.widget .widget-body.large{
+		height: auto;
+	}
+
+	.widget .widget-body.large{
+		min-height: 300px;
+	}
+
+	.widget .widget-header {
+   		padding: 5px 25px 5px 0;
+	}
+
+	.widget .widget-body {
+    	padding: 10px 20px;
+	}
+
+	.widget .widget-body table thead {
+     	background: #fff; 
+	}
+
+	.table {
+    	margin-bottom: 10px;
+	}
+
+	.table>thead>tr>th {
+    	border-bottom: 0;
+	}
+
+	.row > div {
+    	margin-bottom: 10px;
+	}
+
+	.widget .widget-body {
+    	padding-right: 0;
+    	position: relative;
+	}
+
+	.info .name{
+		font-size: 24px;
+		margin-right:20px;
+		display: inline-block;
+		margin-bottom: 10px;
+	}
+
+	.info .link{
+		border-top:1px solid #ddd;
+	}
+	
+	.info .link a{
+		display: inline-block;
+		margin-right: 20px;
+		margin-top: 10px;
+	}
+
+	.info .left {
+		margin-top: 15px;
+		border-right: 1px solid #ddd;
+		display: flex;
+	}
+
+	.info .left img{
+		-webkit-align-items: center;
+  		align-items: center;
+	}
+
+	.info .right div{
+		line-height: 35px;
+	}
+
+	.statistics{
+		background:#eee;
+		margin:10px 1.5%;
+		padding:0;
+	}
+
+	.statistics div:not(:first-child) div{
+		line-height: 40px;
+		border-top: 1px solid #ddd;
+		padding:0 20px;
+	}
+
+	.statistics .header{
+		background: darkturquoise;
+    	height: 95px;
+    	color: white;
+	}
+
+	.statistics .header span{
+		color:#eee;
+	}
+
+	.statistics img{
+		height: 40px;
+   	 	width: 50px;
+    	margin: 28px 0 0 -10px;
+	}
+
+	.statistics .header i{
+		margin-top: 27px;
+	}
+	.statistics .right{
+		text-align: right;
+	}
+
+	.statistics div:not(:first-child) .up {
+		height: 49px;
+    	width: 50px;
+    	overflow: hidden;
+    	padding: 0;
+   	 	margin: 20px -13px;
+    	border: 0;
+	}
+
+	.statistics div:not(:first-child) .up i {
+		margin: 8px -5px;
+    	font-size: 50px;
+	}
+
+	.danger{
+		color: red;
+		margin-left: 13px;
+	}
+
+	.center{
+		text-align: center;
+	}
+	
+	.sale .table>tbody>tr>td{
+		line-height: 30px;
+	}
+
+	.sale img{
+		width: 50px;
+		height: 30px;
+	}
+	
+	.event .table tr td:first-child,.sale .table tr td:first-child{
+		padding:8px 4%;
+	}
+
+	.event .table tr span{
+		display: inline-block;
+		margin-bottom: 3px;
+    	width: 32%;
+	}
+
+	.event .header{
+		color: #767676;
+		margin:0;
+	    padding: 5px 15px;
+	    line-height: 30px;
+	}
+
+	.event .header span{
+		color: #333333 !important;
+		font-weight: 700;
+		display: inline-block;
+	}
+
+	.order h5{
+		color: #767676;
+		margin:0;
+		padding:3px;
+	    background: -webkit-linear-gradient(top, #fcfcfc 0%,#f8f8f8 100%);
+	    line-height: 30px;
+	    font-weight: 700;
+	    border-bottom: 2px solid #ddd;
+	}
+
+	.noInfo{
+		height: 100%;
+    	width: 100%;
+    	display: -webkit-box;
+    	position: absolute;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+    	font-size: 30px;
+    	font-weight: 700;
+    	color: #ccc;
+	}
+
+
+</style>
+<div ng-controller="DashboardController">
+	<div class="row info" >
+		<div class="col-lg-12">
+			<rd-widget>
+			    <rd-widget-body classes="small">
+					<div class="col-lg-8 col-md-12 left">
+						<img src="/common/imgs/logo.png" class="col-lg-2">
+						<div class="col-lg-10">
+							<span class="name">河南金泰生物技术股份有限公司</span>
+							<span class="danger">2017-01-26到期</span>
+							<div class="link">
+								<a href="">店铺设置</a><a href="">查看店铺</a><a href="">新手指引</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-12 right">
+						<div>
+				            <div class="col-lg-7 col-md-7 ">会员营销功能上线</div >
+				            <div class="col-lg-5 col-md-5">2016-06-06 08:00:00</div >
+						</div>
+						<div>
+				            <div class="col-lg-7 col-md-7">买一年赠一年</div>
+				            <div class="col-lg-5 col-md-5">2016-06-06 08:00:00</div>
+						</div>
+						<div>
+				            <div class="col-lg-7 col-md-7">兑换码串联功能免费试</div>
+				            <div class="col-lg-5 col-md-5">2016-06-06 08:00:00</div>
+						</div>
+					</div>
+				</rd-widget-body>
+			</rd-widget>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12 col-md-12">
+			<rd-widget>
+		      	<rd-widget-header title="旺铺数据">
+		      	</rd-widget-header>
+		    <rd-widget-body classes="medium no-padding">
+				<div class="col-lg-2 col-md-2 col-xs-2 statistics" ng-repeat="a in totalData" on-finish-render>
+			        <div ng-switch="a.title" class="header">
+			        	<div class='col-lg-7 col-md-7'>
+			                <h2>{{a.today}}</h2>
+			                <span ng-switch-when="新增">今日新增会员</span>
+			                <span ng-switch-when="到店">今日会员到店</span>
+			                <span ng-switch-when="消费">今日消费</span>
+			                <span ng-switch-when="储值">今日储值</span>
+			                <span ng-switch-when="订单">今日订单</span>
+						</div>
+						<div class='pull-right' style="width: 55px">
+							<div class="up" ng-if="a.today>a.yesterday">
+								<i class="fa fa-5x fa-line-chart"></i>
+							</div>	                
+							<i class="fa fa-3x fa-flash danger" ng-if="a.today<a.yesterday"></i>
+							<i class="fa fa-3x fa-minus" ng-if="a.today==a.yesterday"></i>
+						</div>
+					</div>
+					<div>
+			            <div class="col-lg-6 col-md-6">昨天</div>
+			            <div class="col-lg-6 col-md-6 right">{{a.yesterday}}</div>
+					</div>
+					<div>
+			            <div class="col-lg-6 col-md-6">最近七天</div>
+			            <div class="col-lg-6 col-md-6 right">{{a.week}}</div>
+					</div>
+					<div>
+			            <div class="col-lg-6 col-md-6">最近30天</div>
+			            <div class="col-lg-6 col-md-6 right">{{a.month}}</div>
+			        </div>								
+				</div>
+			</rd-widget-body>
+			</rd-widget>
+		</div>
+	</div>
+	<div class="row bottom">
+		<div class="col-lg-4 col-md-12 order" on-finish-render>
+			<rd-widget>
+	      		<rd-widget-header title="订单">
+	      		全部
+	      		</rd-widget-header>
+	      		<rd-widget-body classes="large no-padding">
+					<div class="table-responsive" ng-if="unfinishOrderList.length!=0||finishOrderList.length!=0">
+						<h5 class="center">待处理订单</h5>
+	                    <table class="table">
+							<thead ng-if="unfinishOrderList.length!=0">
+								<tr>
+									<th>卡号</th>
+									<th>昵称</th>
+									<th>类型</th>
+									<th>总金额</th>
+									<th>支付金额</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<div ng-if="unfinishOrderList.length==0" class="center" style="margin-top: 15px">(暂无待处理订单)</div>
+	                            <tr ng-repeat="a in unfinishOrderList" on-finish-render>
+	                                <td>{{a.card.card_code}}</td>
+	                                <td>{{a.card.nickname}}</td>
+	                                <td>{{a.body.split(':')[0]}}</td>
+	                                <td>{{a.total_fee}}</td>
+	                                <td>{{a.state=="NOT_PAY"?'--':a.total_fee}}</td>
+	                                <td ng-if="a.state=='PAY_SUCCESS'"><a ng-click="deliver([a.id])" style="cursor: pointer">发货</a></td>
+	                                <td ng-if="a.state=='NOT_PAY'">待付款</td>
+	                            </tr>
+	                        </tbody>
+	                    </table>
+						<h5 class="center">已处理订单</h5>
+						<table class="table">
+							<thead ng-if="finishOrderList.length!=0">
+								<tr>
+									<th>卡号</th>
+									<th>昵称</th>
+									<th>类型</th>
+									<th>总金额</th>
+									<th>支付金额</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<div ng-if="finishOrderList.length==0" class="center" style="margin-top: 15px">(暂无已处理订单)</div>
+	                            <tr ng-repeat="a in finishOrderList" on-finish-render>
+	                                <td>{{a.card.card_code}}</td>
+	                                <td>{{a.card.nickname}}</td>
+	                                <td>{{a.body.split(':')[0]}}</td>
+	                                <td>{{a.total_fee}}</td>
+	                                <td>{{a.state=="CLOSED"?'--':a.total_fee}}</td>
+	                                <td><a href="#/order_details/{{a.id}}">查看</a></td>
+	                            </tr>
+	                        </tbody>
+	                    </table>
+					</div>
+					<div ng-if="unfinishOrderList.length==0&&finishOrderList.length==0" class="noInfo">暂无订单记录</div>
+				</rd-widget-body>
+			</rd-widget>
+		</div>
+		<div class="col-lg-4 col-md-12 event" on-finish-render>
+			<rd-widget>
+				<rd-widget-header title="当前营销">
+					设置
+				</rd-widget-header>
+				<rd-widget-body classes="large no-padding">
+					<div class="table-responsive">
+						<table class="table">
+							<div class="header" ng-if="eventruleList">
+								<span style="width: 31%">名称</span>
+								<span style="width: 16%">对象</span>
+								<span style="width: 15%">动作</span>
+								<span style="width: 25%">参数</span>
+								<span>操作</span>
+							</div>
+							<tbody>
+	                            <tr ng-repeat="a in eventruleList" on-finish-render>
+	                            	<div ng-if="!eventruleList" class="noInfo">暂无营销记录</div>
+	                                <td class="col-lg-4 col-md-4">{{a.title}}</td>
+	                                <td style="width:55%">
+	                                	<div ng-repeat="b in a.jobs" style="width: 125%" on-finish-render>	                                	
+	                                		<span style="width:20%">{{recipient[b.recipient]}}</span>
+						                    <span style="width:23%">{{actionJobList[b.class].label}}</span> 
+						                    <span ng-if="getType(b.args) == 'object'" class="object" style="width:42%">
+						                        <div ng-repeat="(key, value) in b.args" ng-switch on="key">
+						                            <div ng-switch-when="ticketTemplateId" style="float:left">
+						                                {{actionJobList[b.class].term_type[key].label}}:{{getTicketName(value)}}
+						                            </div>
+						                            <div ng-switch-when="propertyTemplateId">
+						                                {{actionJobList[b.class].term_type[key].label}}:{{getPropertyName(value)}}
+						                            </div>
+						                            <div ng-switch-default>
+						                                *{{value}}
+						                            </div>
+						                        </div>
+						                    </span>
+						                    <span ng-if="getType(b.args) == 'number'">
+						                        <span ng-if="b.class == 'App\\Jobs\\LevelUp'" style="width:100%">{{getLevelName(b.args)}}</span>
+						                        <span ng-if="b.class != 'App\\Jobs\\LevelUp'">{{b.args}}</span>
+						                    </span>
+						                </div>
+	                                </td>
+	                                <td><a href="" ng-click="eventLink(a)">设置</a></td>
+	                            </tr>
+	                        </tbody>
+						</table>
+	        		</div>
+				</rd-widget-body>
+			<rd-widget>
+		</div>
+		<div class="col-lg-4 col-md-12 sale" on-finish-render>
+			<rd-widget>
+				<rd-widget-header title="销量TOP">
+				</rd-widget-header>
+				<rd-widget-body classes="large no-padding">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr ng-if="saleTop.length!=0">
+									<th class="center">图片</th>
+									<th>名称</th>
+									<th>单价</th>
+									<th>销量</th>
+									<th>总价</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+	                        <tbody>
+	                        	<div ng-if="saleTop.length==0" class="noInfo">暂无销售记录</div>
+	                            <tr ng-repeat="a in saleTop" on-finish-render>
+	                            	<td class="col-xs-1"><img ng-src="{{a.image[0] ? a.image[0] : '/common/imgs/noimg.png'}}" alt=""></td>
+	                                <td style="max-width:150px">{{a.name}}</td>
+	                                <td>{{a.price}}元</td>
+	                                <td>{{a.sum||0}}</td>
+	                                <td>{{a.total_price||'0.00'}}元</td>
+	                                <td><a href="#/commodity_statistics_details/{{a.id}}">查看</a></td>
+	                            </tr>
+	                        </tbody>    
+	                    </table>
+	        		</div>
+				</rd-widget-body>
+			<rd-widget>
+		</div>
+	</div>
+</div>

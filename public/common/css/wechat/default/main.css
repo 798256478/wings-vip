@@ -1,0 +1,638 @@
+/**********************************卡面*****************************************/
+.card-wrapper{
+    position: relative;
+    padding-top: 15px;
+}
+
+.card{
+    position: relative;
+    border-radius: 10px;
+    height: 160px;
+    width: 315px;
+	color: #fff;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card .top {
+    padding-top: 15px;
+}
+
+.card .left{
+    float: left;
+    width: 100px;
+    text-align: center;
+}
+
+.card .right {
+    float: left;
+    padding: 20px 0 20px 5px;
+}
+
+.card .bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-top: solid 1px #fff;
+    height: 46px;
+}
+        
+.card .icon{
+    width: 70px;
+    height: 70px;
+    background-color: #fff;
+    margin-top: 25px;
+    padding: 2px;
+}
+
+.card .title {
+    display: block;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.card .subtitle {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 11px;
+}
+
+.card .code {
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.card .code>small {
+    font-size: 12px;
+}
+
+.card.back .top {
+    padding-top: 0;
+}
+
+.card .name {
+    display: block;
+    white-space: nowrap;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: 400;
+    width: 169px;
+}
+
+.card .phone {
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.card .phone>small {
+    font-size: 12px;
+}
+
+.card .property:first-child {
+    border-left: none;
+}
+
+.card .property {
+    float: left;
+    width: 33.33333333%;
+    text-align: center;
+    border-left: solid 1px #fff;
+}
+
+.card .property a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.card .property label {
+    display: block;
+    font-size: 12px;
+    font-weight: 200;
+    margin-top: 3px;
+    margin-bottom: 0;
+    color: #eee;
+}
+
+.card .property span {
+    font-size: 17px;
+}
+
+/**********************************服务菜单*****************************************/
+.service-group {
+    background-color: #fff;
+    margin-top: 15px;
+}
+
+.service-group .service:first-child {
+    border-top: none;
+}
+
+.service-group .service:hover {
+	/* background-color: #ddd; */
+}
+
+.service-group .service {
+    padding: 0 15px 0 15px;
+    display: block;
+    text-decoration: none;
+    height: 48px;
+    line-height: 48px;
+    border-top: 1px solid #eee;
+}
+
+.service-group .service .icon {
+    line-height: 47px;
+    float: left;
+    margin-right: 7px;
+    margin-top: 1px;
+	color: #777;
+}
+
+.service-group .glyphicon {
+    float: right;
+    top: 0;
+    color: #777;
+    line-height: 46px;
+    font-weight: lighter;
+}
+
+.service-group .title {
+    color: #000;
+    float: left;
+}
+
+.service-group .glyphicon {
+    float: right;
+    top: 0;
+    color: #777;
+    line-height: 46px;
+    font-weight: lighter;
+}
+
+.service-group .sub-title {
+    float: right;
+    font-size: 12px;
+    color: #777;
+    margin-right: 5px;
+}
+
+/**********************************券包*****************************************/
+
+.tickets-pack{
+	padding: 4px 10px;
+}
+
+.tickets-pack .collapse-button{
+    margin: 5px;
+    height: 30px;
+    width: 100px;
+    background-color: #aaa;
+    border-color:#aaa;
+    color: #fff;
+}
+
+.ticket{
+	margin-top: 6px;
+}
+
+.ticket summary{
+	display: block;
+	clear: both;
+	height: 55px;
+}
+
+.ticket summary::-webkit-details-marker{
+	display: none;
+}
+
+.ticket summary:focus{
+	outline: none;
+}
+
+.ticket summary .left{
+	position: relative;
+	float: left;
+	width: 61.8%;
+	height: 55px;
+	background-color: #fff;
+	text-align: center;
+	padding-top: 17px;
+}
+
+.ticket summary .left .type{
+	position: absolute;
+	top: 3px;
+	left: 5px;
+	color: #777;
+}
+
+.ticket summary .left .title{
+	font-size: 19px;
+	float: none;
+}
+
+.ticket summary .right{
+	position: relative;
+	float: left;
+	width: 38.2%;
+	height: 55px;
+	text-align: center;
+	color: #fff;
+	padding-top: 10px;
+	border-left: 1px solid #eee;
+}
+
+.ticket summary .right .sub-title{
+	float: none;
+	width: 92px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	color: #fff;
+	font-size: 13px;
+	border-bottom: 1px solid #fff;
+}
+
+.ticket summary .right .date-info{
+	font-size: 12px;
+}
+
+.ticket summary .point{
+	position: absolute;
+	left: -4px;
+	height: 7px;
+	width: 7px;
+	background-color: #eee;
+	border-radius: 4px;
+}
+
+.ticket summary .p1{top: 5px;}
+.ticket summary .p2{top: 15px;}
+.ticket summary .p3{top: 25px;}
+.ticket summary .p4{top: 35px;}
+.ticket summary .p5{top: 45px;}
+
+.ticket summary .p6{
+	left:auto;
+	right:-10px;
+	top:17px;
+	height: 20px;
+	width: 20px;
+	border-radius: 10px;
+}
+
+.ticket summary .right .seal{
+	position: absolute;
+	z-index: 1;
+	bottom: 24px;
+	left: -48px;
+	display: block;
+	font-size: 10px;
+	border: red 1px solid;
+	color: red;
+	transform: rotate(35deg);
+	-ms-transform:rotate(35deg); 	/* IE 9 */
+	-moz-transform:rotate(35deg); 	/* Firefox */
+	-webkit-transform:rotate(35deg); /* Safari 和 Chrome */
+	-o-transform:rotate(35deg);
+}
+
+.ticket summary .right .seal.grey{
+	color: grey;
+	border-color: grey;
+}
+
+.ticket>p{
+	padding: 10px;
+	background-color: #fff;
+	border-top: 2px #eee dashed;
+}
+
+/**************************内页页头**********************************/
+.breadcrumb{
+	padding: 8px 15px;
+	margin-bottom: 10px;
+}
+
+/**************************记录页（余额、积分、记录）**********************************/
+
+.header-explain{
+	float: right;
+	border: none;
+	background-color: #fff;
+	font-size: 10px;
+	color: #777;
+}
+
+.header-property{
+	height: 100px;
+	width: 100px;
+	text-align: center;
+	color: #fff;
+	padding-top:24px;
+	border-radius: 50px;
+	margin: 10px auto;
+	margin-top: 20px;
+}
+
+.header-property>label{
+	font-size: 10px;
+	margin-bottom: 1px;
+}
+
+.header-property>span{
+	font-size: 21px;
+}
+
+.header-buttons{
+	width: 212px;
+	margin: 10px auto;
+
+}
+
+.header-buttons a{
+	display: inline-block;
+	margin: 0 auto;
+	background-color: #fff;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	color: #777;
+	font-size: 12px;
+	width: 95px;
+	height: 28px;
+	line-height: 24px;
+	text-align: center;
+}
+
+.header-buttons a:hover{
+	background-color: #ddd;
+}
+
+.tab-content {
+	margin-top: 10px;
+}
+
+.content-title{
+	position: relative;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.content-title>span{
+	background-color: #fff;
+	font-size: 12px;
+	color: #999;
+}
+
+.content-title .line{
+	position: absolute;
+	width: 100%;
+	border-top: 1px solid #eee;
+	z-index: -1;
+	top:10px;
+}
+
+.content-none{
+	color: #777;
+	text-align: center;
+	margin-top: 40px;
+}
+
+.content-none .icon{
+	height: 50px;
+	width: 50px;
+	border-radius: 25px;
+	margin: 10px auto;
+	padding-top:7px;
+	background-color: #eee;
+	color: #fff;
+	font-size: 30px;
+}
+
+.record{
+	position: relative;
+	border-top:1px solid #eee;
+	padding: 8px 10px;
+}
+
+.record:first-child{
+	border-top:none;
+}
+
+.record-time{
+	display: block;
+	font-size: 12px;
+	color: #999;
+	margin-bottom: 1px;
+}
+
+.record>p{
+	margin-bottom: 0;
+	padding: 0 3px;
+}
+
+.record-action{
+	font-weight: 600;
+}
+
+.record-summary{
+	color: #555;
+}
+
+.record.value-change>p{
+	padding-right: 60px;
+}
+
+.record-value{
+	position: absolute;
+	right: 10px;
+	top:18px;
+	font-size: 16px;
+}
+
+.record-value.add{
+	color: #FF9900;
+}
+
+.record-value.minus{
+	color: #66CC00;
+}
+
+/**********************************Loading*****************************************/
+.loading{
+	position: fixed;
+	z-index: 1;
+	height: 100%;
+	width: 100%;
+	left: 0;
+	top: 0;
+	background-color: rgba(0,0,0,0.85);
+}
+
+.sk-cube-grid {
+	width: 40px;
+	height: 40px;
+	margin: 200px auto;
+	/*
+	* Spinner positions
+	* 1 2 3
+	* 4 5 6
+	* 7 8 9
+	*/ }
+.sk-cube-grid .sk-cube {
+	width: 33.33%;
+	height: 33.33%;
+	background-color: #333;
+	float: left;
+	-webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+			animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; }
+.sk-cube-grid .sk-cube1 {
+	-webkit-animation-delay: 0.2s;
+			animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube2 {
+	-webkit-animation-delay: 0.3s;
+			animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube3 {
+	-webkit-animation-delay: 0.4s;
+			animation-delay: 0.4s; }
+.sk-cube-grid .sk-cube4 {
+	-webkit-animation-delay: 0.1s;
+			animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube5 {
+	-webkit-animation-delay: 0.2s; 
+			animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube6 {
+-webkit-animation-delay: 0.3s;
+		animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube7 {
+	-webkit-animation-delay: 0.0s;
+			animation-delay: 0.0s; }
+.sk-cube-grid .sk-cube8 {
+	-webkit-animation-delay: 0.1s;
+			animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube9 {
+	-webkit-animation-delay: 0.2s;
+			animation-delay: 0.2s; }
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+0%, 70%, 100% {
+	-webkit-transform: scale3D(1, 1, 1);
+			transform: scale3D(1, 1, 1); }
+35% {
+	-webkit-transform: scale3D(0, 0, 1);
+			transform: scale3D(0, 0, 1); } }
+
+@keyframes sk-cubeGridScaleDelay {
+0%, 70%, 100% {
+	-webkit-transform: scale3D(1, 1, 1);
+			transform: scale3D(1, 1, 1); }
+35% {
+	-webkit-transform: scale3D(0, 0, 1);
+			transform: scale3D(0, 0, 1); } }    
+
+/**********************************alert*****************************************/
+
+.sweet-alert h2{
+	font-size: 19px;
+	margin: 20px 0 15px;
+}
+
+.sweet-alert p{
+	font-size: 14px;
+	line-height: 22px;
+}
+
+/**********************************动画*****************************************/
+/*
+* jQuery Mobile Framework
+* Copyright (c) jQuery Project
+* Dual licensed under the MIT (MIT-LICENSE.txt) or GPL (GPL-LICENSE.txt) licenses.
+*/
+.in {
+	-webkit-animation-timing-function: ease-out;
+	-webkit-animation-duration: 350ms;
+	animation-timing-function: ease-out;
+	animation-duration: 350ms;
+}
+.out {
+	-webkit-animation-timing-function: ease-in;
+	-webkit-animation-duration: 225ms;
+	animation-timing-function: ease-in;
+	animation-duration: 225ms;
+}
+
+/* The properties in this rule are only necessary for the 'flip' transition.
+ * We need specify the perspective to create a projection matrix. This will add
+ * some depth as the element flips. The depth number represents the distance of
+ * the viewer from the z-plane. According to the CSS3 spec, 1000 is a moderate
+ * value.
+ */
+.viewport-flip {
+	-webkit-perspective: 1000;
+	perspective: 1000;
+	/*position: absolute;*/
+}
+.flip {
+	-webkit-backface-visibility: hidden;
+	-webkit-transform: translateX(0); /* Needed to work around an iOS 3.1 bug that causes listview thumbs to disappear when -webkit-visibility:hidden is used. */
+	backface-visibility: hidden;
+	transform: translateX(0);
+}
+.flip.out {
+	-webkit-transform: rotateY(-90deg) scale(.9);
+	-webkit-animation-name: flipouttoleft;
+	-webkit-animation-duration: 175ms;
+	transform: rotateY(-90deg) scale(.9);
+	animation-name: flipouttoleft;
+	animation-duration: 275ms;
+}
+.flip.in {
+	-webkit-animation-name: flipintoright;
+	-webkit-animation-duration: 225ms;
+	animation-name: flipintoright;
+	animation-duration: 325ms;
+}
+.flip.out.reverse {
+	-webkit-transform: rotateY(90deg) scale(.9);
+	-webkit-animation-name: flipouttoright;
+	transform: rotateY(90deg) scale(.9);
+	animation-name: flipouttoright;
+}
+.flip.in.reverse {
+	-webkit-animation-name: flipintoleft;
+	animation-name: flipintoleft;
+}
+@-webkit-keyframes flipouttoleft {
+    from { -webkit-transform: rotateY(0); }
+    to { -webkit-transform: rotateY(-90deg) scale(.9); }
+}
+@keyframes flipouttoleft {
+    from { transform: rotateY(0); }
+    to { transform: rotateY(-90deg) scale(.9); }
+}
+@-webkit-keyframes flipouttoright {
+    from { -webkit-transform: rotateY(0) ; }
+    to { -webkit-transform: rotateY(90deg) scale(.9); }
+}
+@keyframes flipouttoright {
+    from { transform: rotateY(0); }
+    to { transform: rotateY(90deg) scale(.9); }
+}
+@-webkit-keyframes flipintoleft {
+    from { -webkit-transform: rotateY(-90deg) scale(.9); }
+    to { -webkit-transform: rotateY(0); }
+}
+@keyframes flipintoleft {
+    from { transform: rotateY(-90deg) scale(.9); }
+    to { transform: rotateY(0); }
+}
+@-webkit-keyframes flipintoright {
+    from { -webkit-transform: rotateY(90deg) scale(.9); }
+    to { -webkit-transform: rotateY(0); }
+}
+@keyframes flipintoright {
+    from { transform: rotateY(90deg) scale(.9); }
+    to { transform: rotateY(0); }
+}

@@ -1,0 +1,68 @@
+<link rel="stylesheet" href="/common/css/wechat-color.css">
+<link rel="stylesheet" href="css/setting.css">
+<link rel="stylesheet" href="css/kendo.default.min.css">
+<link rel="stylesheet" href="css/kendo.common.min.css">
+<div class="row" id="setting" ng-controller="SettingController">
+    <div class="col-lg-3">
+        <rd-widget>
+            <rd-widget-header icon="fa-gift" title="设置项"></rd-widget-header>
+            <rd-widget-body classes="large-xx no-padding">
+                <div class="list-group" style="padding: 0;">
+                    <button class="list-group-item" ng-repeat="(key, value) in settingList"
+                        ng-click="getSetting(key);">{{value}}</button>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-9">
+        <rd-widget>
+            <rd-widget-header icon="fa-gift" title="{{settingList[setting.key]}}"></rd-widget-header>
+            <rd-widget-body classes="large-xx no-padding">
+                <div class="row" ng-if="setting.key">
+                    <form name="form.settingForm" class="form-horizontal" ng-submit="submit(form.settingForm.$valid)" autocomplete="off">
+                        <fieldset ng-if="setting.key == 'TICKET'" ng-include="'partials/setting_ticket.html'">
+                        </fieldset>
+                        <fieldset ng-if="setting.key == 'CARD'" ng-include="'partials/setting_card.html'">
+                        </fieldset>
+                        <fieldset ng-if="setting.key == 'BALANCE'" ng-include="'partials/setting_balance.html'">
+                        </fieldset>
+                        <fieldset ng-if="setting.key == 'PAYMENT'" ng-include="'partials/setting_payment.html'">
+                        </fieldset>
+                        <fieldset ng-if="setting.key == 'CASHIER_CLIENT'">
+                            <div class="form-group">
+                                <label class="control-label col-md-1">锁定时间</label>
+                                <div class="col-md-2">
+                                    <input type="number" class="form-control" ng-model="setting.value.auto_lock">
+                                </div>
+                                <span class="control-label left">秒</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-1">菜单配置</label>
+                                <div class="col-md-9">
+                                    <div class="sortable-container" sv-root sv-part="setting.value.menus">
+                                        <div ng-repeat="item in setting.value.menus" sv-element="opts" class="sortable">
+                                            {{item.tag}}
+                                            <span class="toggle right" style="margin-top:-5px;">
+                                                <i class="fa fa-toggle-on active" ng-if="!item.disable" ng-click="item.disable = changeState(item.disable);"></i>
+                                                <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="item.disable" ng-click="item.disable = changeState(item.disable);"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset ng-if="setting.key == 'THEME'" ng-include="'partials/setting_theme.html'">
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group">
+                                <div class="col-md-offset-1 col-md-2">
+                                    <button type="submit" class="btn btn-primary" style="margin-left:0;">保存</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

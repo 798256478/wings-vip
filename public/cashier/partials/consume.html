@@ -1,0 +1,32 @@
+<form name="consume_form" ng-controller="ConsumeController"  ng-submit="submit(consume_form.$valid)">
+    <div class="form-group">
+        <label>消费：</label>
+        <input mnk-input shortcut-group="jiezhang" type="text" class="form-control" name="total_fee"
+            ng-model="order.total_fee"  ng-pattern="/^[1-9][0-9]*[.0-9]*|0.[0-9]*[1-9]$/"
+            ng-init="DesktopManager.setFocus('input[name=&quot;total_fee&quot;]')"/>
+        <span class="error" ng-show="consume_form.total_fee.$dirty&&consume_form.total_fee.$invalid">消费必须为正数</span>
+    </div>
+    <div class="form-group">
+        <label>赠送积分：</label>
+        <div class="input-group">
+            <input mnk-input type="text"  class="form-control " name="bonus_present"  ng-disabled="AuthService.current_user.roles!='captain'"
+                 ng-model="order.bonus_present" ng-pattern="/^[1-9][0-9]*$/"/>
+            <span class="input-group-btn">
+                <a  class="btn btn-primary update-btn" ng-show="AuthService.current_user.roles!='captain'" ng-click="switchUser()">修改</a>
+            </span>
+        </div>
+        <span class="error" ng-show="consume_form.bonus_present.$dirty&&consume_form.bonus_present.$invalid">赠送必须为正整数</span>
+    </div>
+    <div class="form-group">
+          <label>支付方式：<small  style="font-weight:400">(1积分抵扣{{bonus_rule.exchange}}元钱)</small></label>
+         <payment debt="debt"  amount="order.total_fee" payment='payments["consume"]'  paymentselects="paymentselects"  bonusrule="bonus_rule"   qualitydata="qualitydata" operation="submit(isValid)" bonus="order.bonus_present" ></payment>
+    </div>
+    <div class="form-group">
+        <label>备注：</label>
+        <input type="text" class="form-control"  ng-model="order.remark" />
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary btn-lg submit-button"  ng-show="debt==0">提交</button>
+        <span class="btn btn-danger btn-lg submit-button"  ng-show="debt!=0">尚余{{debt}}未结清</span>
+    </div>
+</form>

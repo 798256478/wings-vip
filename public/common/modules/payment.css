@@ -1,0 +1,13 @@
+/*-----------------------------------------payment-wrapper-------------------------------------------------*/
+.payment-wrapper .input-group-addon{
+	background-color: #999;
+	border-color: #999;
+	cursor:pointer;
+	color: #fff;
+	width: 80px;
+    border-radius:0;
+}
+
+.payment-wrapper .select-addon{
+    background-color: #159957;
+}

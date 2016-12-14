@@ -1,0 +1,115 @@
+<style media="screen">
+     .project-div{
+        border: 2px solid #ddd;
+        margin-bottom: 30px;
+     }
+     .captain{
+        display: inline-block;
+        line-height: 40px;
+        width: 100%;
+        font-size: 14px;
+        background-color: #eee;
+        padding: 3px 10px;
+     }
+     .captain * {
+        float: left;
+      }
+      
+      .captain a {
+        color: black;
+      }
+      
+      .assessment{
+          padding:10px;
+      }
+</style>
+<div class="row" id="upload" ng-controller="RiskDataController">
+    <div class="col-md-3">
+        <rd-widget>
+            <rd-widget-header icon="fa-users" title="列表">
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <div  class="search-div">
+                     <div class="col-md-4">
+                        <input type="text" placeholder="查找" class="form-control "
+                        ng-model="pages.code" ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}" />
+                     </div>
+                     <div class="col-md-6">
+                        <select class="form-control" ng-options="a.id as a.name for a in experiments"
+                        ng-model="pages.experimentId"></select>
+                     </div>
+                     <div class="icon">
+                        <span class="glyphicon glyphicon-search" ng-click="getList()"></span>
+                     </div>
+                </div>
+                 <br/>
+                 <table class="table">
+                    <thead>
+                        <tr>
+                            <th>编码</th>
+                            <th>实验名称</th>
+                            <th>当前进度</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="a in experimentDataList" on-finish-render>
+                            <td>{{a.barcode.code}}</td>
+                            <td>{{a.experiment.name}}</td>
+                            <td>{{a.progress.name}}</td>
+                            <td><a href="" ng-click="getRiskById(a)">编辑</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-page col-md-12">
+                    <paging
+                        page="pages.nowPage"
+                        page-size="pages.total"
+                        total="pages.total"
+                        scroll-top="true"
+                        hide-if-empty="true"
+                        show-prev-next="true"
+                        text-next=">"
+                        text-prev="<"
+                        text-title-page="第 {page} 页"
+                        text-title-next="下一页"
+                        text-title-prev="上一页">
+                    </paging>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-md-9" ng-show="projectList">
+        <rd-widget>
+            <rd-widget-header title="检测项目：{{currentExperimentData.experiment.name}}">
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <div class="project-div" ng-repeat="project in projectList">
+                    <div class="captain" >
+                            <span>名称：</span><span ng-bind="project.name"></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span>基因评分：</span><span ng-bind="project.projectdata.score"></span></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span>环境评分：</span>
+                            <div class="col-md-2">
+                                <input type="number" class="form-control" step="0.01" name="circum_score" ng-model="project.riskdata.circum_score" >
+                            </div>
+                            <span>总分：</span>
+                            <div class="col-md-2">
+                                <input type="number" class="form-control" step="0.01" name="total_score" ng-model="project.riskdata.total_score"  ng-change="getSel(project)">
+                            </div>
+                            <span>风险层级： </span>
+                            <div class="col-md-2">
+                                <select ng-model="project.riskdata.level" ng-options="circumRisk.level as circumRisk.tag for circumRisk in project.circumRisks"  class="form-control" ng-selected="project.riskdata.level">
+                                </select>
+                            </div>
+                    </div>
+                    <div class="assessment">
+                        <span>环境评价：</span>
+                        <textarea name="riskAssessment" rows="7" class="form-control" ng-model="project.riskdata.riskAssessment"></textarea>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary"
+                ng-disabled="form.wrongForm.$invalid" ng-click="saveData();">提交</button>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

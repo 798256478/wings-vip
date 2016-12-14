@@ -1,0 +1,190 @@
+.member-info-group {
+    margin-top: 15px;
+    background-color: #fff;
+    padding: 5px 15px 0 15px;
+}
+
+/*单选框多选框样式*/
+input[type=radio], input[type=checkbox] {
+    display: none;
+}
+
+.input-cont {
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #eee;
+    height: 32px;
+    padding: 3px 0;
+    margin-top: 5px;
+    margin-right: 4%;
+    min-width: 44% ;
+
+}
+
+.icon-cont {
+    border-right: 1px solid #fff;
+    width: 26px;
+    background-image: url("/common/imgs/input-unchecked.png");
+    background-size: 70% 70%;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.writ-cont {
+    /*padding: 0 20px;*/
+    vertical-align: top;
+    /*display: inline-block;*/
+    padding: 0 3%;
+
+}
+
+.icon-cont, .writ-cont {
+    display: inline-block;
+    height: 26px;
+    text-align: center;
+    line-height: 26px;
+    float:left;
+
+}
+
+
+.checked .icon-cont {
+    background-image: url("/common/imgs/input-checked.png") !important;
+}
+
+/*单选框多选框样式*/
+
+/*输入框*/
+.list-input, .mbsc-control-ev {
+    padding: 0;
+    border: none;
+    border-bottom: solid 1px #DADADA;
+    outline: none;
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+    background-color: inherit;
+    margin-right: 10px;
+    float: right;
+    cursor: pointer;
+}
+
+.color-show {
+    color: #777;
+}
+
+/*输入框*/
+
+/*问卷内容*/
+.section {
+
+}
+
+.section-title {
+    text-align: center;
+    background-color: #fff;
+
+}
+
+.section-title h3 {
+    margin-top: 0;
+}
+
+.section-cont {
+    background-color: #fff;
+    padding: 15px 15px;
+}
+
+.one-topic,.one-topic-text {
+    margin-bottom: 25px;
+}
+
+.one-topic .number,.one-topic-text .number{
+    display: inline-block;
+    width: 22px;
+    text-align: right;
+    vertical-align: top;
+}
+
+pre{
+    display: inline-block;
+    background:none;
+    border: none;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+    font-weight: 700;
+    white-space: pre-wrap;
+    max-width: 90%;
+}
+
+.required-icon {
+    color: red;
+    vertical-align: top;
+}
+
+.topic-title-text{
+    float: left;
+}
+
+.topic-title span,.topic-title-text span {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.topic-option {
+    margin-top: 5px;
+    padding-left: 6%;
+}
+
+.topic-option span {
+    font-size: 12px;
+    font-weight: 400;
+
+}
+
+.topic-option-text{
+    width: auto;
+    float: left;
+    margin-left: 18px;
+}
+
+.button-cont {
+    margin-top: 20px;
+    background-color: #fff;
+
+}
+
+.btn:focus, .btn:hover {
+    color: #fff;
+}
+
+.button-cont .up {
+    float: left;
+    margin-left: 6%;
+}
+
+.button-cont .down {
+    float: right;
+    margin-right: 6%;
+}
+
+.button-cont .submit-button {
+    float: right;
+    margin-right: 6%;
+
+}
+
+.button-cont .glyphicon-menu-left {
+    margin-right: 20%;
+}
+
+.button-cont .glyphicon-menu-right {
+    margin-left: 20%;
+
+}
+
+.error {
+    color: red;
+    vertical-align: top;
+}

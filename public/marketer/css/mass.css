@@ -1,0 +1,80 @@
+/*#mass table{
+    margin-bottom: 0;
+    max-height: 500px;
+    overflow: auto;
+}*/
+
+#mass .mass .eachone{
+    width: 400px;
+    margin-bottom: 10px;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+#mass .mass .query-div {
+    width: 250px;
+    margin-left: 545px;
+}
+#mass .mass .eachone>label{
+    width: 85px;
+    float: left;
+    padding-top: 7px;
+    padding-left: 5px;
+}
+
+#mass .mass .eachone>span{
+    float: left;
+    padding: 7px 5px 0 5px;
+}
+#mass .mass .eachone input[type='text']{
+    width: 115px;
+    float: left;
+}
+#mass .mass .eachone select{
+    width: 115px;
+    float: left;
+}
+#mass .mass .eachone .show-state {
+    cursor: pointer;
+    font-size: 20px;
+    padding-top: 1px;
+}
+#mass .btn-div button{
+    float: right;
+    margin: 0 15px;
+}
+.fa-eye {
+    color: #6aa84f;
+}
+#mass .page-header{
+    margin: 20px 0 10px 0;
+}
+
+.table-div{
+    max-height: 320px;
+    overflow: auto;
+}
+
+.table-div table{
+    margin-bottom: 0;
+}
+.send-div{
+    padding: 0;
+}
+.send-div .msg{
+    margin-left: 20px;
+    float: left;
+}
+.send-div .result-btn{
+    margin-bottom: 15px;
+    width: 80px;
+    float: right;
+}
+.info td{
+    padding-right: 20px;
+}
+.table-condensed tr:first-child td {
+    border-top: 0;
+}

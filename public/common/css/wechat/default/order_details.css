@@ -1,0 +1,258 @@
+/*顶部状态*/
+.group .pay{
+    margin-left: 4.16%;
+}
+
+.group .complete{
+    margin-right: 4.16%;
+}
+
+.state{
+    padding-left: 0;
+    padding-right: 0;
+
+}
+
+.state .col-xs-1,.state .col-sm-1,.state .col-xs-3,.state .col-sm-3{
+    padding: 0;
+}
+
+.state div{
+    text-align: center;
+}
+
+.state .state-icon{
+    font-size: 20px;
+}
+
+.state .connect{
+    font-size: 29px;
+}
+
+.state .pay-shipping,.state .shipping-complete{
+    margin-top:6px ;
+}
+
+.state .pay-shipping span,.state .shipping-complete span{
+    margin-left: -113%;
+    display: block;
+    width: 325%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.state .yes{
+    color: #0092DB;
+}
+
+.state .no{
+    color: gray;
+}
+/*顶部状态完*/
+
+/*配送页面*/
+.delivery .title{
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 600;
+    float: left;
+}
+
+.group .text{
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    float: left;
+    margin-left: 5px;
+}
+
+.delivery .address-one{
+    width: 100%;
+}
+
+.delivery .address-one:first-child{
+    margin-bottom: 10px;
+}
+
+.delivery .address-key{
+    display: inline-block;
+    vertical-align: top;
+    float: left;
+}
+
+.delivery .address-val{
+    display: inline-block;
+    margin-left: 5px;
+    float: left;
+}
+/*配送页面完*/
+
+/*优惠券*/
+.ticket .ticket-cont>span{
+
+}
+
+.ticket .ticket-cont .ticket-key{
+    display: block;
+    float: left;
+}
+
+.ticket .ticket-cont .ticket-val{
+    display: block;
+    float: right;
+    color: #999999;
+}
+/*优惠券完*/
+
+/*支付*/
+.pay-group{
+    padding-top: 10px;
+}
+
+.pay-group .title{
+    border-top: 1px solid #dfdfdf;
+    padding-top:10px;
+}
+
+.pay-group .title:first-child{
+    border-top: none;
+    padding-top: 0;
+}
+
+.pay-group .remark{
+    color: #777777;
+}
+
+.pay-group.bonus-group .remark .price,.pay-group.bonus-group .remark .bonus-require{
+    font-size: 14px;
+    margin: 0 5px;
+}
+
+/*支付*/
+
+/*购物车列表*/
+.group .order-detail .caption .refund{
+    color: red;
+    font-size: 12px;
+}
+.group .order-detail .operation{
+    float: right;
+}
+
+.group .order-detail .operation .quantity{
+    font-size: 16px;
+    float: none;
+    height: 70px;
+    text-align: right;
+    line-height: 70px;
+}
+
+.group .order-detail .operation .refund{
+    margin-top: -24px;
+}
+
+.group .order-detail .operation .refund a{
+    color: #333;
+    font-size: 12px;
+}
+/*购物车列表完*/
+/*底部菜单*/
+/*************************************购物车Bar******************************************/
+.cart-bar{
+    z-index: 100;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 45px;
+    background-color: rgba(0,0,0,0.75);
+    color: #fff;
+}
+
+.cart-bar .menu-icon,
+.cart-bar .cart-icon{
+    font-size: 23px;
+    line-height: 45px;
+    padding: 0 9px;
+}
+
+.cart-bar>.split{
+    font-size: 20px;
+    position: relative;
+    top: -4px;
+    color: #aaa;
+}
+
+.cart-bar .total-price i,
+.cart-bar .total-bonus-require i{
+    font-size:15px;
+}
+
+.cart-bar .total-price .value,
+.cart-bar .total-bonus-require .value{
+    font-size:18px;
+}
+
+.cart-bar .total-bonus-require i{
+    position: relative;
+    top: -2px;
+}
+
+.cart-bar .total-price-and-bonus{
+    font-size: 16px;
+    padding: 0 2px;
+    color: #777;
+}
+
+.cart-bar .total-price.null-value,
+.cart-bar .total-bonus-require.null-value{
+    color: #777;
+}
+
+.cart-bar .order-submit{
+    float: right;
+    height:45px;
+    width: 110px;
+    background-color: #0092DB;
+    color: #FFF;
+    font-size: 19px;
+    line-height: 45px;
+    text-align: center;
+}
+
+/*************************************购物车菜单******************************************/
+
+.shop-menu{
+    position: absolute;
+    bottom: 45px;
+    left: 0px;
+    width: 50%;
+    background-color: rgba(0,0,0,0.75);
+    padding: 20px 40px 0 20px;
+    color: #fff;
+    font-size: 15px;
+}
+
+.shop-menu>div{
+    margin-bottom: 10px;
+    padding-right: 40px;
+}
+
+.shop-menu .home{
+    font-size: 17px;
+}
+
+.shop-menu .split{
+    border-top: 1px solid #fff;
+}
+
+.shop-menu a{
+    color: #fff;
+}
+
+.shop-menu a:visited{
+    color: #fff;
+}
+
+/*底部菜单完*/
+

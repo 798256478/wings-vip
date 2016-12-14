@@ -1,0 +1,273 @@
+<style>
+	.operation-div .form-control{
+		display: inline-block;
+		width: 200px;
+		margin-right: 30px;
+	}
+
+	.operation-div .operation{
+		cursor: pointer;
+
+	}
+
+	.addForm-div{
+		margin-top: 20px;
+	}
+
+	.addForm-div .btn,.editForm-div .btn{
+		background-color: transparent;
+		color:#337AB7;
+	}
+
+	.table .operation {
+		cursor: pointer;
+		color: #337AB7;
+	}
+
+	.btn[disabled]{
+		color:#A4A4A4;
+
+		cursor: pointer;
+		color: #337AB7;
+	}
+
+	.btn[disabled]{
+		color:#A4A4A4;
+	}
+
+	.col-md-offset-1{
+		margin-left:8.3333% !important;
+	}
+
+	.table-cont{
+		margin-top: 19px;
+	}
+
+</style>
+<div class="row" id="customer" ng-controller="HealthCustomerController">
+	<div class="col-md-7">
+		<rd-widget>
+			<rd-widget-header title="健康客户">
+				<div class="operation-div">
+
+				<input type="text" placeholder="查找" class="form-control input-sm"
+				       ng-model="searchValue"
+				       ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}"
+				       ng-change="Search(searchValue)"/>
+				<label class="control-label  operation" ng-click="showOne('addCustomer')">
+					<span class="glyphicon glyphicon-plus"></span>&nbsp新增客户</label>
+					</div>
+				</rd-widget-header>
+			<rd-widget-body classes="auto no-padding ">
+				<div class="row table-cont">
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+							<tr>
+								<th>姓名</th>
+								<th>手机号</th>
+								<th>年龄</th>
+								<th>性别</th>
+								<th>条码</th>
+								<th>当前进度</th>
+								<th>注册时间</th>
+								<th>操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="a in customerList" on-finish-render>
+								<td>{{a.name}}</td>
+								<td><span >{{a.mobile?a.mobile:'--'}}</span></td>
+								<td>{{a.age?a.age:'--'}}</td>
+								<td>{{sexConfig[a.sex]?sexConfig[a.sex]:'未知'}}</td>
+								<td><span >{{a.barcode?a.barcode.code:'未使用'}}</span></td>
+								<td><span >{{a.barcode?progressConfig[a.barcode.current_progress]:'--'}}</span></td>
+								<td>{{a.created_at}}</td>
+								<td><span class="operation" ng-click="showEditCustomer(a)">修改</span></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="table-page col-md-6 col-md-offset-3">
+						<paging
+								page="pages.nowPage"
+								page-size="15"
+								total="pages.codeTotal"
+								scroll-top="true"
+								hide-if-empty="true"
+								show-prev-next="true"
+								text-next="下一页"
+								text-prev="上一页"
+								text-title-page="第 {page} 页"
+								text-title-next="下一页"
+								text-title-prev="上一页">
+						</paging>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+
+	<!--新增客户-->
+	<div class="col-md-5" ng-show="isShow=='addCustomer'">
+		<rd-widget>
+			<rd-widget-header title="新增客户">
+			</rd-widget-header>
+			<rd-widget-body classes="">
+				<div class="editForm-div" >
+					<form name="addForm" class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label col-md-2">客户姓名</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_name" ng-model="addCustomer.name" placeholder="客户名称"
+								       ng-maxlength="5" required >
+								<p ng-show="addForm.customer_name.$invalid && !addForm.customer_mobile.$pristine" class="help-block">
+									客户姓名必填且长度小于5个字
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_mobile" ng-model="addCustomer.mobile" placeholder="手机"
+								       ng-pattern="/^1[345678]{1}\d{9}$/" >
+								<p ng-show="addForm.customer_mobile.$invalid && !addForm.customer_mobile.$pristine" class="help-block">
+									手机号格式不正确
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
+							<div class="col-md-10">
+								<label class="radio-inline">
+									<input type="radio" name="customer_sex" ng-model="addCustomer.sex"  value="1"> 男
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="customer_sex" ng-model="addCustomer.sex"  value="2"> 女
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="customer_sex" ng-model="addCustomer.sex" value="0"> 未知
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="code" ng-model="addCustomer.code" placeholder="条码"
+								       ng-maxlength="11" ng-minlength="6" >
+								<p ng-show="addForm.code.$invalid && !addForm.code.$pristine" class="help-block">
+									条码长度为6位到11位之间
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄</label>
+							<div class="col-md-10">
+								<input type="number" class="form-control" name="customer_age" ng-model="addCustomer.age" placeholder="年龄"
+								       ng-maxlength="3" >
+								<p ng-show="addForm.customer_age.$invalid && !addForm.customer_age.$pristine" class="help-block">
+									年龄为3位以内数字
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_address" ng-model="addCustomer.address" placeholder="地址"
+								       ng-maxlength="50" >
+								<p ng-show="addForm.customer_address.$invalid && !addForm.customer_address.$pristine" class="help-block">
+									地址长度小于50个字
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<button  class="btn col-md-offset-1" ng-disabled="addForm.$invalid" ng-click="addCustomer_save() " >保存</button>
+						</div>
+					</form>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+	<div class="col-md-5" ng-show="isShow=='editCustomer'">
+		<rd-widget>
+			<rd-widget-header title="修改资料">
+			</rd-widget-header>
+			<rd-widget-body classes="">
+				<div class="editForm-div" >
+					<form name="editForm" class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label col-md-2">客户姓名</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_name" ng-model="editCustomer.name" placeholder="客户名称"
+								       ng-maxlength="5" required >
+								<p ng-show="editForm.customer_name.$invalid && !editForm.customer_mobile.$pristine" class="help-block">
+									客户姓名必填且长度小于5个字
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_mobile" ng-model="editCustomer.mobile" placeholder="手机"
+								       ng-pattern="/^1[345678]{1}\d{9}$/" >
+								<p ng-show="editForm.customer_mobile.$invalid && !editForm.customer_mobile.$pristine" class="help-block">
+									手机号格式不正确
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
+							<div class="col-md-10">
+								<label class="radio-inline">
+									<input type="radio" name="customer_sex" ng-model="editCustomer.sex"  value="1"> 男
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="customer_sex" ng-model="editCustomer.sex"  value="2"> 女
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="customer_sex" ng-model="editCustomer.sex"  value="0"> 未知
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_code" ng-model="editCustomer.code" placeholder="条码"
+								       ng-maxlength="11" ng-minlength="6" >
+								<p ng-show="editForm.customer_code.$invalid && !editForm.customer_code.$pristine" class="help-block">
+									条码长度为6位到11位之间
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄</label>
+							<div class="col-md-10">
+								<input type="number" class="form-control" name="customer_age" ng-model="editCustomer.age" placeholder="年龄"
+								       ng-maxlength="3" >
+								<p ng-show="editForm.customer_age.$invalid && !editForm.customer_age.$pristine" class="help-block">
+									年龄为3位以内数字
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_address" ng-model="editCustomer.address" placeholder="地址"
+								       ng-maxlength="50" >
+								<p ng-show="editForm.customer_address.$invalid && !editForm.customer_address.$pristine" class="help-block">
+									地址长度小于50个字
+								</p>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<button  class="btn col-md-offset-1" ng-disabled="editForm.$pristine || editForm.$invalid " ng-click="editCustomer_save() " >保存</button>
+						</div>
+					</form>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+
+	</div>
+
+</div>
