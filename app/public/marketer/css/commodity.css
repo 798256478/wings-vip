@@ -1,0 +1,127 @@
+.suit_div {
+    border: 1px solid #EEE;
+    margin-left: 17px;
+    width: 89.2%;
+    border-radius: 3px;
+    padding: 0;
+}
+.suit_div>.row:first-child {
+    padding: 5px;
+    margin-bottom: -10px;
+}
+.suit_div .suit_list {
+    margin-bottom: 0;
+    padding: 5px;
+}
+.suit_div .suit {
+    margin-bottom: 0;
+    line-height: 25px;
+}
+.ng-isolate-scope > .nav-tabs > li table {
+    width: 100%;
+}
+.ng-isolate-scope > .nav-tabs > li table td{
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px !important;
+}
+.ng-isolate-scope > .nav-tabs > li table td *{
+    font-size: 16px !important;
+}
+.ng-isolate-scope > .nav-tabs > li {
+    width: 12%;
+}
+.tab-content > .active, .pill-content > .active {
+    width: 86%;
+}
+.ng-isolate-scope > .nav-tabs {
+    margin-right: 10px;
+}
+.commodity-list {
+    padding: 10px;
+}
+.nav>li>a:focus {
+    text-decoration: none;
+    background-color: inherit;
+}
+/*category*/
+#commodity .list-group {
+    margin-bottom: 0;
+}
+#commodity .list-group button {
+    margin-left: 0;
+    padding-left: 10%;
+}
+.category-detail {
+
+}
+/*commodity*/
+.commodity {
+    width: 390px;
+    float: left;
+    padding: 10px 0 0 15px;
+}
+.commodity .row {
+    cursor: pointer;
+}
+.commodity .row:hover {
+    text-decoration: none;
+    background-color: #ddd;
+}
+.commodity-pic {
+    float: left;
+    width: 45%;
+    padding: 10px 0 0 10px;
+}
+.commodity-pic img{
+    width: 100%;
+    height: 100%;
+}
+.commodity-msg {
+    float: left;
+    width: 55%;
+    padding-left: 10px;
+}
+.commodity .commission span{
+    font-weight: 600;
+    padding: 0 2px;
+}
+.list-img {
+    max-width: 90px;
+}
+.sortable-container {
+    margin-top: 5px;
+    background-color: #EEE;
+    border: 1px solid #999;
+    height: 100px;
+}
+.img-div {
+    margin: 5px;
+    padding: 2px;
+    border: 1px solid #AAA;
+    display: inline-block;
+    position: relative;
+    cursor: move;
+}
+.img-div img {
+    height: 80px;
+}
+.multi-sortable .sortable-container.main {
+    width: 83%;
+    float: left;
+}
+.multi-sortable .sortable-container.garbage {
+    width: 15%;
+    margin-left: 2%;
+    float: left;
+    position: relative;
+}
+.multi-sortable .sortable-container.garbage .fa{
+    position: absolute;
+    left: 30%;
+    top: 15%;
+}
+.btn-toolbar {
+    padding-bottom: 20px;
+    margin: 0 15%;
+}

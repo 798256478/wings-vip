@@ -1,0 +1,170 @@
+<style type="text/css">
+  .container{
+    margin-bottom: 70px;
+  }
+
+  table{
+    width: 100%;
+  }
+
+  th,td{
+    text-align: center;
+    line-height: 22px;
+  }
+
+  .header{
+    margin-top: 50px;
+  }
+  
+  .header .project-info{
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .panel-default>.panel-heading {
+    background-color: #fff;
+    border-color: #fff;
+  }
+
+  .header .project-info span{
+    margin-left: 15px;
+  }
+
+  .project-title{
+    text-align: center;
+  }
+
+  .panel-group{
+    margin-bottom: 0;
+  }
+  
+  .panel{
+    border-top:1px solid #eee;
+    border-radius: 0;
+    margin:0 -15px;
+  }
+
+  .fa{
+    margin:0 1px;
+  }
+
+  .fa-heart-o{
+    margin-left: -1px;
+  }
+
+  .panel .panel-title{
+    color: #5c5c5c;
+  }
+
+  .panel-heading .project-info{
+    margin-top: 10px;
+    font-size: 15px;
+  }
+
+  .panel-body dl{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .panel-body dl:last-child{
+    border-bottom: 0;
+    padding:0;
+    margin-bottom: 0px;
+  }
+
+  .panel-body th{
+    font-weight: normal;
+  }
+
+  .panel-body dd{
+    margin:5px 0;
+    font-size: 13px;
+  }
+  
+  .panel-body .name{
+    font-weight: 700;
+  }
+
+  .panel-heading{
+    padding:10px 15px;
+    min-height: 65px;
+    position: relative;
+  }
+
+  .panel-heading .right{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    line-height: 70px;
+    height: 100%;
+    width: 55px;
+    text-align: center;
+    color: #777;
+  }
+
+  .panel-body{
+    font-size: 12px;
+    color: #8c8c8c;
+    padding:5px 15px 10px;
+    background: #f8f8f8;
+  }
+
+  .project-info .score{
+    display: inline-block;
+    width: 90px;
+  }
+
+  .danger{
+    color: #a94442;
+  }
+
+  .warning{
+    color: #ff9900;
+  }
+
+  .success{
+    color: #3399ff;
+  }
+</style>
+<div class="container" ng-controller="ReportDetailController">
+    <div class="header">
+      <h3 class="project-title">{{project.name}}</h3>
+      <div class="{{range[project.abilityLevel][0]}} project-info" ng-if="project">
+        <i class="fa fa-heart {{range[project.abilityLevel][0]}}" ng-repeat="n in [].constructor(range[project.abilityLevel][1]) track by $index"></i>  
+        <i class="fa fa-heart-o {{range[project.abilityLevel][0]}}" ng-repeat="n in [].constructor(3-range[project.abilityLevel][1]) track by $index"></i>  
+        <span>{{project.abilityLevel}}</span>
+      </div>
+    </div>
+    <uib-accordion close-others="oneAtATime" ng-repeat="a in projectsDetail">
+        <div uib-accordion-group class="panel-default" is-open="status.open">
+            <uib-accordion-heading>
+                <div class="panel-title">{{a.project_name}}</div>
+                <div class="project-info">
+                  <span class="{{range[a.abilityLevel][0]}} score">{{a.score}}分</span>
+                  <span class="{$range[a.abilityLevel][0]}}">{{a.abilityLevel}}</span>
+                </div><i class="glyphicon glyphicon-chevron-{{status.open?'up':'down'}} right"></i>
+            </uib-accordion-heading>
+            <dl ng-repeat="b in a.genes">
+                <dd>
+                    <span class="name">基因名称：{{b.name}}</span>
+                    <span ng-if="b['effect']">（{{b.effect}}）</span>
+                </dd>
+                <table>
+                    <tr>
+                      <th>SNP编号</th>
+                      <th>SNP位点</th>
+                      <th>风险基因</th>
+                      <th>结果</th>
+                    </tr>
+                    <tr ng-repeat="c in b.site_dtos">
+                      <td style="width: 100px">{{c.code}}</td>
+                      <td style="padding: 0 4%">{{c.SNPSite}}</td>
+                      <td style="padding: 0 6%">{{c.mutation}}</td>
+                      <td style="padding: 0 2%"> <span style="color:rgb({{c.color}});">{{c.showGenotype}}</span></td>
+                    </tr>
+                </table>
+            </dl>
+        </div>
+    </uib-accordion> 
+</div>

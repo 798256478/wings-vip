@@ -1,0 +1,124 @@
+<link rel="stylesheet" href="/common/css/wechat-color.css">
+<style media="screen">
+    .icons{
+        width: 100px;
+        height: 100px;
+        margin-top: 10px;
+    }
+</style>
+<div class="row" id="property" ng-controller="PropertyTemplateController">
+    <div class="col-lg-3">
+        <rd-widget>
+            <rd-widget-header icon="fa-comments-o" title="所有服务">
+                <a href="" ng-click="clearData()"><i class="fa fa-plus fa-2x"></i></a>
+            </rd-widget-header>
+            <rd-widget-body classes="auto no-padding">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="a in propertyTemplateList" on-finish-render>
+                                <td><a ng-click="getPropertyTemplate(a.id)" href="">{{a.title}}</a></td>
+                                <td>{{a.created_at}}</td>
+                                <td><a href="" ng-click="delete(a.id, $event)">删除</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="propertyTemplateList == undefined" style="padding: 20px;text-align: center;color: #AAA;">
+                        暂无服务
+                    </div>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-9">
+        <rd-widget>
+            <rd-widget-header title="{{detailText}}">
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <form name="form.propertyForm" class="form-horizontal" ng-submit="submit(form.propertyForm.$valid)" autocomplete="off">
+                    <fieldset>
+                        <div class="form-group" ng-class="{'has-error':form.propertyForm.title.$invalid && !form.propertyForm.title.$pristine}">
+                            <label class="control-label col-md-1">服务标题</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" name="title" ng-model="propertyTemplate.title" placeholder="服务标题"
+                                    ng-maxlength=20 required>
+                                <p ng-show="form.propertyForm.title.$invalid && !form.propertyForm.title.$pristine" class="help-block">
+                                    标题必填且长度小于20个字
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : form.propertyForm.color.$invalid && !form.propertyForm.color.$pristine }">
+                            <label class="control-label col-md-1">颜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色</label>
+                            <div class="col-md-3">
+                                <select class="form-control {{propertyTemplate.color}}" name="color" ng-model="propertyTemplate.color" required>
+                                    <option value=""></option>
+                                    <option class="Color010" value="Color010"></option>
+                                    <option class="Color020" value="Color020"></option>
+                                    <option class="Color030" value="Color030"></option>
+                                    <option class="Color040" value="Color040"></option>
+                                    <option class="Color050" value="Color050"></option>
+                                    <option class="Color060" value="Color060"></option>
+                                    <option class="Color070" value="Color070"></option>
+                                    <option class="Color080" value="Color080"></option>
+                                    <option class="Color081" value="Color081"></option>
+                                    <option class="Color082" value="Color082"></option>
+                                    <option class="Color090" value="Color090"></option>
+                                    <option class="Color100" value="Color100"></option>
+                                    <option class="Color101" value="Color101"></option>
+                                    <option class="Color102" value="Color102"></option>
+                                </select>
+                                <p ng-show="form.propertyForm.color.$invalid && !form.propertyForm.color.$pristine" class="help-block">
+                                    卡券颜色必选
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1">图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;标</label>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-info btn-sm" ng-click="getIcons()">选择图标</button>
+                                <div class="icons" ng-if="propertyTemplate.image_icon">
+                                    <img ng-src="{{propertyTemplate.image_icon}}" alt="" />
+                                </div>
+                                <div class="icons" ng-if="!propertyTemplate.image_icon && propertyTemplate.icon">
+                                    <i class="{{propertyTemplate.icon}} fa-5x"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : form.propertyForm.notice.$invalid && !form.propertyForm.notice.$pristine }">
+                            <label class="control-label col-md-1">操作提示</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="notice" ng-maxlength=40
+                                    ng-model="propertyTemplate.notice" required>
+                                <p ng-show="form.propertyForm.notice.$invalid && !form.propertyForm.notice.$pristine"
+                                    class="help-block">
+                                    操作提示必填且长度小于40字
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : form.propertyForm.description.$invalid && !form.propertyForm.description.$pristine }">
+                            <label class="control-label col-md-1">服务详情</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" name="description" ng-model="propertyTemplate.description"
+                                    ng-maxlength=2000 rows="6" required></textarea>
+                                <p ng-show="form.propertyForm.description.$invalid && !form.propertyForm.description.$pristine"
+                                    class="help-block">
+                                    服务详情必填且长度小于2000字
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-1">
+                            <button type="submit" class="btn btn-primary left" ng-disabled="form.propertyForm.$invalid">提交</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

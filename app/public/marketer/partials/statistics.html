@@ -1,0 +1,117 @@
+<link rel="stylesheet" href="css/kendo.default.min.css">
+<style media="screen">
+    .widget .widget-body {
+        padding: 5px 10px;
+    }
+    .sel {
+        margin-top: 10px;
+    }
+    #statistics .year-div{
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+        padding-top: 3px;
+    }
+    .month-div{
+        margin-bottom: 5px;
+        padding-top: 3px;
+    }
+    .mytitle {
+
+    }
+    #statistics a.active{
+        background-color: #d4d4d4;
+    }
+    #statistics a{
+        font-size: 14px;
+        margin: 2px 10px;
+        padding: 3px 5px;
+        border-radius: 4px;
+        background-color: inherit;
+    }
+    #statistics a:first-child{
+        margin-left: 2px;
+    }
+    .cost-div{
+        margin-top: 10px;
+        margin-left: 23px;
+        width: 250px;
+    }
+</style>
+<div class="row" id="statistics" ng-controller="StatisticsController">
+    <div class="col-lg-12">
+        <rd-widget>
+            <rd-widget-header icon="fa-comments-o" title="统计图">
+            </rd-widget-header>
+            <rd-widget-body classes="large-x">
+                <div class="sel" ng-if="dateList.year.length > 0">
+                    <div class="year-div">
+                        <span class="mytitle">年份：</span>
+                        <a href="" class="month none-style" ng-repeat="year in dateList.year"
+                            ng-click="selYear(year);" ng-class="{'active':year == selDate.year}">
+                            {{year}}年
+                        </a>
+                    </div>
+                    <div class="year-div">
+                        <span class="mytitle">月份：</span>
+                        <a href="" class="month none-style" ng-repeat="month in dateList.month"
+                            ng-click="selMonth(month);" ng-class="{'active':month == selDate.month}">
+                            {{month == 'all'?'全年':month+'月'}}
+                        </a>
+                    </div>
+                    <div ng-class="{'year-div':key == 'COST', 'month-div':key != 'COST'}">
+                        <span class="mytitle">类型：</span>
+                        <a href="" class="month none-style" ng-repeat="(key1,value) in typeList"
+                            ng-click="selType(key1);" ng-class="{'active':key1 == key}">
+                            {{value}}
+                        </a>
+                    </div>
+                    <div class="month-div" ng-if="key == 'COST'">
+                        <a href="" class="month none-style" ng-click="getCostChat('costtype')"
+                            ng-class="{'active':costtype == 'costtype'}">
+                            按消费类型查看
+                        </a>
+                        <a href="" class="month none-style" ng-click="getCostChat('channel')"
+                            ng-class="{'active':costtype == 'channel'}">
+                            按消费端查看
+                        </a>
+                    </div>
+                </div>
+                <div class="demo-section k-content wide">
+                    <div id="chart" style="height: 400px;"></div>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-12">
+        <rd-widget>
+            <rd-widget-header icon="fa-comments-o" title="详情">
+            </rd-widget-header>
+            <rd-widget-body classes="large-xx">
+                <div ng-if="dataState">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th ng-repeat="a in statistics.table">{{a.name}}</th>
+                                <th ng-if="CostChart.table.channel">
+                                    总消费
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="i in dataCount" ng-repeat>
+                                <td>{{dataText1 + statistics.catearr[i] + dataText2}}</td>
+                                <td ng-repeat="a in statistics.table">
+                                    {{a.data[i]}}
+                                </td>
+                                <td ng-if="CostChart.table.channel">
+                                    {{getTotalMoney(statistics.table, i)}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

@@ -1,0 +1,232 @@
+<style>
+	.grey{
+		color:#aaa;
+	}
+
+	.table>tbody>tr>td{
+		vertical-align: middle;
+		border: 0;
+	}
+
+	.table>tbody+tbody {
+    	border-top: 0;
+	}
+
+	/*筛选*/
+	.screen .start-finish{
+		float: left;
+		margin-left: 0;
+	}
+
+	.screen label{
+		float: left;
+		margin-left: 10px; 
+	}
+
+	.screen .col-md-2{
+		width: 14%;
+	}
+	/*列表*/
+	.one-order-title{
+    	background-color: #B7D4F1;
+	}
+
+	.one-order-title td{
+	    border-left:1px solid #dddddd;
+	    border-right: 1px solid #dddddd;
+	}
+
+	.one-order-title .order-number-key{
+	    margin-left: 10px;
+	}
+
+	.one-order-title .order-number-val{
+	    margin-left: 5px;
+	    display: inline-block;
+	    width: 260px;
+	}
+
+	.one-order-title .order-time-key{
+	    margin-left: 25px;
+	}
+
+	.one-order-title .order-time-val{
+	    margin-left: 5px;
+	}
+
+	.one-order-content .fa-btc{
+		position: relative;
+		top:-1px;
+	}
+
+	.one-order-content img{
+		height: 50px;
+		width: 50px;
+		margin-right: 10px;
+	}
+
+	.one-order-content .child-commodity{
+		padding: 5px;
+	}
+
+	.one-order-content .child-commodity:last-child{
+		border: 0;
+	}
+
+	/*分页*/
+	.table-page{
+		float: right;
+		margin: -30px 15px 10px;
+	}
+
+	.widget-body{
+		position: relative;
+	}
+
+	.widget-body .body{
+		position: absolute;
+		height: 100%
+	}
+
+	.noInfo{
+		position: relative;
+		top: -80px;
+		height: 80%;
+    	display: -webkit-box;
+    	width: 100%;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+    	color: #ccc;
+    	font-size: 30px; 	
+	}
+
+</style>
+<div class="row" ng-controller="RefundController">
+	<div class="col-md-12">
+		<rd-widget>
+			<rd-widget-body classes="no-padding auto-nohead">
+				<div class="row body">
+					<!--筛选-->
+					<div class="col-md-12" style="margin-top: 15px;padding-left:12px">
+						<form class="form form-horizontal screen">
+							<label class="control-label ">退货状态</label>
+							<div class="col-md-2">
+								<select class="form-control" ng-options="key as value for (key, value) in refundState"
+								        ng-model="option.state" ng-change=search()></select>
+							</div>
+
+							<label class="control-label ">订单编号</label>
+							<div class="col-md-2">
+								<input type="text" class="form-control" ng-model="option.number" ng-change=search()>
+							</div>
+
+							<label class="control-label ">买家</label>
+							<div class="col-md-2">
+								<input type="text" class="form-control" ng-model="option.buyer" ng-change=search()>
+							</div>
+
+							<label class="control-label ">退款申请时间</label>
+							<div class="col-md-2">
+								<div class="input-group">
+									<input class="form-control" type="text" 
+									       uib-datepicker-popup="{{datePicker.format}}" min-date="datePicker.minDate"
+									       datepicker-options="datePicker.dateOptions" is-open="startTime.opened"
+									       current-text="今天" clear-text="清除" close-text="关闭"
+									       ng-required="true" ng-model="option.start" readonly ng-change=search()>
+	                                <span class="input-group-btn">
+	                                    <button type="button" class="btn btn-default" ng-click="selectStartTime()">
+		                                    <i class="fa fa-calendar"></i>
+	                                    </button>
+	                                </span>
+								</div>
+							</div>
+							<span class="control-label start-finish">—</span>
+							<div class="col-md-2">
+								<div class="input-group" >
+									<input class="form-control" type="text" 
+									       uib-datepicker-popup="{{datePicker.format}}" min-date="datePicker.minDate"
+									       datepicker-options="datePicker.dateOptions" is-open="finishTime.opened"
+									       current-text="今天" clear-text="清除" close-text="关闭"
+									       ng-required="true" ng-model="option.end" readonly ng-change=search()>
+	                                <span class="input-group-btn">
+	                                    <button type="button" class="btn btn-default" ng-click="selectFinishTime()">
+		                                    <i class="fa fa-calendar"></i>
+	                                    </button>
+	                                </span>
+								</div>
+							</div>
+							<button class="btn btn-default search" ng-click="search()">搜索</button>
+						</form>
+					</div>
+					<!--订单列表-->	
+					<div class="col-md-12" >
+						<table class="table">
+							<thead>
+								<tr>
+									<th>商品信息</th>
+									<th>买家</th>
+									<th>交易金额</th>
+									<th>积分</th>
+									<th>退款金额</th>
+									<th>退款状态</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody ng-repeat="a in refundData" on-finish-render>
+								<tr class="one-order-title">
+									<td colspan="9">
+										<span class="order-number-key" >订单号:</span>
+										<span class="order-number-val">{{a.order.number}}</span>
+										<span class="order-time-key">申请时间:</span>
+										<span class="order-time-val">{{a.created_at}}</span>
+									</td>
+								</tr>							
+								<tr class="one-order-content">
+									<td>
+										<div ng-if="a.order_detail" class="child-commodity">
+											<img ng-src="{{a.order_detail.commodity_specification_history.commodity_history.image.length>0?
+											a.order_detail.commodity_specification_history.commodity_history.image[0]:'/common/imgs/noimg.png'}}">
+											<span class="commodity-name">{{a.order_detail.commodity_specification_history.commodity_history.name}}</span>
+										</div>
+										<div ng-repeat="b in a.order.order_details" ng-if="!a.order_detail" class="child-commodity">
+											<img ng-src="{{b.commodity_specification_history.commodity_history.image.length>0?
+											b.commodity_specification_history.commodity_history.image[0]:'/common/imgs/noimg.png'}}">
+											<span class="commodity-name">{{b.commodity_specification_history.commodity_history.name}}</span>
+										</div>
+									</td>
+									<td>{{a.order.card.nickname}}({{a.order.card.card_code}})</td>
+									<td><i class="fa fa-cny"></i><label>{{a.order_detail?a.order_detail.total_price:a.order.total_fee | currency:""}}</label></td>
+									<td><i class="fa fa-btc"></i><label>{{a.order_detail?a.order_detail.total_bonus_require:a.order.bonus_require}}</label></td>
+									<td ng-if="a.state=='REFUND'"><i class="fa fa-cny"></i><label>{{a.money}}</label></td>
+									<td ng-if="a.state!='REFUND'">--</td>
+									<td>{{refundState[a.state]}}</td>
+									<td ng-if="a.state=='APPLY'"><a href="#/deal_refund/{{a.id}}">待处理</a></td>
+									<td ng-if="a.state!='APPLY'"><a href="#/deal_refund/{{a.id}}">查看</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div  ng-if="pages.refundTotal<=0" class="noInfo">暂无退款信息</div>
+					<!--分页-->
+					<div class="col-md-12">
+						<div class="table-page ">
+							<paging
+									page="option.page"
+									page-size="option.page_size"
+									total="pages.refundTotal"
+									scroll-top="true"
+									hide-if-empty="true"
+									show-prev-next="true"
+									text-next="下一页"
+									text-prev="上一页"
+									text-title-page="第 {page} 页"
+									text-title-next="下一页"
+									text-title-prev="上一页">
+							</paging>
+						</div>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+</div>

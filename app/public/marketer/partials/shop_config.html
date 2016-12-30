@@ -1,0 +1,584 @@
+<link rel="stylesheet" type="text/css" href="/marketer/css/shop_config.css">
+
+<style>
+	.align-right{
+		width: 164px;
+		float: right;
+	}
+
+	.align-right-bg{
+		width: 179px;
+		float: right;
+	}
+
+</style>
+
+<div class="row" ng-controller="ShopConfigController" >
+	<div class="col-md-3 shop">
+		<!--商城主页-->
+		<div class="home-page-button" ng-click="showHomePage()">
+			<span>商&nbsp;&nbsp;&nbsp;&nbsp;城&nbsp;&nbsp;&nbsp;&nbsp;主&nbsp;&nbsp;&nbsp;&nbsp;页</span>
+		</div>
+
+		<!--店铺列表-->
+		<rd-widget>
+			<rd-widget-header title="店铺">
+				<span class="icon-span title-icon" ng-click="addShop()">
+					<i class="fa fa-plus"></i>
+				</span>
+			</rd-widget-header>
+			<rd-widget-body classes=" no-padding" shop-list>
+				<div class="row">
+					<div class="list clearfix" ng-class="{'checked':show.shop===$index}" ng-repeat="a in shop"
+					     ng-click="showDetail($index)">
+						<span class="icon">
+							<img ng-src="{{a.image_icon}}" alt="" ng-if="a.image_icon">
+							<i class="{{a.icon}}" ng-if="!a.image_icon && a.icon"></i>
+						</span>
+						<span class="title">
+							{{a.title}}
+						</span>
+						<span class="delete-icon " ng-click="deleteShop($index)">
+							<i class="fa fa-trash"></i>
+						</span>
+					</div>
+					<div class="no-shop" ng-if="shop.length==0" ng-style="noShopHeight">
+						<span class="">
+							暂无商铺
+						</span>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+
+	<!--店铺详情-->
+	<div class="col-md-6 shop-detail" ng-show="show.page=='b'">
+		<rd-widget>
+			<rd-widget-header title="店铺设置">
+			</rd-widget-header>
+			<rd-widget-body classes="auto no-padding">
+				<div class="row shop-base-info">
+					<div class="col-md-12 base-info-div">
+						<span class="base-info-key">基本信息设置</span>
+						<button class="btn base-info-save" ng-click="saveShopTitle()" ng-disabled="shopTitle.$invalid"
+						        type="button">保存
+							</button>
+					</div>
+					<form class="form-inline base-info col-md-12" name="shopTitle">
+						<div class="row" shop-base-info-one="">
+							<div class="col-md-5" base-info-two-two="41">
+								<span class="title-key " >店铺名称:</span>
+								<input type="text" class="form-control " ng-model="shop[show.shop]['title']"
+								       placeholder="请输入店铺名" required>
+								<!--<span class="title-val shop-title-val" ng-click="getShopTitle()">{{shop[show.shop]['title']}}</span>-->
+							</div>
+							<div class="col-md-3 no-padding-left no-padding-right" >
+								<span class="title-key ">店铺排序:</span>
+								<input type="number" class="form-control " ng-model="shop[show.shop]['sort']"
+								       placeholder="0-100" ng-pattern="/^([1-9]\d{0,1}|100|0)$/"
+								       required >
+							</div>
+							<div class="align-right-bg icon-div">
+								<span class="title-key ">店铺图标:</span>
+								<img class="" ng-src="{{shop[show.shop].image_icon}}" alt=""
+								     ng-if="shop[show.shop].image_icon"/>
+								<span class="title-val" ng-if="!shop[show.shop].image_icon && shop[show.shop].icon">
+									<i class="{{shop[show.shop].icon}} fa-1x"></i>
+								</span>
+								<button type="button" class="btn btn-info btn-sm" ng-click="getShopIcons()">选择图标
+								</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 recommended" >
+								<span class="title-key">店铺推广:</span>
+								<div ng-repeat="a in recommendedCommondity track by $index" class="recommended-val"
+								     ng-class="{'first-recommended-val':$index===0}" ng-click="editRecommended($index)"
+								     ng-mouseenter="deleteIcon=true" ng-mouseleave="deleteIcon=false" >
+									<img ng-src="{{shop[show.shop].recommended_items[$index].image
+										?shop[show.shop].recommended_items[$index].image:'/common/imgs/noimg.png'}}"
+									     alt="{{a.name}}" title="{{a.name}}" ng-if="!a.url">
+									<img ng-src="{{a.image?a.image:'/common/imgs/noimg.png'}}"
+									     alt="{{a.url}}" title="{{a.url}}" ng-if="a.url">
+									<span class="title" ng-if="!a.url">{{a.name}}</span>
+									<span class="title" ng-if="a.url">{{a.url}}</span>
+									<span class="delete" ng-click="deleteRecommended($index,$event)"
+									      ng-show="deleteIcon">
+										<i class="fa fa-times-circle"></i>
+									</span>
+								</div>
+								<span class="icon-span " ng-click="editRecommended('add')"
+								      ng-if="shop[show.shop].recommended_items.length<4">
+									<i class="fa fa-plus"></i>
+								</span>
+							</div>
+						</div>
+					</form>
+					</div>
+				<div class="row category" ng-show="show.isCategory">
+					<div class="col-md-12 category-key">
+						<span class="">分类设置</span>
+					</div>
+					<div class="col-md-12 no-padding-right category-detail">
+						<div class="left" >
+							<div class="category-div clearfix" ng-repeat="a in shop[show.shop]['categories']"
+							     ng-click="showCategory($index)" ng-class="{'active':show.category===$index}">
+								<span class="icon" >
+									<img ng-src="{{a.image_icon}}" alt="" ng-if="a.image_icon">
+									<i class="{{a.icon}}" ng-if="!a.image_icon && a.icon"></i>
+								</span>
+								<span class="title">{{a.title}}</span>
+								<span class="delete-icon " ng-click="deleteCategory($index)">
+									<i class="fa fa-trash"></i>
+								</span>
+								<span class="arrows" ng-show="show.category===$index"></span>
+								<span class="arrows-2" ng-show="show.category===$index"></span>
+							</div>
+							<div class="add-div" ng-click="addCategory()" ng-class="{'active':show.category==='add'}">
+								<span class="add-span">
+								<i class="fa fa-plus"></i>
+								</span>
+								<span class="arrows" ng-show="show.category==='add'"></span>
+								<span class="arrows-2" ng-show="show.category==='add'"></span>
+							</div>
+						</div>
+						<div class="right" ng-if="shop[show.shop].categories.length==0 && show.category!='add'" no-category>
+							<span class="no-category">暂无分类</span>
+						</div>
+						<div class="right" ng-show="shop[show.shop].categories.length>0 || show.category=='add'">
+							<div class="base-info clearfix row">
+								<form name="categoryForm " class="form-inline">
+									<div class="row">
+										<div class="col-md-6 no-padding-left clearfix" base-info-two-two="26" >
+											<span class="title-key">分类名称:</span>
+											<input type="text" class="form-control"
+											       ng-model="shop[show.shop].categories[show.category].title"
+											       placeholder="请输入分类名" required>
+										</div>
+										<div class="align-right no-padding-right">
+											<span class="title-key">分类图标:</span>
+											<img class="title-val"
+											     ng-src="{{shop[show.shop].categories[show.category].image_icon}}"
+											     alt="" ng-if="shop[show.shop].categories[show.category].image_icon"/>
+											<span class="title-val"
+											      ng-if="!shop[show.shop].categories[show.category].image_icon && shop[show.shop].categories[show.category].icon">
+												<i class="{{shop[show.shop].categories[show.category].icon}} fa-1x"></i>
+											</span>
+											<button type="button" class="btn btn-info btn-sm" ng-click="getCategoryIcons()">
+												选择图标
+											</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="category-template no-padding-left ">
+											<span class="title-key">分类模版:</span>
+											<span class="title-val">
+												<span class="no-checked"
+												      ng-class="{'checked':shop[show.shop]['categories'][show.category].layout=='once'}"
+												      ng-click="saveLayout('once')">单&nbsp;&nbsp;列</span>
+												<span class="no-checked"
+												      ng-class="{'checked':shop[show.shop]['categories'][show.category].layout=='double'}"
+												      ng-click="saveLayout('double')">双&nbsp;&nbsp;列</span>
+												<span class="no-checked"
+												      ng-class="{'checked':shop[show.shop]['categories'][show.category].layout=='detail'}"
+												      ng-click="saveLayout('detail')">详&nbsp;&nbsp;情</span>
+											</span>
+										</div>
+										<div class="align-right no-padding-right" base-info-two-two="11">
+											<span class="title-key ">分类排序:</span>
+											<input type="number" class="form-control "
+											       ng-model="shop[show.shop].categories[show.category].sort"
+											       placeholder="0-100" required ng-pattern="/^([1-9]\d{0,1}|100|0)$/">
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="row category-table" category-table>
+								<table class="table">
+									<thead>
+									<tr>
+										<th >
+											商品列表
+											<span class="icon-span title-icon" ng-click="showCommondityList('b')">
+												<i class="fa fa-plus"></i>
+											</span>
+										</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr ng-repeat="a in currentCommondity" >
+										<td>
+											<img ng-src="{{a.image.length>0?a.image[0]:'/common/imgs/noimg.png'}}" alt="">
+											<span>{{a.name}}</span>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								<div class="category-no-commodity" ng-if="currentCommondity.length==0">
+									<span>暂无商品</span>
+								</div>
+							</div>
+							<div class="btn-div ">
+								<button type="button" class="btn btn-info " ng-click="saveShopCategory()"
+								        ng-disabled="categoryForm.$invalid">保存分类信息
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--分类信息-->
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+
+	<!--商城主页配置-->
+	<div class="col-md-6 home-page" ng-show="show.page == 'd'">
+		<rd-widget>
+			<rd-widget-header title="主页设置">
+			</rd-widget-header>
+			<rd-widget-body classes="auto no-padding">
+				<div class="carousel base-model">
+					<div class="explain">头部广告 <small>（该模块最多上传5张图片，最佳显示比例2:1，最佳显示大小360*180）</small>:</div>
+					<div class="image-content">
+						<div class="content" ng-repeat="a in shopPage.carouselCommondity track by $index"
+						     ng-mouseenter="deleteIcon=true" ng-mouseleave="deleteIcon=false" on-finish-render
+						     ng-click="editShopPageCarousel($index)">
+							<img ng-src="{{a.image}}" alt="" >
+							<span class="title" ng-if="a.type == 'commodity'">{{a.name}}</span>
+							<span class="title" ng-if="a.type == 'url'">{{a.url}}</span>
+							<span class="title" ng-if="a.type == 'image'">该图无链接</span>
+							<span class="delete" ng-click="deleteShopPageCarousel($index,$event)"
+							      ng-show="deleteIcon">
+								<i class="fa fa-times-circle"></i>
+							</span>
+						</div>
+						<span class="icon-span" ng-click="editShopPageCarousel('add')" ng-if="shopPage.content.carousel.items.length < 4">
+							<i class="fa fa-plus"></i>
+						</span>
+					</div>
+				</div>
+
+				<!--<div class="shop">-->
+					<!--分类-->
+				<!--</div>-->
+
+				<div class="commodities base-model">
+					<div class="explain">主推商品<small>(该模块最多选择6个商品)</small>:</div>
+					<div class="image-content">
+						<div class="content" ng-repeat="a in shopPage.commodities track by $index">
+							<img ng-src="{{a.image.length>0 ? a.image[0] : '/common/imgs/noimg.png'}}" alt="">
+							<span class="title" >{{a.name}}</span>
+						</div>
+						<span class="icon-span " ng-click="showCommondityList('d')">
+							<i class="fa fa-plus"></i>
+						</span>
+					</div>
+				</div>
+
+				<div class="introduce base-model">
+					<div class="explain">底部介绍<small>(该图片最佳显示比例3.5:1)</small>:</div>
+					<div class="image-content" >
+						<div class="content" ng-if="shopPage.content.introduce.url.length > 0" ng-mouseenter="deleteIcon=true" ng-mouseleave="deleteIcon=false">
+							<img ng-src="{{shopPage.content.introduce.url}}" alt=""
+							     ng-if="shopPage.content.introduce.url.length > 0">
+							<span class="delete" ng-click="deleteShopPageIntroduce()"
+							      ng-show="deleteIcon">
+								<i class="fa fa-times-circle"></i>
+							</span>
+						</div>
+						<div class="no-introduce" ng-if="shopPage.content.introduce.url.length <= 0">
+							还未上传图片
+						</div>
+						<div class="button-span " ngf-select="uplodeImage('introduce',$file, $invalidFiles)"
+						      accept="image/*" ngf-max-size="2MB">
+							<button class="choose-button" ng-if="shopPage.content.introduce.url.length == 0">选择图片</button>
+							<button class="" ng-if="shopPage.content.introduce.url.length > 0">更换图片</button>
+						</div>
+					</div>
+				</div>
+				<div class="button clearfix">
+					<button type="button" class="btn btn-info" ng-click="saveShopPage()">保存</button>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+
+	<!--商品列表-->
+	<div class="col-md-3 commodity-list" ng-show="show.list">
+		<rd-widget>
+			<rd-widget-header ng-if="show.list=='a'" title="{{'请选择' + shop[show.shop].title + '的推广商品'}}"></rd-widget-header>
+			<rd-widget-header ng-if="show.list=='b'" title="{{'请选择' + shop[show.shop].categories[show.category].title + '的商品'}}"></rd-widget-header>
+			<rd-widget-header ng-if="show.list=='c'" title="请选择商城主页的头部商品"></rd-widget-header>
+			<rd-widget-header ng-if="show.list=='d'" title="请选择商城主页的推广商品"></rd-widget-header>
+			<rd-widget-body classes="auto no-padding">
+				<!--主推对应的商品列表-->
+				<div class="row recommended" ng-show="show.list=='a'" commodity-list-height>
+					<form class="form-inline" name="recommendedForm">
+						<div class="clearfix party">
+							<span >图片:</span>
+							<img ng-src="{{recommended.image}}" alt="" ng-if="recommended.image">
+							<button type="file" ngf-select="uplodeImage('recommended',$file, $invalidFiles)"
+							        accept="image/*" ngf-max-size="2MB" >选择图片
+							</button>
+							<span class="hint">(图片宽高比在2:1显示最佳)</span>
+						</div>
+						<div class="clearfix party" base-info-two-two="21">
+							<span >类型:</span>
+							<select name="" class="form-control" ng-model="recommended.type">
+								<option value="commodity" >商品</option>
+								<option value="url" >链接</option>
+							</select>
+						</div>
+						<div ng-show="recommended.type==='url'">
+							<div class="clearfix party big-bottom" base-info-two-two="21">
+								<span >链接:</span>
+								<input type="text" placeholder="链接地址" class="form-control" ng-model="recommended.url"
+								       required>
+							</div>
+						</div>
+					</form>
+					<div ng-show="recommended.type==='commodity'" >
+						<div class="row search" base-info-two-two="21" >
+							<span>搜索:</span>
+							<input type="text" placeholder="商品名称" class="form-control "
+							       ng-model="sort.commodity.title.sel"
+							       ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}"
+							       ng-change="getCommoditiesListFirstPage()"/>
+						</div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>名称</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="a in commodityList" >
+									<td>
+										<img ng-src="{{a.image.length>0?a.image[0]:'/common/imgs/noimg.png'}}" alt="">
+										<label for="{{'recommended-'+a.id}}">{{a.name}}</label>
+									</td>
+									<td>
+										<input id="{{'recommended-'+a.id}}" type="radio" name="recommended"
+										       ng-checked="recommended.commodity.id==a.id"
+										       ng-model="recommended.commodity" ng-click="checkRecommended(a)">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="page-btn clearfix">
+							<div class="table-page ">
+								<paging
+										page="pages.commodity.nowPage"
+										page-size="10"
+										total="pages.commodity.commodityTotal"
+										scroll-top="true"
+										hide-if-empty="true"
+										show-prev-next="true"
+										text-next="下一页"
+										text-prev="上一页"
+										text-title-page="第 {page} 页"
+										text-title-next="下一页"
+										text-title-prev="上一页">
+								</paging>
+							</div>
+						</div>
+					</div>
+					<div class="button-div">
+						<button type="button" class="btn btn-info" ng-click="addToRecommended()">添加</button>
+						<button type="button" class="btn btn-danger" ng-click="deleteRecommended(recommended.id,$event)"
+						        ng-if="recommended.id!=='add'">删除</button>
+					</div>
+				</div>
+
+				<!--商城主页轮播图对应的商品列表-->
+				<div class="row recommended" ng-show="show.list=='c'" commodity-list-height>
+					<form class="form-inline" name="recommendedForm">
+						<div class="clearfix party">
+							<span >图片:</span>
+							<img ng-src="{{shopPage.carousel.image}}" alt="" ng-if="shopPage.carousel.image">
+							<button type="file" ngf-select="uplodeImage('carousel',$file, $invalidFiles)"
+							        accept="image/*" ngf-max-size="2MB" >选择图片
+							</button>
+							<span class="hint">(图片宽高比在2:1显示最佳)</span>
+						</div>
+						<div class="clearfix party" base-info-two-two="21">
+							<span >类型:</span>
+							<select name="" class="form-control" ng-model="shopPage.carousel.type">
+								<option value="image" >图片</option>
+								<option value="commodity" >商品</option>
+								<option value="url" >链接</option>
+							</select>
+						</div>
+						<div ng-show="shopPage.carousel.type==='url'">
+							<div class="clearfix party big-bottom" base-info-two-two="21">
+								<span >链接:</span>
+								<input type="text" placeholder="链接地址" class="form-control" ng-model="shopPage.carousel.url"
+								       required>
+							</div>
+						</div>
+					</form>
+					<div ng-show="shopPage.carousel.type==='commodity'" >
+						<div class="row search" base-info-two-two="21" >
+							<span>搜索:</span>
+							<input type="text" placeholder="商品名称" class="form-control "
+							       ng-model="sort.commodity.title.sel"
+							       ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}"
+							       ng-change="getCommoditiesListFirstPage()"/>
+						</div>
+						<table class="table">
+							<thead>
+							<tr>
+								<th>名称</th>
+								<th></th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="a in commodityList" >
+								<td>
+									<img ng-src="{{a.image.length>0?a.image[0]:'/common/imgs/noimg.png'}}" alt="">
+									<label for="{{'carousel-'+a.id}}">{{a.name}}</label>
+								</td>
+								<td>
+									<input id="{{'carousel-'+a.id}}" type="radio" name="carousel" ng-checked="shopPage.carousel.commodityId == a.id"
+									       ng-click="checkShopPageCarousel(a)">
+								</td>
+							</tr>
+							</tbody>
+						</table>
+						<div class="page-btn clearfix">
+							<div class="table-page ">
+								<paging
+										page="pages.commodity.nowPage"
+										page-size="10"
+										total="pages.commodity.commodityTotal"
+										scroll-top="true"
+										hide-if-empty="true"
+										show-prev-next="true"
+										text-next="下一页"
+										text-prev="上一页"
+										text-title-page="第 {page} 页"
+										text-title-next="下一页"
+										text-title-prev="上一页">
+								</paging>
+							</div>
+						</div>
+					</div>
+					<div class="button-div">
+						<button type="button" class="btn btn-info" ng-click="addToShopPageCarousel()">添加</button>
+						<button type="button" class="btn btn-danger"
+						        ng-click="deleteShopPageCarousel(shopPage.carousel.indexId,$event)"
+						        ng-if="recommended.id!=='add'">删除</button>
+					</div>
+				</div>
+
+				<!--分类对应的商品列表-->
+				<div class="row category" ng-show="show.list=='b'" commodity-list-height>
+					<div class="row " screen-three-two="">
+						<label for="batchCategory" class="checkbox-inline">
+							<input id="batchCategory" type="checkbox" ng-model="batch.batchCategory" ng-click="batchCategory()">全选
+						</label>
+						<label for="noBatchCategory" class="checkbox-inline">
+							<input id="noBatchCategory" type="checkbox" ng-model="batch.noBatchCategory" ng-click="noBatchCategory()">反选
+						</label>
+						<input type="text" placeholder="商品名称" class="form-control "
+						       ng-model="sort.commodity.title.sel"
+						       ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}"
+						       ng-change="getCommoditiesListFirstPage()"/>
+					</div>
+
+					<table class="table">
+						<thead>
+						<tr>
+							<th>名称</th>
+							<th></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="a in commodityList" >
+							<td>
+								<img ng-src="{{a.image.length>0?a.image[0]:'/common/imgs/noimg.png'}}" alt="">
+								<label for="{{'category-'+a.id}}">{{a.name}}</label>
+							</td>
+							<td>
+								<input id="{{'category-'+a.id}}" type="checkbox"
+								       ng-checked="shop[show.shop].categories[show.category].items.indexOf(a.id)>=0"
+								       ng-click="addToCategory(a)">
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<div class="page-btn">
+						<div class="table-page ">
+							<paging
+									page="pages.commodity.nowPage"
+									page-size="10"
+									total="pages.commodity.commodityTotal"
+									scroll-top="true"
+									hide-if-empty="true"
+									show-prev-next="true"
+									text-next="下一页"
+									text-prev="上一页"
+									text-title-page="第 {page} 页"
+									text-title-next="下一页"
+									text-title-prev="上一页">
+							</paging>
+						</div>
+					</div>
+				</div>
+
+				<!--商城主页主推对应的商品列表-->
+				<div class="row category" ng-show="show.list=='d'" commodity-list-height>
+					<div class="row " >
+						<input type="text" placeholder="商品名称" class="form-control "
+						       ng-model="sort.commodity.title.sel"
+						       ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}"
+						       ng-change="getCommoditiesListFirstPage()"/>
+					</div>
+					<table class="table">
+						<thead>
+						<tr>
+							<th>名称</th>
+							<th></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="a in commodityList" >
+							<td>
+								<img ng-src="{{a.image.length>0?a.image[0]:'/common/imgs/noimg.png'}}" alt="">
+								<label for="{{'shopPage-'+a.id}}">{{a.name}}</label>
+							</td>
+							<td>
+								<input id="{{'shopPage-'+a.id}}" type="checkbox"
+								       ng-checked="shopPage.content.commodities.items.indexOf(a.id)>=0"
+								       ng-click="addToShopPageCommondities(a,$event)">
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<div class="page-btn">
+						<div class="table-page ">
+							<paging
+									page="pages.commodity.nowPage"
+									page-size="10"
+									total="pages.commodity.commodityTotal"
+									scroll-top="true"
+									hide-if-empty="true"
+									show-prev-next="true"
+									text-next="下一页"
+									text-prev="上一页"
+									text-title-page="第 {page} 页"
+									text-title-next="下一页"
+									text-title-prev="上一页">
+							</paging>
+						</div>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+
+</div>
+
+

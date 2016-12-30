@@ -1,0 +1,340 @@
+.container{
+    padding: 0 ;
+    margin-bottom: 50px;
+}
+	
+body{
+    background-color: #eee;
+}
+
+.group{
+    position: relative;
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.group>.title i{
+    font-size: 14px;
+    width: 14px;
+    margin-right: 2px;
+    text-align: center;
+}
+
+.group>.title h4{
+    display: inline;
+    font-size: 14px;
+    margin: 0;
+}
+
+/************************************配送地址**************************************/
+
+.deliver-group>p{
+    font-size: 14px;
+    margin: 5px 10px 0 18px;
+    color: #666;
+}
+
+/************************************商品列表**************************************/
+.commodity-list{
+    padding: 0;
+    background-color: #eee;
+}
+
+.commodity-list>div{
+    margin-bottom: 5px;
+}
+
+.commodity-list>div:last-child{
+    margin-bottom: 0;
+}
+
+.order-detail{
+    width: 100%;
+    height: 90px;
+    margin-bottom: 5px;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.suite .suite-detail .order-detail{
+    padding: 5px 10px 5px 0;
+    height:70px;
+    margin-bottom: 0;
+}
+
+.suite .suite-detail .connecting-line{
+    position: relative;
+    top:-10px;
+    float: left;
+    height: 70px;
+    width: 25px;
+    background-color: #eeeeee;
+}
+
+.suite .suite-detail .order-detail:last-child .connecting-line{
+    height: 75px;
+}
+
+.suite .suite-detail .connecting-line>div{
+    position: relative;
+    width: 15px;
+    float: right;
+    border-left: 1px solid #ccc;
+    height: 100%;
+}
+
+.suite .suite-detail .order-detail:last-child .connecting-line>div{
+    height: 40px;
+}
+
+.suite .suite-detail .connecting-line>div>div{
+    height: 40px;
+    border-bottom: 1px solid #ccc;
+}
+
+.suite .suite-detail .order-detail>img{
+    margin-left: 5px;
+    width: 60px;
+    height: 60px;
+}
+
+.suite .suite-detail .name{
+    margin-bottom: 0;
+}
+
+.suite .suite-detail .specification{
+    margin-bottom: 0;
+}
+
+.suite .suite-detail .quantity{
+    height: 60px;
+    line-height: 60px;
+}
+
+.order-detail:last-child{
+    margin-bottom: 0;
+}
+
+.order-detail>img{
+    float: left;
+    width: 70px;
+    height: 70px;
+}
+
+.order-detail .caption{
+    float: left;
+    margin-left: 10px;
+}
+
+.order-detail .name{
+    margin-top: 5px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    height: 15px;
+}
+
+.order-detail .specification{
+    height: 18px;
+    margin-bottom: 4px;
+    color: #777;
+    font-size: 12px;
+}
+
+.order-detail .price>i{
+    font-size:13px;
+}
+
+.order-detail .price-and-bonus{
+    color: #aaa;
+}
+
+.order-detail .bonus-require>i{
+    position: relative;
+    top: -1px;
+    font-size:13px;
+}
+
+.order-detail .quantity{
+    float: right;
+    height: 70px;
+    line-height: 70px;
+    font-size: 18px;
+    /*margin-right: 10px;*/
+    color: #555;
+}
+
+/************************************优惠券**************************************/
+
+.ticket-group{
+    height: 40px;
+    color: #333;
+}
+
+.ticket-group .title {
+    float: left;
+}
+
+.tickets-pack .ticket .left .icon{
+    position: absolute;
+    top:19px;
+    left: 14px;
+    background-color: #ffffff;
+    font-size: 21px;
+    display: none;
+}
+
+.tickets-pack .ticket .left .icon.checked{
+    display: block;
+}
+
+.ticket-group .right-icon{
+    float: right;
+    font-size: 19px;
+    line-height: 19px;
+    margin-left: 10px;
+}
+
+.ticket-group .sub-title{
+    float: right;
+    font-size: 12px;
+    color: #777777;
+}
+
+.ticket-group .sub-title span{
+    vertical-align: text-top;
+}
+
+.ticket-group .ticket::first-child{
+    margin-top: 0px;
+}
+
+.ticket-group .ticket::last-child{
+    margin-bottom: 10px;
+}
+
+.tickets-pack {
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+
+/************************************支付**************************************/
+
+.pay-group {
+    padding-bottom: 5px;
+    padding-top: 0;
+}
+
+.pay-group>.bonus-group{
+    border-top: 1px solid #dfdfdf;
+}
+
+.pay-group h4{
+    margin: 0;
+    font-size: 14px;
+}
+
+.pay-group>.balance-group,.pay-group>.bonus-group{
+    position: relative;
+    padding-top: 10px;
+}
+
+.pay-group>.bonus-group .value small{
+    color: #777777;
+    margin-left: 5px;
+}
+
+.pay-group .balance-group .price,
+.pay-group>.price,
+.pay-group .bonus-group .bonus-require,
+.pay-group>.bonus-require{
+    font-size: 18px;
+    margin: 5px 0 0 10px;
+}
+
+.pay-group .balance-link,
+.pay-group .check-btn{
+    position: absolute;
+    right: 0px;
+    top: 10px;
+}
+
+.pay-group .check-btn{
+    font-size: 26px;
+}
+
+.pay-group .check-btn .fa-toggle-on{
+    color: #0092DB;
+}
+
+.pay-group .check-btn .fa-toggle-off{
+    color: #dfdfdf;
+}
+
+.pay-group.bonus{
+    padding-top: 10px;
+}
+/************************************留言**************************************/
+
+.messages-group .message{
+    border: none;
+    outline: none;
+    float: none;
+    resize: none;
+    overflow-y: visible;
+    min-height: 20px;
+    display: inline-block;
+    width: 100%;
+}
+
+.messages-group .message:empty:before{
+    content: attr(placeholder);
+    color: #bbb;
+}
+
+/************************************底栏**************************************/
+.order-bar{
+    z-index: 100;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 45px;
+    background-color: rgba(0,0,0,0.75);
+    color: #fff;
+}
+
+.order-bar>.back-icon{
+    font-size: 28px;
+    line-height: 45px;
+    padding: 0 10px;
+}
+
+.order-bar>.split{
+    font-size: 20px;
+    position: relative;
+    top: -4px;
+    color: #aaa;
+}
+
+.order-bar>.order-amount{
+    display: inline-block;
+    font-size: 17px;
+    vertical-align: top;
+    line-height: 45px;
+}
+
+.order-bar .order-submit{
+    float: right;
+    height:45px;
+    width: 100px;
+    background-color: #0092DB;
+    color: #FFF;
+    font-size: 19px;
+    line-height: 45px;
+    text-align: center;
+}
+
+.order-bar .order-submit.disabled {
+    background-color:#777;
+}

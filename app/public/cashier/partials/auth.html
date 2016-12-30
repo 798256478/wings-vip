@@ -1,0 +1,140 @@
+<div class="container-fluid" ng-controller="AuthController">
+    <div class="user-panels"  ng-if="password_status==0">
+        <div class="user-info-panel" ng-show="login_step == 'OK'">
+             <!--<div><h3>登陆人</h3></div>-->
+             <div class="user-info">
+                <div class="name" ><span ng-bind="AuthService.current_user.display_name"></span></div>
+                <div class="role" ><span ng-bind="AuthService.current_user.roles"></span></div> 
+                <div class="operation">
+                    <a  ng-click="lockup()"> 
+                        <span class="glyphicon glyphicon-lock" ></span>
+                        <div> 切换/锁定</div>
+                    </a>
+                     <a  ng-click="update_password_status()"> 
+                        <span class="glyphicon glyphicon-edit" ></span>
+                        <div>修改密码</div>
+                    </a>
+                     <a  ng-click="statistical()"> 
+                        <span class="glyphicon glyphicon-edit" ></span>
+                       <div> 统计分析</div>
+                    </a>
+                </div>
+             </div>
+             
+             <div ng-if="statistical_data!=''" class="statistical-wrapper">
+                 
+                <div class="statistical-group f-clear">
+                    <fieldset class="property">
+                        <label>会员到店</label>
+                        <span ng-bind="statistical_data.to_store"></span>
+                    </fieldset>
+                    <fieldset class="property">
+                        <label>新会员</label>
+                        <span ng-bind="statistical_data.today_card_count"></span>
+                    </fieldset>
+                    <fieldset class="property">
+                        <label>消费</label>
+                        <span ng-bind="statistical_data.consume"></span>
+                    </fieldset>
+                </div>
+                <div class="statistical-group f-clear">
+                    <fieldset class="property">
+                        <label>储值</label>
+                        <span ng-bind="statistical_data.balance"></span>
+                    </fieldset>
+                    <fieldset class="property">
+                        <label>购买</label>
+                        <span ng-bind="statistical_data.goods_consume"></span>
+                    </fieldset>
+                    <fieldset class="property">
+                        <label>核销</label>
+                        <span ng-bind="statistical_data.ticket_verified_count"></span>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="pin-panel" ng-if="login_step == 'PIN'">
+            <h3>请输入4位PIN码</h3>
+            <div>
+                <input mnk-input mnk-autofocus type="password" class="form-control pin" ng-model="login_fields.pin" autocomplete="off" >
+                <a class="tologin" ng-click="toLogin()"> 
+                    &nbsp;<span class="glyphicon glyphicon-user" ></span>&nbsp;
+                    新用户/忘记PIN码
+                </a>
+            </div>
+        </div>
+        <div class="login-panel" ng-if="login_step == 'LOGIN'">
+            <h3>请登陆</h3>
+            <form role="form" ng-submit="login()">
+                <div class="form-group">
+                    <input mnk-input shortcut-group="toPassword" mnk-autofocus type="text" class="form-control login-name" ng-model="login_fields.login_name" autocomplete="off"  placeholder="工号...">
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input mnk-input shortcut-group="login" type="password" class="form-control password" ng-model="login_fields.password" id="password" autocomplete="off"  placeholder="密码...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">登录</button>
+                        </span>
+                    </div>
+                </div>
+                <a class="btn btn-default" ng-click="toPin()" ng-show="AuthService.logined_users.length > 0"> 
+                    &nbsp;<span class="glyphicon glyphicon-user" ></span>&nbsp;
+                    使用PIN码
+                </a>
+            </form>
+        </div>
+        <div class="pin-set-panel pin1" ng-if="login_step == 'PIN1'" >
+            <h3>请设置4位PIN码</h3>
+            <div class="form-group">
+                <input mnk-input mnk-autofocus id="pin1" type="password" class="form-control pin" ng-model="login_fields.pin1" autocomplete="off" >
+            </div>
+        </div>
+        <div class="pin-set-panel pin2" ng-if="login_step == 'PIN2'">
+            <h3>请再次输入4位PIN码</h3>
+              <div class="form-group">
+                <input mnk-input mnk-autofocus  type="password" class="form-control pin" ng-model="login_fields.pin2" autocomplete="off" >
+              </div>
+        </div>
+    </div>
+     <div class="edit-password" ng-if="password_status==1">
+            <h3>修改密码</h3>
+            <form role="form" ng-submit="editPassword()"> 
+                <div class="form-group">
+                    <input mnk-input shortcut-group="toNewPassword"  mnk-autofocus  type="password" class="form-control oldpassword" ng-model="edit_passsword_fields.oldpassword" autocomplete="off"  placeholder="原密码...">
+                </div>
+                <div class="form-group">
+                    <input mnk-input shortcut-group="toAgainPassword" type="password" class="form-control newpassword" ng-model="edit_passsword_fields.newpassword" autocomplete="off"  placeholder="新密码...">
+                </div>
+                <div>
+                    <div class="input-group">
+                        <input mnk-input shortcut-group="editpassword" type="password" class="form-control againpassword" ng-model="edit_passsword_fields.againpassword" autocomplete="off"  placeholder="重新输入新密码...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">确定</button>
+                        </span>
+                    </div>
+                </div>
+                <a class="tologin" ng-click="update_password_status()" ng-show="AuthService.logined_users.length > 0"> 
+                    放弃
+                </a>
+            </form>
+        </div>
+    <div class="logined-panel clear">
+        <h3 class="{{AuthService.logined_users.length > 0? 'part-header':''}}">当班收银</h3>
+        <div ng-if="AuthService.logined_users.length == 0" class="content-none">
+            <div class="icon">
+                <span class="glyphicon glyphicon-piggy-bank" ></span>
+            </div>
+            尚无收银员登陆~
+        </div>
+        <div class="logined-group" ng-if="AuthService.logined_users.length > 0">
+            <div class="logined" ng-repeat="model in AuthService.logined_users">
+                <span class="name">
+                    <span ng-bind="model.display_name"></span>&nbsp;
+                    <small class="role" ng-bind="model.roles"></small>
+                </span>
+                <span class="login-time" ng-bind="model.logintime" ></span>
+                <span class="glyphicon glyphicon-remove" ng-click="logout(model.id)"></span>
+            </div>
+        </div>
+    </div>
+</div>

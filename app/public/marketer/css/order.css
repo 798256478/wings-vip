@@ -1,0 +1,187 @@
+/*筛选*/
+.screen .start-finish{
+    float: left;
+    margin-left: 0;
+}
+
+.screen label{
+    float: left;
+    margin-left: 2%;
+}
+
+.screen label:first-child{
+    margin-left: 0;
+}
+
+.screen .time-div{
+    float: left;
+    position: relative;
+    padding: 0 15px;
+    width: 12%;
+}
+
+.screen .search{
+
+}
+
+.order-count-key,.order-count-val{
+    float: right;
+}
+
+.order-count-key{
+    margin-left: 10px;
+}
+
+/*列表*/
+.table{
+    border-collapse: separate !important;
+    border-spacing: 0!important;
+    margin-bottom: 0;
+}
+
+.table th{
+    text-align: center;
+}
+
+.table td {
+    vertical-align: middle !important;
+}
+
+.tr-margin{
+    height: 9px;
+    padding: 0!important;
+}
+
+.one-order-title{
+    background-color: #B7D4F1;
+}
+
+.one-order-title td{
+    border-left:1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+}
+
+.one-order-title .order-input-span{
+    display: inline-block;
+    width: 14px;
+}
+
+.one-order-title .order-number-key{
+    margin-left: 10px;
+}
+
+.one-order-title .order-number-val{
+    margin-left: 5px;
+    display: inline-block;
+    width: 260px;
+}
+
+.one-order-title .order-time-key{
+    margin-left: 25px;
+}
+
+.one-order-title .order-time-val{
+    margin-left: 5px;
+}
+
+.one-order-content{
+
+}
+
+.one-order-tbody .one-order-content:last-child td{
+    border-bottom: 1px solid #dddddd;
+}
+
+.one-order-content td:first-child{
+    border-left: 1px solid #dddddd;
+}
+
+.one-order-content .price-td,.one-order-content .amount-td{
+    text-align: center;
+}
+
+.one-order-content .one-order-merger-td:last-child{
+    border-right: 1px solid #dddddd;
+}
+
+.one-order-content .one-order-merger-td{
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #dddddd;
+    text-align: center;
+}
+
+.one-order-content .commodity-img-div{
+    float: left;
+    width: 60px;
+    height: 60px;
+}
+
+.one-order-content img{
+    width: 100%;
+    height: 100%;
+}
+
+.one-order-content .commodity-name-div{
+    float: left;
+    margin-left: 9px;
+}
+
+.one-order-content .commodity-name-div .commodity-name{
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.one-order-content .commodity-name-div .commodity-name .refund{
+    color: red;
+    font-size: 12px!important;
+}
+
+.one-order-content .commodity-name-div .no-commodity-name{
+    display: block;
+    height: 60px;
+    line-height: 60px;
+}
+
+.one-order-content .commodity-name-div .commodity-specification-span{
+    display: block;
+    color: #888888;
+    font-size: 13px;
+}
+
+.one-order-content .fa-btc{
+    position: relative;
+    top:-1px;
+}
+
+.one-order-content .operation-td span{
+    color: #337AB7;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.batch-operation-deliver{
+    color: #337AB7;
+    cursor: pointer;
+    margin-left: 20px;
+    vertical-align: middle;
+}
+
+.isShowCloseOrder{
+    margin-left: 20px;
+}
+
+/*分页*/
+.table-page{
+    float: right;
+    margin-top: -10px;
+}
+
+.no-order-span{
+    display: block;
+    width: 50%;
+    margin: 100px auto;
+    text-align: center;
+    font-size: 30px;
+    color: #888888;
+}

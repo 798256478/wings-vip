@@ -1,0 +1,59 @@
+<form name="initialize_form" ng-controller="InitializeController" ng-show="AuthService.current_user.roles=='captain'" ng-submit="submit(initialize_form.$valid)">
+    <div class="form-group">
+        <label>余额：</label>
+        <input mnk-input  shortcut-group="init" type="text"  class="form-control"  name="balance"
+            ng-model="initData.balance" ng-pattern="/^[1-9][0-9]*[.0-9]*|0.[0-9]*[1-9]|0$/"/>
+        <span class="error" ng-show="initialize_form.balance.$dirty&&initialize_form.balance.$invalid">余额必须为非负数</span>
+    </div>
+    <div class="form-group">
+        <label>积分：</label>
+        <input mnk-input  shortcut-group="init"  type="text"  class="form-control" name="bonus"
+            ng-model="initData.bonus" ng-pattern="/^[1-9][0-9]*|0$/"
+            ng-init="DesktopManager.setFocus('input[name=&quot;bonus&quot;]')"/>
+        <span class="error" ng-show="initialize_form.bonus.$dirty&&initialize_form.bonus.$invalid">积分必须为非负正数</span>
+    </div>
+    <div class="form-group">
+        <label>等级：</label>
+       <select class="form-control" ng-model="initData.level" ng-options="key as value for (key,value) in cardSettings"></select>
+    </div>
+    <div class="form-group">
+        <label>服务：</label>
+         <div class="commodity-div" ng-repeat="commodity in commodities|filter:{sellable_type:'App\\Models\\propertyTemplate'} as propertyCommodities">
+            <div class="commodity"   ng-include="'partials/commodity.html'"></div>
+        </div>
+        <div class="content-none" ng-if="propertyCommodities.length==0">
+            <div class="icon">
+                <span class="glyphicon glyphicon-piggy-bank" ></span>
+            </div>
+            暂时没有服务。若有需要，请到管理后台添加
+        </div>
+    </div>
+    <div class="form-group">
+        <label>选择：</label>
+        <div class="content-none" ng-if="select_count==0">
+             <div class="icon">
+                <span class="glyphicon glyphicon-piggy-bank" ></span>
+            </div>
+            尚没有选择服务
+        </div>
+        <div class="select-item" ng-repeat="(key,item) in carts">
+            <span class="title" ng-bind="item.commodity.title"></span>
+            <div>
+                <input  mnk-input type="text" class="form-control num"  placeholder="数量" name="{{item.commodity.title}}"
+                 ng-model="item.sellable.quantity"  ng-pattern="/^[1-9][0-9]*$/"/>
+                <input type="date"  mnk-input  class="form-control expiry-date" ng-model="item.sellable.expiry_date" placeholder="有效期"/>
+            </div>
+           <div class="clear">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary btn-lg submit-button">提交</button>
+    </div>
+</form>
+<div class="content-none"  ng-show="AuthService.current_user.roles!='captain'" >
+    <div class="icon">
+        <span class="glyphicon glyphicon-piggy-bank" ></span>
+    </div>
+    您没有该权限
+</div>

@@ -1,0 +1,142 @@
+<style media="screen">
+     #dataList tbody tr td li{
+        list-style: none;
+        margin: 0px;
+     }
+
+     #dataList,.form-group{
+         margin-bottom: 0;
+     }
+
+     .form-horizontal .form-group{
+         margin-right: 0;
+     }
+
+    #dataList label{
+        font-size: 14px !important;
+        padding-right: 15px;
+        cursor: pointer;
+    }
+    .radio-inline label{
+        cursor: pointer;
+        padding-right: 10px;
+    }
+    .panel-title a{
+        outline: none;
+    }
+</style>
+<div class="row" id="upload" ng-controller="ProjectDataFengxianController">
+    <div class="col-md-3">
+        <rd-widget>
+            <rd-widget-header icon="fa-users" title="列表">
+               
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <div  class="search-div">
+                     <div class="col-md-4">
+                        <input type="text" placeholder="查找" class="form-control "
+                        ng-model="pages.code" ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}" />
+                     </div>
+                     <div class="col-md-6">
+                        <select class="form-control" ng-options="a.id as a.name for a in experiments"
+                        ng-model="pages.experimentId"></select>
+                     </div>
+                     <div class="icon">
+                        <span class="glyphicon glyphicon-search" ng-click="getList()"></span>
+                     </div>
+                </div>
+                <br/>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>编码</th>
+                            <th>实验名臣</th>
+                            <th>当前进度</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="a in experimentDataList" on-finish-render>
+                            <td>{{a.barcode.code}}</td>
+                            <td>{{a.experiment.name}}</td>
+                            <td>{{a.progress.name}}</td>
+                            <td><a href="" ng-click="getDetailById(a)">编辑</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-page col-md-12">
+                    <paging
+                        page="pages.nowPage"
+                        page-size="pages.pageSize"
+                        total="pages.total"
+                        scroll-top="true"
+                        hide-if-empty="true"
+                        show-prev-next="true"
+                        text-next=">"
+                        text-prev="<"
+                        text-title-page="第 {page} 页"
+                        text-title-next="下一页"
+                        text-title-prev="上一页">
+                    </paging>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-md-9" ng-show="parentProjectList">
+        <rd-widget>
+            <rd-widget-header title="检测项目：{{currentExperimentData.experiment.name}}">
+            </rd-widget-header>
+            <rd-widget-body classes="auto">
+                <div ng-if="parentProjectList">
+                    <uib-accordion>
+                        <uib-accordion-group ng-repeat="parentProject in parentProjectList" heading="{{parentProject.name}}" id="a{{parentProject.id}}">
+                            <form name="form.projectdata" class="form-horizontal" style="margin-left: 20px;">
+                                <div class="form-group">
+                                    <table id="dataList" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th width="200px">名称</th>
+                                                <th width="100px">参考得分</th>
+                                                <th width="120px">得分</th>
+                                                <th >风险等级</th>
+                                                <th width="330px">位点数据</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="childProject in parentProject.childProjects">
+                                                <td><span style="font-size: 14px !important">{{childProject.name}}</span></td>
+                                                <td><span style="font-size: 14px !important">{{childProject.original_score}}</span></td>
+                                                <td>
+                                                    <input type="number" class="form-control" step="0.01" name="score" ng-model="childProject.score" ng-bind="getSel(childProject)">
+                                                </td>
+                                                <td>
+                                                    <label ng-repeat="project_risk in childProject.project_risks">
+                                                        <input type="radio" ng-model="childProject.abilityLevel" ng-value="project_risk.tag">{{project_risk.tag}}
+                                                    </label>
+                                                </td>
+                                                <td class="site-data">
+                                                    <table style="width:100%">
+                                                        <tr  ng-repeat="site in childProject.siteDTOs">
+                                                            <td >{{site.code}}</td>
+                                                            <td width="50px">{{site.SNPSite}}</td>
+                                                            <td width="50px">{{site.mutation}}</td>
+                                                            <td width="50px">{{site.showGenotype}}</td>
+                                                            <td width="50px">{{site.abilityLevel?  site.abilityLevel:site.score}}</td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </uib-accordion-group>
+                    </uib-accordion>
+                    <button type="button" class="btn btn-primary"
+                    ng-disabled="form.wrongForm.$invalid" ng-click="saveData();">提交</button>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

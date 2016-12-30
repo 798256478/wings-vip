@@ -1,0 +1,195 @@
+<style type="text/css">
+  .search{
+    width: 660px;
+    margin: 65px auto;
+  }
+
+  .search-label{
+    font-size: 22px;
+    width: 16%;
+  }
+
+  .title-info{
+  	text-align: center;
+  	margin-bottom: 30px;
+  	color: #8c8c8c;
+  }
+  
+  .title-info span{
+    margin:0 8%;
+  }
+
+  h3,.nosuggest{
+    text-align: center;
+  }
+  
+  .panel{
+    position: relative;
+    border-top:1px solid #f1f1f1;
+    border-radius: 0;
+    margin:0 -15px;
+  }
+
+  .panel-group {
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  .panel-group .panel+.panel {
+     margin-top: 0px; 
+  }
+
+  .panel-default>.panel-heading {
+    background-color: #fff;
+    border-color: #fff;
+  }
+
+  .panel-heading{
+  	padding:5px 15px;
+    position: relative;
+  }
+
+  .panel-title{
+    color: #5c5c5c;
+    font-size: 18px;
+    line-height: 33px;
+  }
+
+  .panel-heading .left{
+  	line-height: 30px;
+  }
+
+  .right{
+  	position: absolute;
+    right: 0px;
+    top: 0px;
+    line-height: 80px;
+    height: 100%;
+    width: 50px;
+    text-align: center;
+    color: #777;
+  }
+
+  .fa{
+    margin:0 1px;
+  }
+
+  .fa-heart-o{
+    margin-left: -4px;
+  }
+
+  .panel-heading .info span{
+    display: inline-block;
+    width: 60px;
+    margin-left: 30px;
+    margin-right: 50px;
+    font-size: 15px;
+  }
+
+  .panel-body{
+    font-size: 13px;
+    color: #8c8c8c;
+    line-height: 1.5em;
+    padding:0px 15px 10px;
+  }
+
+  .panel-group .panel-heading+.panel-collapse>.list-group, .panel-group .panel-heading+.panel-collapse>.panel-body {
+    border-top: 0;
+  }
+
+  .level{
+    position: absolute;
+    left:70px;
+  }
+  
+  .suggest{
+    position: absolute;
+    left:180px;
+    color: #3399ff;
+  }
+
+  .danger{
+    color: #a94442;
+  }
+
+  .warning{
+    color: #ff9900;
+  }
+
+  .success{
+    color: #3399ff;
+  }
+
+  .unfinish{
+    margin-top: 150px;
+    text-align: center;
+    font-size: 16px;
+    color: #8c8c8c;
+  }
+	
+  .unfinish span{
+  	font-size: 120px;
+  	margin-bottom: 8px;
+    margin-top: 20px;
+    color:#dedede;
+  }
+
+  .unfinish div{
+    margin:10px 0;
+  }
+
+  .unfind div{
+    text-align: center;
+    margin-top: 200px;
+    color: #999;
+  }
+
+</style>
+<div class="container" ng-controller="ReportController">
+    <div class="search">
+      <label class="col-lg-2  col-md-2 col-sm-2 col-xs-2 search-label">条&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"> 
+          <input type="text" name="" class="form-control" ng-model="code">
+      </div>
+      <button ng-disabled="!code" ng-click='getReportData()' class="btn btn-primary" >确定</button>    
+    </div>
+    <div ng-if="progress.indexOf('数据分析')>-1||progress.indexOf('检测报告')>-1">
+      <h3>{{reportData['title']}}</h3>
+      <div class="title-info">
+        <span>{{customer.name}}</span>
+        <span>{{dataCode}}</span>
+        <span>{{reportData['time']['date'].substring(0,11)}}</span>
+      </div>
+      <uib-accordion close-others="oneAtATime" ng-repeat="project in reportData['projects_data']">
+        <div uib-accordion-group class="panel-default" is-open="status.open">
+          <uib-accordion-heading>
+                <div class="panel-title">
+                    {{project.project_name}} 
+                </div>
+                <div class="info">
+                    <i class="fa fa-heart {{range[project.abilityLevel][0]}}" ng-repeat="n in [].constructor(range[project.abilityLevel][1]) track by $index"></i>  
+                    <i class="fa fa-heart-o {{range[project.abilityLevel][0]}}" ng-repeat="n in [].constructor(3-range[project.abilityLevel][1]) track by $index"></i>            
+                    <span class="{{range[project.abilityLevel][0]}} level">{{project.abilityLevel}}</span>
+                    <span class="suggest">建议</span>
+                </div>          
+              
+          </uib-accordion-heading>
+          <div ng-if="project.riskAssessment">{{project.riskAssessment}}</div>
+          <div class='nosuggest' ng-if="!project.riskAssessment">暂无建议</div>
+        </div>
+        <a class="right" ng-href="#/reportDetail/{{dataCode}}/{{project.project_id}}">                  
+            <i class="glyphicon glyphicon-chevron-right" ></i>
+        </a>
+      </uib-accordion>
+    </div> 
+    <div class="unfinish" ng-if="customer&&progress.indexOf('数据分析')==-1&&progress.indexOf('检测报告')==-1">
+      <span class="glyphicon glyphicon-piggy-bank"></span>
+      <div>亲，您的报告正在加紧进行中。。。</div>
+    </div>
+    <div class="unfind" ng-if="!customer&&!first">
+      <div>未查询到检测报告，请检查条码是否正确</div>
+    </div>
+    <div class="unfind" ng-if="first">
+      <div>请输入条码，获取报告内容</div>
+    </div>
+</div>

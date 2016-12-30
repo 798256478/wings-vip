@@ -1,0 +1,216 @@
+<div class="form-group">
+    <label class="control-label col-md-2 title-label">支&nbsp;&nbsp;付&nbsp;&nbsp;方&nbsp;式</label>
+    <div class="col-md-9">
+        <div class="table-div">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>支付名称</th>
+                        <th>支付类型</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in setting.value.methods">
+                        <td>{{item.name}}</td>
+                        <td>{{paymentType[item.type]}}</td>
+                        <td class="toggle">
+                            <i class="fa fa-toggle-on active" ng-if="!item.disabled" ng-click="item.disabled = changeState(item.disabled);" style="font-size: 20px !important;"></i>
+                            <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="item.disabled" ng-click="item.disabled = changeState(item.disabled);" style="font-size: 20px !important;"></i>
+                        </td>
+                        <td>
+                            <a ng-if="item.type == 'CASHIER'" href="" ng-click="delPayment(item)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <span class="control-label left">支付名称</span>
+            <div class="col-md-2">
+                <input type="text" class="form-control" ng-model="payName">
+            </div>
+            <span class="control-label left">支付类型</span>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="payType">
+                    <option value="CASHIER">现金支付</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-info" ng-click="addPayment(payName, payType);">添加</button>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-2 title-label">储值支付方式</label>
+    <div class="col-md-9">
+        <div class="col-md-12" style="margin-bottom: 10px;padding-left:0;">
+            <span class="control-label left">赠送积分基础比例</span>
+            <div class="col-md-2">
+                <input type="number" step="0.01" class="form-control" ng-model="setting.value.balance.bonus">
+            </div>
+            <span class="control-label left">倍</span>
+        </div>
+        <div class="table-div">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>支付方式</th>
+                        <th>赠送比例</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(key, value) in setting.value.balance.methods">
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
+                        <td>
+                            <a href="" ng-click="delBalance(key)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12" style="margin-bottom: 10px;padding-left:0;">
+            <span class="control-label left">支付方式</span>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="balance_payment">
+                    <option ng-repeat="a in setting.value.methods" value="{{a.name}}" ng-if="a.type != 'BALANCE'">
+                        {{a.name}}
+                    </option>
+                </select>
+            </div>
+            <span class="control-label left">赠积分比例</span>
+            <div class="col-md-2">
+                <input type="number" step="0.01" min="0.01" class="form-control" ng-model="balance_proportion">
+            </div>
+            <button type="button" class="btn btn-info" ng-click="addBalance(balance_payment,balance_proportion);">添加</button>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-2 title-label">消费支付方式</label>
+    <div class="col-md-9">
+        <div class="col-md-12" style="margin-bottom: 10px;padding-left:0;">
+            <span class="control-label left">赠送积分基础比例</span>
+            <div class="col-md-2">
+                <input type="number" step="0.01" class="form-control" ng-model="setting.value.consume.bonus">
+            </div>
+            <span class="control-label left">倍</span>
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>支付方式</th>
+                        <th>赠送比例</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(key, value) in setting.value.consume.methods">
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
+                        <td>
+                            <a href="" ng-click="delConsume(key)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12" style="margin-bottom: 10px;padding-left:0;">
+            <span class="control-label left">支付方式</span>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="consume_payment">
+                    <option ng-repeat="a in setting.value.methods" value="{{a.name}}">
+                        {{a.name}}
+                    </option>
+                </select>
+            </div>
+            <span class="control-label left">赠积分比例</span>
+            <div class="col-md-2">
+                <input type="number" step="0.01" class="form-control" ng-model="consume_proportion">
+            </div>
+            <button type="button" class="btn btn-info" ng-click="addConsume(consume_payment,consume_proportion);">添加</button>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-2 title-label">购买支付方式</label>
+    <div class="col-md-9">
+        <div class="col-md-12" style="margin-bottom: 10px;padding-left:0;">
+            <span class="control-label left">赠送积分基础比例</span>
+            <div class="col-md-2">
+                <input type="number" step="0.01" class="form-control" ng-model="setting.value.commodities.bonus">
+            </div>
+            <span class="control-label left">倍</span>
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>支付方式</th>
+                        <th>赠送比例</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(key, value) in setting.value.commodities.methods">
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
+                        <td>
+                            <a href="" ng-click="delCommodities(key)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12" style="margin-bottom: 10px;padding-left:0;">
+            <span class="control-label left">支付方式</span>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="commodities_payment">
+                    <option ng-repeat="a in setting.value.methods" value="{{a.name}}">
+                        {{a.name}}
+                    </option>
+                </select>
+            </div>
+            <span class="control-label left">赠积分比例</span>
+            <div class="col-md-2">
+                <input type="number" step="0.01" class="form-control" ng-model="commodities_proportion">
+            </div>
+            <button type="button" class="btn btn-info" ng-click="addCommodities(commodities_payment,commodities_proportion);">添加</button>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-2 title-label">购买积分抵用</label>
+    <div class="col-md-9">
+        <div class="col-md-12" style="margin-bottom: 10px;padding-left:0;">
+            <span class="control-label left">状态</span>
+            <div class="col-md-1 toggle">
+                <i class="fa fa-toggle-on active" ng-if="setting.value.bonus_rule.disabled == false"
+                    ng-click="setting.value.bonus_rule.disabled = changeState(setting.value.bonus_rule.disabled);"></i>
+                <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="setting.value.bonus_rule.disabled == true"
+                    ng-click="setting.value.bonus_rule.disabled = changeState(setting.value.bonus_rule.disabled);"></i>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-bottom: 10px;padding-left:0;">
+            <span class="control-label left">每积分可抵用</span>
+            <div class="col-md-2">
+                <input type="number" min="0" step="0.01" class="form-control" ng-model="setting.value.bonus_rule.exchange">
+            </div>
+            <span class="control-label left">余额</span>
+        </div>
+        <div class="col-md-12" style="margin-bottom: 10px;padding-left:0;">
+            <span class="control-label left">最大抵用比例</span>
+            <div class="col-md-2">
+                <input type="number" min="0" max="100" class="form-control" ng-model="setting.value.bonus_rule.use">
+            </div>
+            <span class="control-label left">%，最大抵用金额</span>
+            <div class="col-md-2">
+                <input type="number" min="0" step="0.01" class="form-control" ng-model="setting.value.bonus_rule.limit" placeholder="为0无限制">
+            </div>
+            <span class="control-label left">元</span>
+        </div>
+    </div>
+</div>

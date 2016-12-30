@@ -1,0 +1,36 @@
+<form name="balance_buy_form" ng-controller="BalanceBuyController" ng-submit="submit(balance_buy_form.$valid)">
+    <div class="form-group">
+        <label>金额：</label>
+        <input mnk-input   shortcut-group="jiezhang" name="balance_fee"  type="text"  class="form-control" 
+            ng-model="order.balance_fee" ng-pattern="/^[1-9][0-9]*[.0-9]*|0.[0-9]*[1-9]$/"  
+            ng-init="DesktopManager.setFocus('input[name=&quot;balance_fee&quot;]')"/>
+        <span class="error" ng-show="balance_buy_form.balance_fee.$dirty&&balance_buy_form.balance_fee.$invalid">金额必须为正数</span>
+    </div>
+    <div class="form-group">
+        <label>赠送：</label>
+        <div class="input-group">
+            <input mnk-input type="text"  class="form-control " name="balance_present"  ng-disabled="AuthService.current_user.roles!='captain'"
+                 ng-model="order.balance_present" ng-pattern="/^[1-9][0-9]*[.0-9]*|0.[0-9]*[1-9]$/"/>
+            <span class="input-group-btn">
+                <a  class="btn btn-primary update-btn" ng-show="AuthService.current_user.roles!='captain'" ng-click="switchUser()">修改</a>
+            </span>
+        </div>
+        <span class="error" ng-show="balance_buy_form.balance_present.$dirty&&balance_buy_form.balance_present.$invalid">赠送必须为正数</span>
+    </div>
+    <div class="form-group">
+        <label>总计：</label>
+        <input type="text" class="form-control"  disabled  ng-model="order.total"/>
+    </div>
+    <div class="form-group">
+         <label>支付方式：</label>
+         <payment  debt="debt" amount="order.balance_fee" payment='payments["balance"]'  bonusrule="bonus_rule"   paymentselects="paymentselects"  qualitydata="qualitydata" operation="submit(isValid)"></payment>
+    </div>
+    <div class="form-group">
+        <label>备注：</label>
+        <input type="text" class="form-control"  ng-model="order.remark" />
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary btn-lg submit-button"  ng-show="debt==0">提交</button>
+        <span class="btn btn-danger btn-lg submit-button"  ng-show="debt!=0">尚余{{debt}}未结清</span>
+    </div>
+</form>

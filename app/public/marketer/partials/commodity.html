@@ -1,0 +1,114 @@
+<link rel="stylesheet" href="/marketer/css/commodity.css">
+<style media="screen">
+    form label.control-label {
+        padding-right: 10px;
+    }
+</style>
+<div class="row" id="commodity" ng-controller="CommodityController">
+    <div class="col-lg-3">
+        <rd-widget>
+            <rd-widget-header icon="fa-comments-o" title="全部分类">
+                <a href="" ng-click="addCommodityCategory()"><i class="fa fa-plus fa-2x"></i></a>
+            </rd-widget-header>
+            <rd-widget-body classes="auto no-padding">
+                <div class="list-group item">
+                    <button class="list-group-item" ng-repeat="a in commodityCategoryList"  on-finish-render
+                        ng-click="getCommodityCategory(a);">{{a.name}}</button>
+                </div>
+                <div ng-if="commodityCategoryList == undefined" style="padding: 20px;text-align: center;color: #AAA;">
+                    暂无分类
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+    <div class="col-lg-9" ng-show="commodityCategory">
+        <div style="margin-bottom: 19px;">
+            <rd-widget>
+                <rd-widget-header title="分类详情"></rd-widget-header>
+                <rd-widget-body classes="">
+                    <div class="category-detail" style="height: 70px;">
+                        <form name="form.commodityCategory" class="form-inline" ng-submit="submitCommodityCategory(form.commodityCategory.$valid)" autocomplete="off">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="control-label">分类名称</label>
+                                    <input type="text" class="form-control" name="name" ng-model="commodityCategory.name" placeholder="分类名称"
+                                        ng-maxlength=20 required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">佣金</label>
+                                    <div class="input-group">
+                                        <div class="input-group-btn" uib-dropdown is-open="commission.isopen">
+                                            <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>{{commission.text}} <span class="caret"></span></button>
+                                            <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                                                <li><a href="" ng-click="changeCommission('无返还', '  ')">无返还</a></li>
+                                                <li><a href="" ng-click="changeCommission('固定金额', '元')">固定金额</a></li>
+                                                <li><a href="" ng-click="changeCommission('固定比例', '%')">按比例</a></li>
+                                            </ul>
+                                        </div>
+                                        <input type="number" class="form-control" ng-model="commodityCategory.commission_show"
+                                        ng-disabled="commission.text == '无返还'">
+                                        <span class="input-group-addon">{{commission.unit}}</span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" ng-disabled="form.commodityCategory.$invalid">提交</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </rd-widget-body>
+            </rd-widget>
+        </div>
+        <rd-widget>
+            <rd-widget-header title="{{text}}"></rd-widget-header>
+            <rd-widget-body classes="auto-height-part">
+                <div class="btn-toolbar">
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group">
+                            <button class="btn btn-info" ng-class="btn_product" ng-click="clearData();selType('product');">新建商品</button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-info" ng-class="btn_property" ng-click="clearData();selType('property');">新建服务</button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-info" ng-class="btn_ticket" ng-click="clearData();selType('ticket');">新建优惠券</button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-info" ng-class="btn_suit" ng-click="clearData();selType('suit');">新建套装</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="commodity_list" ng-if="!commodity.commodity_category_id">
+                    <div class="commodityList">
+                        <div class="commodity" ng-repeat="a in commodityList">
+                            <div class="row" ng-click="getCommodity(a.id);">
+                                <div class="commodity-pic">
+                                    <img ng-src="{{a.image[0] ? a.image[0] : '/common/imgs/noimg.png'}}"/>
+                                </div>
+                                <div class="commodity-msg">
+                                    <h4>{{a.name}}</h4>
+                                    <p>
+                                        <i class="fa fa-jpy" aria-hidden="true"></i>{{a.price}}
+                                        +&nbsp;
+                                        <i class="fa fa-bitcoin"></i>{{a.bonus_require}}
+                                    </p>
+                                    <p class="commission" ng-if="a.commission == null">
+                                        佣金<span>无</span>
+                                    </p>
+                                    <p class="commission" ng-if="a.commission >= 1">
+                                        佣金<span>{{a.commission}}</span>元
+                                    </p>
+                                    <p class="commission" ng-if="a.commission < 1 && a.commission != null">
+                                        佣金<span>{{a.commission * 100}}</span>%
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="commodityList == undefined" style="padding: 20px;text-align: center;color: #AAA;font-size: 20px;">
+                            暂无商品
+                        </div>
+                    </div>
+                </div>
+                <div class="" ng-if="commodity.commodity_category_id" ng-include="'partials/commodity_view.html'"></div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>

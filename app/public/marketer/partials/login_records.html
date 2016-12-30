@@ -1,0 +1,72 @@
+<!--<link rel="stylesheet" type="text/css" href="/marketer/css/health.css">-->
+
+<style>
+	.screen .col-md-1{
+		padding-right: 0;
+	}
+
+</style>
+
+<div class="row"  ng-controller="LoginRecordsController">
+	<div class="col-md-7">
+		<rd-widget>
+			<rd-widget-header title="所有记录">
+			</rd-widget-header>
+			<rd-widget-body classes="auto no-padding">
+				<div class="row">
+					<div class="col-md-12" style="margin-top: 15px;">
+						<form class="form form-horizontal screen">
+							<label class="control-label col-md-1">角色</label>
+							<div class="col-md-2">
+								<select class="form-control" ng-options="key as value for (key, value) in sort.roles.list"
+								        ng-model="sort.roles.sel"></select>
+							</div>
+							<label class="control-label col-md-1">昵称</label>
+							<div class="col-md-2">
+								<input type="text" placeholder="昵称" class="form-control "
+								       ng-model="search.value"
+								       ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}"
+								       />
+							</div>
+						</form>
+					</div>
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+							<tr>
+								<th class="col-md-4">昵称</th>
+								<th class="col-md-4">角色</th>
+								<th class="col-md-4">登录时间</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="a in loginList" on-finish-render>
+								<td>{{a.display_name}}</td>
+								<td>{{sort.roles.list[a.roles]}}</td>
+								<td>{{a.created_at}}</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="table-page col-md-8 col-md-offset-2">
+						<paging
+								page="pages.nowPage"
+								page-size="14"
+								total="pages.total"
+								scroll-top="true"
+								hide-if-empty="true"
+								show-prev-next="true"
+								text-next="下一页"
+								text-prev="上一页"
+								text-title-page="第 {page} 页"
+								text-title-next="下一页"
+								text-title-prev="上一页">
+						</paging>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+</div>
+
+

@@ -1,0 +1,70 @@
+<div class="card-box" ng-controller="CardController">
+    <div class="card-info-zone">
+        <div class="card-search-panel">
+            <complete id="search" inputClass="form-control" selectedobject="selectcard"  placeholder="Search"  localdata="cardSummaries" searchfield="card_code,mobile" titlefield="card_code,nickname,mobile" matchclass="matchClass"></complete>
+            <span class="glyphicon glyphicon-refresh input-group-addon" ng-click="getCardSummaries()" ></span>
+        </div>
+        <div class="card-info-panel">
+            <div class="card-wrapper" ng-click="getCard(cardInfo.card.id)">
+                <div class="card back ">
+                    <div class="top f-clear">
+                        <div class="left">
+                            <img class="icon img-circle" src="{{cardInfo.card.headimgurl?cardInfo.card.headimgurl:''}}"></img>
+                        </div>
+                        <div class="right">
+                            <strong class="name"  ng-bind="cardInfo.card.name?cardInfo.card.name:cardInfo.card.nickname?cardInfo.card.nickname:'匿名'"></strong>
+                            <strong class="phone"><small> Phone.</small> <span  ng-bind="cardInfo.card.mobile?cardInfo.card.mobile:cardInfo.card.card_code"></span></strong>
+                        </div>
+                    </div>
+                    <div class="bottom f-clear">
+                        <fieldset class="property">
+                            <label>Coin</label>
+                            <span ng-bind="cardInfo?cardInfo.card.balance:'0.00'"></span>
+                        </fieldset>
+                        <fieldset class="property">
+                            <label>Point</label>
+                            <span ng-bind="cardInfo?cardInfo.card.bonus:'0'"></span>
+                        </fieldset>
+                        <fieldset class="property">
+                            <label>Level</label>
+                            <span ng-bind="cardInfo?cardSettings[cardInfo.card.level]:'无'"></span>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>        
+            <div class="alert alert-info" role="alert" >
+               口令码：<span ng-bind="cardInfo.card.pin?cardInfo.card.pin:'无'"></span>
+            </div>
+        </div>
+        <div class="cardRecords-panel">
+            <h3 class="part-header">操作记录</h3>
+            <div class="record" ng-repeat="record in cardInfo.records">
+                  <span class="cteatetime" ng-bind="record.display_time"></span>
+                  <div>
+                       <span ng-bind="record.action" class="action"></span>
+                       &nbsp;
+                       <span  ng-bind="record.summary" class="summary"></span>
+                  </div>
+            </div>
+            <div class="content-none" ng-if="!(cardInfo.records.length > 0)" >
+                <div class="icon">
+                    <span class="glyphicon glyphicon-list-alt" ></span>
+                </div>
+                该会员尚无操作记录~
+            </div>
+        </div>
+    </div>
+    <div class="card-page-tab-zone" >
+        <div ng-repeat="menu in cashier_client.menus | filter:{disable:false}">
+            <div  class="operation-button {{currentPage==menu.page?'active':''}}"  role="button" ng-click="switchPage(menu.page)">
+                <span class="glyphicon glyphicon-qrcode"></span><span ng-bind="menu.tag"></span>
+            </div>
+        </div>
+    </div>
+        
+    <div class="card-page-zone"  ng-show="currentPage == 'BALANCE' && DesktopManager.isLocked == false"    ng-include="'partials/balance.html'"></div>
+    <div class="card-page-zone"  ng-show="currentPage=='CONSUME'  && DesktopManager.isLocked == false"  ng-include="'partials/consume.html'"></div>
+    <div class="card-page-zone"  ng-if="currentPage == 'MALL'"  ng-include="'partials/mall.html'"></div>
+    <div class="card-page-zone"  ng-if="currentPage == 'WRITE_OFF'"  ng-include="'partials/writeoff.html'"></div>
+    <div class="card-page-zone"  ng-show="currentPage == 'INITIALIZE' && DesktopManager.isLocked == false"  ng-include="'partials/initialize.html'"></div>
+</div>

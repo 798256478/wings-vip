@@ -1,0 +1,56 @@
+#customer h2.page-header.page{
+    margin-top: 0px;
+}
+
+#customer table{
+    margin-bottom: 0;
+}
+
+#customer table tr td:first-child{
+    padding-left: 15px;
+}
+
+#customer .mytable{
+    text-align: center;
+    margin-bottom: 0;
+}
+
+#customer .mytable .mytbth{
+    font-size: 16px;
+}
+
+#customer .myform div{
+    margin: 5px 0;
+}
+
+#customer .show-value{
+    font-size: 28px;
+    margin-top: -5px;
+}
+
+#customer .right-border{
+    border-right: 2px solid #BBB;
+}
+
+#customer .value-line{
+    border-top: 2px dotted #BBB;
+    padding: 6px 0;
+}
+
+#customer .form-group{
+    width: 270px;
+}
+
+#customer .form-group span{
+    width: 270px;
+}
+
+#customer .valred{
+    color: red;
+    font-weight: 800;
+}
+
+#customer .valgreen{
+    color: green;
+    font-weight: 800;
+}

@@ -1,0 +1,187 @@
+<link rel="stylesheet" href="css/mass.css">
+<div id="mass" ng-controller="MassController">
+    <rd-widget>
+        <rd-widget-body classes="auto-nohead no-padding">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="col-md-12">
+                        <h4 class="page-header">模板查询</h4>
+                        <div class="clearfix">
+                            <div class="tmp">
+                                <div style="float: left;" ng-repeat="tmp in MassTmpList">
+                                    <div class="btn-group" style="margin-left: 10px;">
+                                        <button type="button" ng-click="getMassTemplate(tmp._id)" class="btn btn-outline btn-info btn-sm">{{tmp.name}}</button>
+                                        <button type="button" ng-click="delMassTemplate(tmp._id,$event)" class="btn btn-outline btn-danger btn-sm">X</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="MassTmpList == undefined" style="padding: 20px;text-align: center;color: #AAA;">
+                                暂无模板
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mass row">
+                        <div class="col-md-12">
+                            <h4 class="page-header">高级查询</h4>
+                        </div>
+                        <div class="eachone" ng-repeat="a in advancedQuery" on-finish-render>
+
+                            <label>{{a.text}}</label>
+                            <input ng-if="a.id != 6 && a.id != 9 && a.id != 12" type="text" class="form-control"
+                                name="minval" ng-model="a.minval">
+                            <input ng-if="a.id == 6 || a.id == 9" type="text" class="form-control" name="minval" ng-model="a.minval"
+                                uib-datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.dateOptions"
+                                is-open="a.openMin" current-text="今天" clear-text="清除" close-text="关闭"
+                                ng-required="true" ng-click="a.openMin = selectDate(a.openMin)" readonly>
+                            <select ng-if="a.id == 12" class="form-control" name="minval" ng-model="a.minval"
+                                ng-options="a.id as a.name for a in levels">
+                            </select>
+                            <span>-</span>
+                            <input ng-if="a.id != 6 && a.id != 9 && a.id != 12" type="text" class="form-control"
+                                name="maxval" ng-model="a.maxval">
+                            <input ng-if="a.id == 6 || a.id == 9" type="text" class="form-control" name="maxval" ng-model="a.maxval"
+                                uib-datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.dateOptions"
+                                is-open="a.openMax" current-text="今天" clear-text="清除" close-text="关闭"
+                                ng-required="true" ng-click="a.openMax = selectDate(a.openMax)" readonly>
+                            <select ng-if="a.id == 12" class="form-control" name="maxval" ng-model="a.maxval"
+                                ng-options="a.id as a.name for a in levels">
+                            </select>
+                            <span class="show-state">
+                                <i class="fa fa-eye" ng-if="a.isshow" ng-click="a.isshow = changeShow(a.isshow)"></i>
+                                <i class="fa fa-eye-slash" ng-if="!a.isshow" ng-click="a.isshow = changeShow(a.isshow)"></i>
+                            </span>
+                        </div>
+                        <div class="eachone query-div">
+                            <button id='modalbtn' type="button" class="btn btn-info btn-outline" ng-click="setTmpName()">存为模板</button>
+                            <button type="submit" class="btn btn-info" ng-click="init();">重置</button>
+                            <button type="submit" class="btn btn-primary" ng-click="queryList(advancedQuery)">查询</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h4 class="page-header">
+                            查询结果
+                            <small class="msg" ng-if="queryTotal">
+                                共<span style="color:red;">{{queryTotal ? queryTotal : '0'}}</span>个会员符合条件
+                                <span ng-if="queryUnable > 0">
+                                    ,&nbsp;其中有
+                                    <span style="color:red;">{{queryUnable}}</span>
+                                    个会员无法接收微信消息
+                                </span>
+                            </small>
+                        </h4>
+                        <div class="send-div row">
+                            <h5 class="msg" ng-show="quering">{{quering}}</h5>
+                            <button type="button" class="btn btn-default result-btn" data-toggle="modal"
+                                data-target="#message_modal" ng-click="sendType()" ng-disabled="!queryResult.length">发送</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="table-div">
+                            <table class="table long-table">
+                                    <thead>
+                                        <tr>
+                                            <th>昵称</th>
+                                            <th>卡号</th>
+                                            <th ng-repeat="tmp in myinputarr">
+                                                {{tmp}}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="val in queryResult">
+                                            <td>
+                                                {{val.nickname}}
+                                            </td>
+                                            <td>
+                                                {{val.card_code}}
+                                            </td>
+                                            <td ng-repeat="a in myinputarr">
+                                                <span ng-if="a != '等级'">{{val[a] ? val[a] : 0}}</span>
+                                                <span ng-if="a == '等级'">{{getLevelName(val[a])}}</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="page-header" style="margin-bottom: 10px;">操作历史</h4>
+                    <div class="row" style="height: 324px; overflow-y: auto;">
+                        <div class="col-md-12" style="padding:0;">
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr ng-repeat="ea in massHistory">
+                                        <td>
+                                            <table>
+                                                <tr class="info">
+                                                    <td>{{ea.created_at}}</td>
+                                                    <td>{{ea.operator.display_name}}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-xs btn-outline btn-info" ng-click="showHistory(ea.data)">查看</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <span ng-repeat="(key,value) in ea.mass" ng-switch="key">
+                                                            <span ng-switch-when="bonus">
+                                                                <span class="show-label">赠积分</span>
+                                                                <span class="show-text">{{value}}</span>
+                                                            </span>
+                                                            <span ng-switch-when="balance">
+                                                                <span class="show-label">赠余额</span>
+                                                                <span class="show-text">{{value}}</span>
+                                                            </span>
+                                                            <span ng-switch-when="ticket">
+                                                                <span class="show-label">赠券</span>
+                                                                <span class="show-text">{{value.ticket}}</span>
+                                                                <span class="show-text">{{value.count}}张</span>
+                                                            </span>
+                                                            <span ng-switch-when="property">
+                                                                <span class="show-label">赠服务</span>
+                                                                <span class="show-text">{{value.property}}</span>
+                                                                <span class="show-text">{{value.count}}次</span>
+                                                            </span>
+                                                            <span ng-switch-when="level">
+                                                                <span class="show-label">提升等级</span>
+                                                                <span class="show-text">{{value}}</span>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div ng-if="massHistory == undefined" style="text-align: center;color: #AAA;">
+                                暂无历史纪录
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="page-header" style="margin-bottom: 10px;">发送TOP</h4>
+                    <div class="row" style="height: 400px; overflow-y: auto;">
+                        <div class="col-md-12" style="padding:0;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>昵称</th>
+                                        <th>卡号</th>
+                                        <th>接收次数</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="a in sendTop">
+                                        <td>{{a.nickname}}</td>
+                                        <td>{{a.card_code}}</td>
+                                        <td>{{a.month_receive}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </rd-widget-body>
+    </rd-widget>
+</div>

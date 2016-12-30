@@ -1,0 +1,280 @@
+.no-padding {
+    background-color: #f3f3f3;
+}
+
+.details{
+    padding: 0!important;
+}
+
+.details .operation {
+    cursor: pointer;
+    color: #337AB7;
+    margin-right: 18px;
+}
+
+.party-div {
+    margin: 10px 0 0 0;
+    padding: 23px 30px;
+    background-color: #ffffff;
+}
+
+/*订单进度*/
+.state-going-div, .state-dns-div, .state-complete-div {
+
+}
+
+.state-div {
+    padding: 30px !important;
+    margin: 0!important;
+}
+
+.state-div > div {
+    float: left;
+    width: 29.41%;
+}
+
+.state-finish-div {
+    width: 11.76% !important;
+}
+
+.state-finish-div span {
+    width: 100% !important;
+}
+
+.state-div > div > span {
+    display: inline-block;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    float: left;
+}
+
+.state-div .connect-line {
+    font-size: 20px;
+    line-height: 26px;
+    width: 40%;
+    margin: 0 10%;
+    overflow: hidden;
+}
+
+.state-going-div > span:first-child {
+    background-color: #D96464;
+    color: #ffffff;
+    width: 40%;
+}
+
+.state-going-div > span:last-child {
+    color: #D96464;
+}
+
+.state-dns-div > span:first-child {
+    background-color: #DDDEDD;
+    width: 40%;
+}
+
+.state-dns-div > span:last-child {
+    color: #DDDEDD;
+}
+
+.state-dns-div .state-span {
+    color: #333333 !important;
+}
+
+.state-complete-div > span:first-child {
+    background-color: #6EA952;
+    color: #ffffff;
+    width: 40%;
+}
+
+.state-complete-div > span:last-child {
+    color: #6EA952;
+}
+
+.state-complete-div .state-span {
+    color: #ffffff !important;
+}
+
+/*订单进度完*/
+/*订单状态*/
+.state-text-div{
+    padding-top: 20px!important;
+}
+
+.state-text-div .state-text-one {
+    border-bottom: 1px solid #dfdfdf;
+    padding: 0 0 10px 0;
+    height: 57px;
+}
+
+.state-text-div .state-text-one .state-icon {
+    font-size: 46px;
+    height: 46px;
+    line-height: 46px;
+    display: inline-block;
+}
+
+.state-text-div .state-text-one .state-icon .fa-check-circle-o{
+    color: #6EA952;
+}
+
+.state-text-div .state-text-one .state-icon .fa-sign-out{
+    color: #5D79CA;
+}
+
+.state-text-div .state-text-one .state-text-val,.state-text-div .state-text-one .state-text-key {
+    margin-left: 9px;
+    font-size: 20px;
+    font-weight: 600;
+    vertical-align: top;
+    height: 46px;
+    line-height: 46px;
+    display: inline-block;
+}
+
+.state-text-div .state-text-one .state-text-key{
+    margin-left: 10px;
+}
+
+.state-text-div .state-text-two {
+    margin-top: 10px;
+    color: #888888;
+}
+
+/*订单状态完*/
+/*物流信息支付信息订单详情*/
+.party-title-div {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.party-detail-div {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.party-detail-div > span {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.party-detail-div > span:last-child {
+    margin-bottom: 0;
+
+}
+
+.party-detail-div >div{
+    margin-bottom: 10px;
+}
+
+.party-detail-div >div:last-child {
+    margin-bottom: 0;
+}
+
+
+.party-detail-div .party-detail-one-key {
+    margin-right: 5px;
+}
+
+/*物流信息支付信息订单详情完*/
+/*订单详情表格部分*/
+.table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+.table td {
+    vertical-align: middle !important;
+}
+
+.table th {
+    background-color: #B7D4F1;
+    text-align: center;
+}
+
+.one-order-content {
+
+}
+
+.one-order-content .suit{
+    background-color: #F9F9F9;
+}
+
+.one-order-content .suit img{
+    vertical-align: top;
+    width: 60px;
+    height: 60px;
+}
+
+.one-order-content .suit .caption{
+    display: inline-block;
+    text-align: left;
+    margin-left: 5px;
+}
+
+.one-order-content:last-child td {
+    border-bottom: 1px solid #dddddd;
+}
+
+.one-order-content .commodity-image {
+    border-left: 1px solid #dddddd;
+}
+
+.one-order-content .one-order-merger-td:last-child {
+    border-right: 1px solid #dddddd;
+}
+
+.one-order-content .price-td,.one-order-content .amount-td{
+    text-align: center;
+}
+
+.one-order-content .one-order-merger-td {
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #dddddd;
+    text-align: center;
+}
+
+.one-order-content .commodity-img-div {
+    float: left;
+    width: 60px;
+    height: 60px;
+}
+
+.one-order-content .commodity-img-div img {
+    width: 100%;
+    height: 100%;
+}
+
+.one-order-content .commodity-name-div {
+    float: left;
+    margin-left: 9px;
+}
+
+.one-order-content .commodity-name-div .commodity-name {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.one-order-content .commodity-name-div .commodity-name .refund{
+    color: red;
+    font-size: 12px!important;
+}
+
+.one-order-content .commodity-name-div .no-commodity-name{
+    display: block;
+    height: 60px;
+    line-height: 60px;
+}
+
+.one-order-content .commodity-name-div .commodity-specification-span {
+    display: block;
+    color: #888888;
+    font-size: 13px;
+}
+
+.one-order-content .fa-btc {
+    position: relative;
+    top: -1px;
+}
+
+/*订单详情表格部分完*/

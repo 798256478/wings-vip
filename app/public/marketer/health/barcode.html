@@ -1,0 +1,302 @@
+<!--<link rel="stylesheet" type="text/css" href="/marketer/css/health.css">-->
+
+<style>
+
+
+	.list-module .search-div .icon {
+		color: #337AB7;
+		font-size: 26px;
+		cursor: pointer;
+		height: 34px;
+		padding-top: 0.5%;
+	}
+
+	.item-module .rd-widget-body > div {
+		margin-bottom: 30px;
+	}
+
+	.add-icon {
+		color: #337AB7;
+		font-size: 26px;
+		height: 34px;
+		border: none;
+		background: none;
+	}
+
+
+ .operation {
+		margin-right: 32px;
+		cursor: pointer;
+
+	}
+
+	.form-horizontal {
+		width: 100%;
+	}
+
+
+	.screen .col-md-1{
+		padding-right: 0;
+	}
+
+	.col-md-offset-1{
+		margin-left: 8.33333% !important;
+	}
+
+</style>
+
+<div class="row" id="barcode" ng-controller="BarcodeController">
+	<div class="col-md-4">
+		<rd-widget>
+			<rd-widget-header title="所有条码">
+				<div class="operation-div">
+					<label class="control-label   operation" ng-click="changeShow('addCode')">
+						<span class="glyphicon glyphicon-plus"></span>&nbsp;添加条码</label>
+					<label class="control-label  operation" ng-click="changeShow('uploadCode')">
+						<span class="glyphicon glyphicon-upload"></span>&nbsp;上传条码</label>
+				</div>
+			</rd-widget-header>
+			<rd-widget-body classes="auto no-padding">
+				<div class="row">
+					<div class="col-md-12" style="margin-top: 15px;">
+						<form class="form form-horizontal screen">
+
+							<label class="control-label col-md-2">搜索</label>
+							<div class="col-md-5">
+								<input type="text" placeholder="查找" class="form-control "
+								       ng-model="searchValue"
+								       ng-model-options="{updateOn:'default blur',debounce:{default:1000,blur:0}}"
+								       ng-change="Search()"/>
+							</div>
+						</form>
+					</div>
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+							<tr>
+								<th>条码</th>
+								<th>客户</th>
+                                <th>添加时间</th>
+								<th>操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="a in barcodes" on-finish-render>
+								<td>{{a.code}}</td>
+								<td>{{a.customer?a.customer.name:'--'}}</td>
+                                <td>{{a.created_at}}</td>
+								<td>
+									<a class="operation" ng-click="show_edit_codeInfo(a.code)">实验管理</a>
+									<a class="operation" ng-click="show_edit_customer(a)">客户</a>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="table-page col-md-8 col-md-offset-2">
+						<paging
+								page="pages.nowPage"
+								page-size="pages.pagesize"
+								total="pages.total"
+								scroll-top="true"
+								hide-if-empty="true"
+								show-prev-next="true"
+								text-next="下一页"
+								text-prev="上一页"
+								text-title-page="第 {page} 页"
+								text-title-next="下一页"
+								text-title-prev="上一页">
+						</paging>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+
+	<!--添加条码-->
+	<div class="col-md-8 list-module" ng-show="isShow=='addCode'">
+		<rd-widget>
+			<rd-widget-header title="添加条码">
+			</rd-widget-header>
+			<rd-widget-body >
+				<div style="height:80px">
+					<div class="col-md-8">
+						<input type="text" class="form-control" ng-model="add.code" placeholder="产品条码">
+					</div>
+					<div class="col-md-2">
+						<button class="btn btn-primary" ng-click="add_code()">添加</button>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+
+	<!--上传条码-->
+	<div class="col-md-8 list-module" ng-show="isShow=='uploadCode'">
+		<rd-widget>
+			<div class="widget-header">
+				<i class="fa" ng-class="icon"></i>
+				上传
+				<div class="pull-right">
+					<button class="glyphicon glyphicon-plus add-icon" type="file" ngf-select="" ng-model="file"
+					        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+					        ngf-max-size="2MB"></button>
+				</div>
+			</div>
+			<rd-widget-body class="auto">
+				<div style="height:80px">
+					<div class="col-md-10">
+						<span ng-bind="file.name"></span>
+						<span ng-if="!file.name">未选择文件</span>
+					</div>
+					<div class="col-md-2">
+						<button class="btn btn-primary" ng-click="fileUpload(file)">确定</button>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+
+	<!--实验绑定-->
+	<div class="col-md-8 list-module" ng-show="isShow=='codeInfo'">
+		<rd-widget>
+			<rd-widget-header title="{{currentCodeInfo.code}}实验管理">
+			</rd-widget-header>
+			<rd-widget-body class="auto">
+                <form name="form.experiment" class="form-inline">
+                    <div class="form-group">
+                        <label  class="control-label">产品条码</label>&nbsp;&nbsp;
+                        <strong ng-bind="currentCodeInfo.code"></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">实验</label>&nbsp;&nbsp;
+                        <select class="form-control" ng-options="experiment.id as experiment.name for experiment in experiments"
+                                    ng-model="currentexperiment.experiment_id">
+                            <option  value="0">-- 请选择 --</option>
+                        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">进度</label>&nbsp;&nbsp;
+                        <select class="form-control" ng-options="progress.id as progress.name  for progress in progresses"
+                                ng-model="currentexperiment.progress_id">
+                             <option value="0">-- 请选择 --</option>
+                        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="form-group submit-button-div">
+                        <a class="btn" ng-click="edit_currentexperiment_save()">保存</a>
+                    </div>
+                </form>
+                <br/>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>实验名称</th>
+                        <th>当前阶段</th>
+                        <th>修改时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="a in currentCodeInfo.experiment_datas" ng-if="currentCodeInfo.experiment_datas.length>0" on-finish-render>
+                        <td>{{a.experiment.name}}</td>
+                        <td>{{a.progress.name}}</td>
+                        <td>{{a.updated_at}}</td>
+                        <td>
+                            <a class="operation" ng-click="edit_currentexperiment(a)">编辑</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="!currentCodeInfo.experiment_datas||currentCodeInfo.experiment_datas.length==0">
+                        <td colspan="4">暂无实验信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+
+
+
+	<!--修改客户资料-->
+	<div class="col-md-7 list-module" ng-show="isShow=='customer'">
+		<rd-widget>
+			<rd-widget-header title="客户资料">
+			</rd-widget-header>
+			<rd-widget-body classes="">
+				<div class="editForm-div" >
+					<form name="editForm" class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label col-md-2">条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_code" ng-model="editCustomer.code" ng-disabled="true">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">客户姓名</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_name" ng-model="editCustomer.name" placeholder="客户名称"
+								       ng-maxlength="5" required >
+								<p ng-show="editForm.customer_name.$invalid && !editForm.customer_mobile.$pristine" class="help-block">
+									客户姓名必填且长度小于5个字
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_mobile" ng-model="editCustomer.mobile" placeholder="手机"
+								       ng-pattern="/^1[345678]{1}\d{9}$/" >
+								<p ng-show="editForm.customer_mobile.$invalid && !editForm.customer_mobile.$pristine" class="help-block">
+									手机号格式不正确
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
+							<div class="col-md-10">
+								<label class="radio-inline">
+									<input type="radio" name="customer_sex" ng-model="editCustomer.sex"  value="1"> 男
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="customer_sex" ng-model="editCustomer.sex"  value="2"> 女
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="customer_sex" ng-model="editCustomer.sex"  value="0"> 未知
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄</label>
+							<div class="col-md-10">
+								<input type="number" class="form-control" name="customer_age" ng-model="editCustomer.age" placeholder="年龄"
+								       ng-maxlength="3" >
+								<p ng-show="editForm.customer_age.$invalid && !editForm.customer_age.$pristine" class="help-block">
+									年龄为3位以内数字
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" name="customer_address" ng-model="editCustomer.address" placeholder="地址"
+								       ng-maxlength="50" >
+								<p ng-show="editForm.customer_address.$invalid && !editForm.customer_address.$pristine" class="help-block">
+									地址长度小于50个字
+								</p>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<button  class="btn btn-primary  col-md-offset-1" ng-disabled="editForm.$pristine || editForm.$invalid " ng-click="editCustomer_save() " >保存</button>
+						</div>
+					</form>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+
+	</div>
+
+
+</div>
+
+

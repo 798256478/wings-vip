@@ -1,0 +1,348 @@
+<style>
+	.search-cont .form-control {
+		width: 50%;
+	}
+	pre{
+		display: inline;
+		background:none;
+		border: none;
+		font-size: 16px;
+		padding: 0;
+		margin: 0;
+		font-weight: 700;
+	}
+
+	/*单选框多选框样式*/
+	input[type=radio], input[type=checkbox] {
+		display: none;
+	}
+
+	.input-cont {
+		border-radius: 5px;
+		cursor: pointer;
+		background-color: #eee;
+		height: 32px;
+		padding: 3px 0;
+		margin-top: 5px;
+		width: 138px;
+
+		/*单独一横排*/
+		/*width: 84%;*/
+		/*margin-left: 8%;*/
+
+		/*组合排列*/
+		/*margin-right: 4%;*/
+		/*min-width: 20%;*/
+
+	}
+
+	.topic-options-cont {
+		float: left;
+		margin-right: 20px;
+		/*min-width: 100px;*/
+		/*max-width: 100%;*/
+		width: 138px;
+	}
+
+	.icon-cont {
+		border-right: 1px solid #fff;
+		width: 26px;
+		background-image: url("/common/imgs/input-unchecked.png");
+		background-size: 70% 70%;
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+
+	.writ-cont {
+		/*padding: 0 20px;*/
+		vertical-align: top;
+		/*display: inline-block;*/
+		/*padding: 0 10px;*/
+		padding: 0 10px 0 2px;
+		width: 106px;
+
+	}
+
+	.icon-cont, .writ-cont {
+		display: inline-block;
+		height: 26px;
+		text-align: center;
+		line-height: 26px;
+
+	}
+
+	.checked {
+		background-color: #0092DB;
+		color: #fff;
+	}
+
+	.checked .icon-cont {
+		background-image: url("/common/imgs/input-checked.png") !important;
+	}
+
+	/*单选框多选框样式*/
+
+	/*输入框*/
+	.list-input, .mbsc-control-ev {
+		padding: 0;
+		border: none;
+		border-bottom: solid 1px #DADADA;
+		outline: none;
+		display: inline-block;
+		width: 100%;
+		text-align: left;
+		background-color: inherit;
+		margin-right: 10px;
+		float: right;
+		cursor: pointer;
+	}
+
+	.color-show {
+		color: #777;
+	}
+
+	/*输入框*/
+
+	/*问卷内容*/
+	.section {
+
+	}
+	.row{
+		margin-bottom: 20px;
+	}
+
+	.section-title {
+		text-align: center;
+		background-color: #fff;
+		padding: 20px 0;
+		margin-bottom: 0 !important;
+
+	}
+
+	.section-title h3 {
+		margin-top: 0;
+	}
+
+	.section-cont {
+		background-color: #fff;
+		padding: 15px 35px;
+	}
+
+	.one-topic, .one-topic-text {
+		margin-bottom: 25px;
+	}
+
+	.required-icon {
+		color: red;
+	}
+
+	.topic-title-text {
+		float: left;
+	}
+
+	.topic-title span, .topic-title-text span {
+		font-size: 16px;
+		font-weight: 700;
+	}
+
+	.topic-title .number,.topic-title-text .number{
+		display: inline-block;
+		width: 20px;
+		text-align: right;
+	}
+
+	.topic-option {
+		margin-top: 5px;
+		padding-left: 42px;
+	}
+
+	.topic-option span {
+		font-size: 12px;
+		font-weight: 400;
+
+	}
+
+	.topic-option-text {
+		width: 30%;
+		float: left;
+		margin-left: 18px;
+	}
+
+	.button-div{
+		float: right;
+		margin-right: 20px;
+	}
+
+	.button-div button{
+		margin-left: 50px;
+		margin-top: 20px;
+	}
+
+	/*.button-cont {*/
+		/*margin-top: 20px;*/
+		/*background-color: #fff;*/
+
+	/*}*/
+
+	/*.button-cont button {*/
+		/*background-color: #0092DB;*/
+		/*width: 40%;*/
+		/*color: #fff;*/
+		/*margin-bottom: 80px;*/
+
+	/*}*/
+
+	/*.btn:focus, .btn:hover {*/
+		/*color: #fff;*/
+	/*}*/
+
+	/*.button-cont .up {*/
+		/*float: left;*/
+		/*margin-left: 6%;*/
+	/*}*/
+
+	/*.button-cont .down {*/
+		/*float: right;*/
+		/*margin-right: 6%;*/
+	/*}*/
+
+	/*.button-cont .submit-button {*/
+		/*float: right;*/
+		/*margin-right: 6%;*/
+
+	/*}*/
+
+	/*.button-cont .glyphicon-menu-left {*/
+		/*margin-right: 20%;*/
+	/*}*/
+
+	/*.button-cont .glyphicon-menu-right {*/
+		/*margin-left: 20%;*/
+
+	/*}*/
+
+	/*.error {*/
+		/*color: red;*/
+	/*}*/
+</style>
+<div ng-controller="QuestionnaireController">
+	<div class="row">
+		<div class=" search-cont col-md-12">
+			<form class="form-inline">
+				<label for="input-code" id="position">条码:</label>
+				<input type="text" class="form-control " id="input-code" ng-model="input.code" spellcheck="false"
+				       required>
+				<button class="btn btn-default" type="submit" ng-disabled="!input.code" ng-click="searchCode()">查找
+				</button>
+			</form>
+		</div>
+	</div>
+	<div class="row" >
+		<div class="col-md-12">
+			<form name="questionnaire_form" >
+				<!--<div class="section row " id="{{$index}}" ng-repeat="section in questionnaire.sections ">-->
+					<div class="section-title"><h3>{{questionnaire['section']}}</h3></div>
+					<div class="section-cont">
+						<div ng-repeat="topic in questionnaire.questions" class="clearfix">
+							<div class="one-topic " ng-if="topic.type=='choose'">
+								<div class="topic-title">
+									<span>
+										<span class="number">{{$index+1}}</span>&nbsp;.&nbsp;<pre ng-bind="topic.title"></pre>
+										<!--<span ng-if="topic.is_required ==1">*</span>-->
+									</span>
+								</div>
+								<div class=" topic-option clearfix" ng-class="topic.is_required == 1 ?'required' :''">
+									<div ng-repeat="(key,val) in topic.options" class="topic-options-cont">
+										<input type="radio" ng-model="form_data[topic.position]"
+										       ng-true-value="'{{key}}'" name="{{topic.position}}" >
+										<!--<label for="{{topic.position}}[{{key}}]" class="input-cont  radio-label"-->
+										<label  class="input-cont  radio-label" ng-class="{checked:form_data[topic.position]==key}"
+										        ng-click="radioClick(form_data[topic.position],key,topic.position)">
+											<span class="icon-cont"></span>
+											<span class="writ-cont">{{val}}</span>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="one-topic" ng-if="topic['type']=='checkbox'">
+								<div class="topic-title">
+									<span>
+										<span class="number">{{$index+1}}</span>&nbsp.&nbsp{{topic.title}}(多选)
+										<!--<span ng-if="topic.is_required ==1">*</span>-->
+									</span>
+								</div>
+								<div class=" topic-option clearfix {{topic.is_required == 1 ?'required' :''}} ">
+									<div ng-repeat="(key,val) in topic.options" class="topic-options-cont">
+										<input type="checkbox" id="{{topic.position}}[{{key}}]"
+										       ng-true-value="'{{key}}'" ng-model="form_data[topic.position][key]">
+										<label for="{{topic.position}}[{{key}}]" class="input-cont"
+										       ng-class="{checked:form_data[topic.position][key]}">
+											<span class="icon-cont"></span>
+											<span class="writ-cont">{{val}}</span>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="one-topic" ng-if="topic['type']=='judge'">
+								<div class="topic-title">
+									<span>
+										<span class="number">{{$index+1}}</span>&nbsp.&nbsp{{topic.title}}
+										<!--<span ng-if="topic.is_required ==1">*</span>-->
+									</span>
+								</div>
+								<div class=" topic-option clearfix" ng-class="topic.is_required == 1 ?'required' :''">
+									<div ng-repeat="(key,val) in topic.options" class="topic-options-cont">
+										<input type="radio" ng-true-value="'{{key}}'" ng-model="form_data[topic.position]">
+										<!--<label for="{{topic.position}}[{{key}}]"-->
+										<label class="input-cont  radio-label"
+							                    ng-class="{checked:form_data[topic.position]==key}"
+							                   ng-click="radioClick(form_data[topic.position],key,topic.position)">
+											<span class="icon-cont"></span>
+											<span class="writ-cont">{{val}}</span>
+										</label>
+									</div>
+								</div>
+							</div>
+							<!--@else-->
+							<div class="one-topic-text clearfix" ng-if="topic['type']=='text'">
+								<div class="topic-title-text">
+									<span>
+										<span class="number">{{$index+1}}</span>&nbsp.&nbsp<pre ng-bind="topic.title"></pre>
+										<!--<span ng-if="topic.is_required ==1">*</span>-->
+									</span>
+								</div>
+								<div class=" topic-option-text" ng-class="topic.is_required == 1 ?'required' :''">
+									<input type="text" class=" list-input color-show " ng-model="form_data[topic.position]">
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--<div class="button-cont clearfix">-->
+					<!--<div ng-if="$index!=0">-->
+					<!--<button type="button" class="btn  up"><span class="glyphicon glyphicon-menu-left"></span>-->
+					<!--上一页-->
+					<!--</button>-->
+					<!--</div>-->
+					<!--<div ng-if="!$last">-->
+					<!--<button type="button" class="btn  down">下一页 <span-->
+					<!--class="glyphicon glyphicon-menu-right"></span></button>-->
+					<!--</div>-->
+					<!--<div ng-if="$last">-->
+					<!--<input type="hidden" name="is_complete" value="1">-->
+					<!--<button type="button" class="btn  submit-button">提交</button>-->
+					<!--</div>-->
+
+					<!--</div>-->
+
+
+				<div class="button-div ">
+					<!--<input type="hidden" name="is_complete" value="1">-->
+					<!--<input type="hidden"  ng-model="form_data.code" value="{{detection.code}}">-->
+					<button type="button" class="btn btn-primary btn-lg submit-button" ng-hide="page==0" ng-click="last()">上一页</button>
+					<button type="button" class="btn btn-primary btn-lg submit-button" ng-hide="page==4" ng-click="next()">下一页</button>
+					<button type="button" class="btn btn-primary btn-lg submit-button" ng-show="page==4" ng-click="complete()">提交</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

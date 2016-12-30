@@ -1,0 +1,262 @@
+<form name="form.commodityForm" class="form-horizontal" ng-submit="submit(form.commodityForm.$valid)" novalidate autocomplete="off">
+    <fieldset>
+        <div class="form-group">
+            <label class="control-label col-md-1">名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</label>
+            <div class="col-md-7">
+                <input type="text" class="form-control" ng-model="commodity.name" placeholder="商品名称" ng-maxlength=15 required>
+                <p ng-if="error.name" class="help-block">{{error.name[0]}}</p>
+            </div>
+            <label class="control-label col-md-1">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态</label>
+            <div class="col-md-3 toggle">
+                <i class="fa fa-toggle-on active" ng-if="commodity.is_on_offer == true" ng-click="commodity.is_on_offer = changeState(commodity.is_on_offer);"></i>
+                <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="commodity.is_on_offer == false" ng-click="commodity.is_on_offer = changeState(commodity.is_on_offer);"></i>
+                <p ng-if="error.is_on_offer" class="help-block">{{error.is_on_offer[0]}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-1">副&nbsp;&nbsp;标&nbsp;题</label>
+            <div class="col-md-7">
+                <input type="text" class="form-control" ng-model="commodity.summary" placeholder="副标题"
+                    ng-maxlength=50 required>
+                <p ng-if="error.summary" class="help-block">{{error.summary[0]}}</p>
+            </div>
+            <label class="control-label col-md-1">能否用券</label>
+            <div class="col-md-3 toggle">
+                <i class="fa fa-toggle-on active" ng-if="commodity.disable_coupon == false" ng-click="commodity.disable_coupon = changeState(commodity.disable_coupon);"></i>
+                <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="commodity.disable_coupon == true" ng-click="commodity.disable_coupon = changeState(commodity.disable_coupon);"></i>
+                <p ng-if="error.disable_coupon" class="help-block">{{error.disable_coupon[0]}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-1">编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" required ng-model="commodity.code" placeholder="编码">
+                <p ng-if="error.code" class="help-block">{{error.code[0]}}</p>
+            </div>
+            <label class="control-label col-md-1">限&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购</label>
+            <div class="col-md-3">
+                <input type="number" class="form-control" ng-model="commodity.quota_number" placeholder="为0无限制" required>
+                <p ng-if="error.quota_number" class="help-block">{{error.quota_number[0]}}</p>
+            </div>
+            <label class="control-label col-md-1" ng-if="nowType != 'ticket' && nowType != 'property'">是否发货</label>
+            <div class="col-md-3 toggle" ng-if="nowType != 'ticket' && nowType != 'property'">
+                <i class="fa fa-toggle-on active" ng-if="commodity.is_need_delivery == true"
+                ng-click="commodity.is_need_delivery = changeState(commodity.is_need_delivery);"></i>
+                <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="commodity.is_need_delivery == false"
+                ng-click="commodity.is_need_delivery = changeState(commodity.is_need_delivery);"></i>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-1">所属分类</label>
+            <div class="col-md-3">
+                <select class="form-control" name="category" ng-model="commodity.commodity_category_id"
+                    ng-options="a.id as a.name for a in commodityCategoryList" required>
+                </select>
+            </div>
+            <label class="control-label col-md-1">佣&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;金</label>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <div class="input-group-btn" uib-dropdown is-open="commodityCommission.isopen">
+                        <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>{{commodityCommission.text}} <span class="caret"></span></button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                            <li><a href="" ng-click="changeCommodityCommission('无返还', '  ')">无返还</a></li>
+                            <li><a href="" ng-click="changeCommodityCommission('固定金额', '元')">固定金额</a></li>
+                            <li><a href="" ng-click="changeCommodityCommission('固定比例', '%')">按比例</a></li>
+                        </ul>
+                    </div>
+                    <input type="number" class="form-control" ng-model="commodity.commission_show"
+                    ng-disabled="commodityCommission.text == '无返还'">
+                    <span class="input-group-addon">{{commodityCommission.unit}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="nowType == 'suit'">
+            <label class="control-label col-md-1">套&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;装</label>
+            <div class="col-md-10 suit_div">
+                <div class="row">
+                    <div class="col-md-3">
+                        <select class="form-control" ng-model="suit.suit">
+                            <option ng-repeat="a in commodityWithoutSuit" value="{{a}}">
+                                {{a.full_name}}
+                            </option>
+                        </select>
+                    </div>
+                    <label class="control-label col-md-1">数量：</label>
+                    <div class="col-md-2">
+                        <input type="number" class="form-control" ng-model="suit.count">
+                    </div>
+                    <button type="button" class="btn btn-info btn-sm" ng-click="addSuit();">添加</button>
+                </div>
+                <div class="row suit_list">
+                    <div class="col-md-3 suit" ng-repeat="a in suitArr">
+                        <span>{{a.full_name}}&nbsp;*&nbsp;{{a.count}}</span>
+                        <button type="button" class="btn btn-warning btn-xs" ng-click="delSuitArr(a.id);">X</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-1">图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;片</label>
+            <div class="col-md-11">
+                <button type="file" ngf-select="uploadImage($file, $invalidFiles)" accept="image/*" ngf-max-size="2MB">选择图片</button>
+                <span style="color: #888;">拖拽图片进行排序</span>
+            </div>
+            <div class="col-md-11">
+                <div class="multi-sortable" sv-root>
+                    <div class="sortable-container main" sv-part="commodity.image">
+                        <div ng-repeat="item in commodity.image" sv-element class="img-div multi">
+                            <img draggable="false" ng-src="{{item}}" alt=""/>
+                        </div>
+                    </div>
+                    <div class="sortable-container garbage" sv-part="garbage">
+                        <i class="fa fa-trash-o fa-5x"></i>
+                        <div ng-repeat="item in garbage" sv-element class="img-div multi">
+                            <img draggable="false" ng-src="{{item}}" alt=""/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="nowType != 'suit'">
+            <label class="control-label col-md-1">商品规格</label>
+            <div class="col-md-4">
+                <label class="radio-inline">
+                    <input type="radio" name="spe" ng-model="spe_type.state" value="no">单一规格
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="spe" ng-model="spe_type.state" value="yes">多规格
+                </label>
+            </div>
+        </div>
+        <div class="form-group" ng-if="spe_type.state == 'no'">
+            <label class="control-label col-md-1">售&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价</label>
+            <div class="col-md-3">
+                <input type="number" step="0.01" class="form-control" ng-model="commodity.specifications[0].price" placeholder="售价">
+            </div>
+            <label class="control-label col-md-1">积&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分</label>
+            <div class="col-md-3">
+                <input type="number" class="form-control" ng-model="commodity.specifications[0].bonus_require" placeholder="积分">
+            </div>
+            <label class="control-label col-md-1">库&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存</label>
+            <div class="col-md-3">
+                <input type="number" class="form-control" ng-model="commodity.specifications[0].stock_quantity" placeholder="库存">
+            </div>
+        </div>
+        <div class="form-group" ng-if="spe_type.state == 'no' && nowType == 'property'">
+            <label class="control-label col-md-1" ng-bind-html="spe_name"></label>
+            <div class="col-md-3">
+                <select class="form-control" ng-model="commodity.specifications[0].sellable_id" ng-options="a.id as a.title for a in sellableList"></select>
+            </div>
+            <label class="control-label col-md-1">次&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数</label>
+            <div class="col-md-3">
+                <input type="number" class="form-control" ng-model="commodity.specifications[0].sellable_quantity" placeholder="服务次数">
+            </div>
+            <label class="control-label col-md-1">效&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</label>
+            <div class="col-md-3">
+                <input type="number" class="form-control" ng-model="commodity.specifications[0].sellable_validity_days" placeholder="服务效期">
+            </div>
+        </div>
+        <div class="form-group" ng-if="spe_type.state == 'no' && nowType == 'ticket'">
+            <label class="control-label col-md-1" ng-bind-html="spe_name"></label>
+            <div class="col-md-3">
+                <select class="form-control" ng-model="commodity.specifications[0].sellable_id" ng-options="a.id as a.title for a in sellableList"></select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="spe_type.state == 'yes'">
+            <label class="control-label col-md-1">规&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格</label>
+            <div class="col-md-11">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="min-width: 100px;">规格名</th>
+                            <th style="min-width: 150px;" ng-if="nowType == 'property' || nowType == 'ticket'" ng-bind-html="spe_name"></th>
+                            <th style="min-width: 100px;">库存</th>
+                            <th style="min-width: 85px;" ng-if="nowType == 'property'">次数</th>
+                            <th style="min-width: 85px;" ng-if="nowType == 'property'">效期</th>
+                            <th style="min-width: 100px;">售价</th>
+                            <th style="min-width: 100px;">所需积分</th>
+                            <th style="min-width: 60px;">状态</th>
+                            <th style="min-width: 70px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="a in commodity.specifications">
+                            <td>
+                                <input type="text" class="form-control" ng-model="a.name">
+                            </td>
+                            <td ng-if="nowType == 'property' || nowType == 'ticket'">
+                                <select class="form-control" ng-model="a.sellable_id" ng-options="a.id as a.title for a in sellableList"></select>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" ng-model="a.stock_quantity">
+                            </td>
+                            <td ng-if="nowType == 'property'">
+                                <input type="number" class="form-control" ng-model="a.sellable_quantity" placeholder="次数">
+                            </td>
+                            <td ng-if="nowType == 'property'">
+                                <input type="number" class="form-control" ng-model="a.sellable_validity_days" placeholder="效期">
+                            </td>
+                            <td>
+                                <input type="number" step="0.01" class="form-control" ng-model="a.price" placeholder="售价">
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" ng-model="a.bonus_require" placeholder="积分">
+                            </td>
+                            <td class="toggle">
+                                <i class="fa fa-toggle-on active" style="font-size: 30px !important;" ng-if="a.is_on_offer == true" ng-click="a.is_on_offer = changeState(a.is_on_offer);"></i>
+                                <i class="fa fa-toggle-on fa-rotate-180 inactive" style="font-size: 30px !important;" ng-if="a.is_on_offer == false" ng-click="a.is_on_offer = changeState(a.is_on_offer);"></i>
+                            </td>
+                            <td>
+                                <div ng-if="!a.id">
+                                    <button type="button" class="btn" ng-click="delSpec(a);">删除</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control" ng-model="spec.name" placeholder="新建规格">
+                            </td>
+                            <td ng-if="nowType == 'property' || nowType == 'ticket'">
+                                <select class="form-control" ng-model="spec.sellable_id" ng-options="a.id as a.title for a in sellableList"></select>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" ng-model="spec.stock_quantity" placeholder="库存">
+                            </td>
+                            <td ng-if="nowType == 'property'">
+                                <input type="number" class="form-control" ng-model="spec.sellable_quantity" placeholder="次数">
+                            </td>
+                            <td ng-if="nowType == 'property'">
+                                <input type="number" class="form-control" ng-model="spec.sellable_validity_days" placeholder="效期">
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" ng-model="spec.price" placeholder="售价">
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" ng-model="spec.bonus_require" placeholder="所需积分">
+                            </td>
+                            <td class="toggle">
+                                <i class="fa fa-toggle-on active" style="font-size: 30px !important;" ng-if="spec.is_on_offer == true" ng-click="spec.is_on_offer = changeState(spec.is_on_offer);"></i>
+                                <i class="fa fa-toggle-on fa-rotate-180 inactive" style="font-size: 30px !important;" ng-if="spec.is_on_offer == false" ng-click="spec.is_on_offer = changeState(spec.is_on_offer);"></i>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info" ng-click="addSpecification()">增加</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-1">详&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;情</label>
+            <div class="col-md-11">
+                <textarea ui-tinymce="tinymceOptions" ng-model="commodity.detail" required></textarea>
+            </div>
+        </div>
+        <div class="col-md-offset-1">
+            <button type="submit" class="btn btn-primary left" ng-disabled="form.commodityForm.$invalid">提交</button>
+            <button type="button" class="btn btn-warning left" ng-disabled="!commodity.id" ng-click="delete(commodity.id, $event)">删除</button>
+            <button type="button" class="btn btn-info left" ng-click="clearData()">清空</button>
+        </div>
+    </fieldset>
+</form>
+<button id="textImage" type="file" style="display:none;" ngf-select="richTextUploadImage($file, $invalidFiles)" accept="image/*" ngf-max-size="2MB">选择图片</button>

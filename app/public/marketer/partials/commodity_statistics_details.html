@@ -1,0 +1,223 @@
+<style>
+	.table .operation {
+		cursor: pointer;
+		color: #337AB7;
+	}
+
+	img {
+		width: 60px;
+		height: 60px;
+		margin-right: 18px;
+	}
+
+	.table td {
+		vertical-align: middle !important;
+	}
+
+	.table tr {
+		border-bottom: 1px solid #DDDDDD;
+	}
+
+	.details .details-div {
+		margin: 27px 0 4px 0;
+	}
+
+	.details .operation {
+		cursor: pointer;
+		color: #337AB7;
+		margin-right: 18px;
+	}
+
+	.details .details-div h4 {
+		font-weight: 700;
+		margin-bottom: 20px;
+	}
+
+	.details .details-div .details-div-left {
+		border-right: 1px solid #dfdfdf;
+	}
+
+	.details .details-div .details-div-right {
+		margin-left: 20px;
+	}
+
+	.details .details-div .line-div {
+		margin-bottom: 12px;
+	}
+
+	.details .details-div .line-div:after{
+		display: block;
+		clear: both;
+		content: '';
+	}
+
+	.details .details-div .line-div .parameter-name {
+		font-weight: 600;
+		margin-right: 10px;
+	}
+
+	.details .details-div .line-div .parameter {
+		font-size: 13px;
+		margin-left: 10px;
+	}
+
+	.details .details-div .icon-label {
+		font-size: 50px;
+		height: 50px;
+	}
+
+	.details .details-div .finish {
+		color: #159857;
+	}
+
+	.details .details-div .noFinish {
+		color: #8B6E90;
+	}
+
+	.table .operation {
+		cursor: pointer;
+		color: #337AB7;
+	}
+	
+	.widget .widget-body {
+        padding: 5px 10px;
+    }
+
+    .sel {
+        padding-left: 10px;
+        margin: 15px 0;
+    }
+    #statistics .year-div{
+        margin-bottom: 9px;
+        padding-bottom: 5px;
+        padding-top: 3px;
+    }
+
+    .month-div div{
+	    margin-left: 45px;
+	    margin-top: -27px;
+	    line-height: 34px;
+    }
+
+    #statistics a.active{
+        background-color: #d4d4d4;
+    }
+    #statistics a{
+        font-size: 14px;
+        margin: 2px 20px;
+        padding: 3px 5px;
+        border-radius: 4px;
+        background-color: inherit;
+    }
+    .cost-div{
+        margin-top: 10px;
+        margin-left: 23px;
+        width: 250px;
+    }
+
+    .table tr th i.fa-sort-asc{
+    	position: relative;
+    	margin-left: 8px;
+    	top: 3px;
+    }
+
+    .table tr th i.fa-sort-desc{
+    	position: relative;
+    	margin-left: 8px;
+    	top: -3px;
+    }
+
+    .table tr th i.fa-unsorted{
+    	position: relative;
+    	margin-left: 8px;
+    }
+
+</style>
+<div class="row" ng-controller="CommodityStatisticDetailsController">
+	<div class="col-md-12 details" >
+		<rd-widget>
+			<rd-widget-header title="销售详情">
+				<label class="control-label  operation" ng-click="backList()">
+					<span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;返回列表
+				</label>
+			</rd-widget-header>
+			<rd-widget-body classes="auto no-padding">
+				<div class="col-md-12">
+					<div class="details-div">
+						<h4>商品信息</h4>
+						<div class="col-md-3 details-div-left">
+							<div class="line-div">
+                                <span class="col-md-12">
+                                    <span class="parameter-name">商品图片:</span><span class="parameter"><img ng-src="{{commodity.image[0] ? commodity.image[0] : '/common/imgs/noimg.png'}}" alt=""></span>
+                                </span>
+							</div>
+							<div class="line-div">
+								<span class="col-md-12">
+                                    <span class="parameter-name">商品名称:</span><span  class="parameter">{{commodity.name}}</span>
+								</span>
+							</div>
+							<div class="line-div">
+								<span class="col-md-12">
+                                    <span class="parameter-name">商品单价:</span><span  class="parameter">{{commodity.price}}元</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-md-8 details-div-right" id="statistics">
+							<div class="col-md-12">
+								<div class="sel" ng-if="dateList.year.length > 0">
+				                    <div class="year-div">
+				                        <span class="mytitle">年份：</span>
+				                        <a href="" class="month none-style" ng-repeat="year in dateList.year"
+				                            ng-click="selYear(year);" ng-class="{'active':year == selDate.year}">
+				                            {{year}}年
+				                        </a>
+				                    </div>
+				                    <div class="month-div">
+				                        <span class="mytitle">月份：</span>
+				                        <div>
+					                        <a href="" class="month none-style" ng-repeat="month in dateList.month"
+					                            ng-click="selMonth(month);" ng-class="{'active':month == selDate.month}">
+					                            {{month == 'all'?'全年':month+'月'}}
+					                        </a>
+				                        </div>
+				                    </div>
+				                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="details-div">
+						<h4>销量统计图</h4>
+						<div class="demo-section k-content wide">
+		                    <div id="chart" style="height: 400px;"></div>
+		                </div>
+	                </div>
+	            </div>
+				<div class="col-md-12">
+					<div class="details-div" style="margin: 0">
+						<h4>销售记录</h4>
+						<div class="col-md-12 ">
+							<table class="table">
+								<thead>
+									<tr>
+										<th ng-click="getDateSort()">日期<i class="fa fa-sort-{{dateSort?dateSort:' fa-unsorted'}}"></th>
+										<th ng-click="getSaleSort()">销量<i class="fa fa-sort-{{saleSort?saleSort:' fa-unsorted'}}"></i></th>
+										<th ng-click="getEarnSort()">收入<i class="fa fa-sort-{{earnSort?earnSort:' fa-unsorted'}}"></i></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="a in commodityStatisticsData" on-finish-render>
+										<td>{{a.catearr}}</td>
+										<td>{{a[0].sum ? a[0].sum:0}}</td>
+										<td>{{a[0].total_price ? a[0].total_price:'0.00'}}元</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+</div>

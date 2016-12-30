@@ -1,0 +1,72 @@
+body {
+    background-color: #eee;
+}
+
+.member-info-group {
+    margin-top: 15px;
+    background-color: #fff;
+    padding: 0 15px 0 15px;
+}
+
+.member-info {
+    height: 48px;
+    line-height: 48px;
+    border-top: 1px solid #eee;
+}
+
+.member-info:first-child {
+    border-top: none;
+}
+
+.member-info-group.phone:hover {
+    background-color: #ddd;
+}
+
+.member-info .list-input, .mbsc-control-ev {
+    padding: 0;
+    border: none;
+    outline: none;
+    display: inline-block;
+    width: auto;
+    text-align: right;
+    background-color: inherit;
+    margin-right: 10px;
+    float: right;
+    cursor: pointer;
+}
+
+#ver-btn {
+    float: right;
+    margin: 10px 5px 0 5px;
+}
+
+#ver {
+    display: none;
+}
+
+input {
+    color: #777;
+}
+
+.submit-div {
+    margin-top: 20px;
+}
+
+.title {
+    margin: 10px auto;
+    padding: 5px auto;
+}
+
+.title h3 {
+    text-align: center;
+}
+
+.error {
+    color: red;
+    font-weight: 300;
+}
+
+.ver-btn {
+    width: 58px;
+    display: none;
+}

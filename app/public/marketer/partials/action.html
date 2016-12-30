@@ -1,0 +1,151 @@
+<style media="screen">
+    .joblist{
+        float: left;
+        margin-right: 20px;
+    }
+    .btn-social{
+        position:relative;
+        padding-left:44px;
+        text-align:left;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        margin-left: 0 !important;
+    }
+    .btn-social>:first-child{
+        position:absolute;
+        left:0;top:0;bottom:0;width:32px;
+        line-height:33px;
+        text-align:center;
+        border-right:1px solid rgba(0,0,0,0.1);
+    }
+</style>
+<div class="row" ng-controller="ActionController">
+    <div class="col-md-12" style="margin-left:0;padding-left:0;">
+        <table class="table table-bordered" style="margin:0;">
+            <thead>
+                <tr>
+                    <th>动作</th>
+                    <th>参数</th>
+                    <th>对象</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="a in rule.jobs">
+                    <td>{{actionJobList[a.class].label}}</td>
+                    <td ng-if="getType(a.args) == 'object'">
+                        <span ng-repeat="(key, value) in a.args" ng-switch on="key">
+                            <span ng-switch-when="ticketTemplateId" style="display: block;">
+                                {{actionJobList[a.class].term_type[key].label}}:{{getTicketName(value)}}
+                            </span>
+                            <span ng-switch-when="propertyTemplateId" style="display: block;">
+                                {{actionJobList[a.class].term_type[key].label}}:{{getPropertyName(value)}}
+                            </span>
+                            <span ng-switch-default style="display: block;">
+                                {{actionJobList[a.class].term_type[key].label}}:{{value}}
+                            </span>
+                        </span>
+                    </td>
+                    <td ng-if="getType(a.args) == 'number'">
+                        <span ng-if="a.class == 'App\\Jobs\\LevelUp'">{{getLevelName(a.args)}}</span>
+                        <span ng-if="a.class == 'App\\Jobs\\PayCommission' && a.args < 1">
+                            {{a.args * 100}}%
+                        </span>
+                        <span ng-if="a.class == 'App\\Jobs\\PayCommission' && a.args >= 1">
+                            {{a.args}}元
+                        </span>
+                        <span ng-if="a.class != 'App\\Jobs\\LevelUp' && a.class != 'App\\Jobs\\PayCommission'">
+                            {{a.args}}
+                        </span>
+                    </td>
+                    <td>{{recipient[a.recipient]}}</td>
+                    <td>
+                        <a href="" ng-click="alertAdd(a)">编辑</a>
+                        <a href="" ng-click="actionDeleteJob(a)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12" style="margin-left:0;padding-left:0;">
+        <div class="joblist" ng-repeat="a in actionJobList" style="padding-left:0;margin-bottom:10px;">
+            <button type="button" class="btn btn-info btn-social" ng-click="alertAdd(a)">
+                <i class="fa fa-plus"></i>{{a.label}}
+            </button>
+        </div>
+    </div>
+    <div class="col-md-12" ng-if="actionTmpJob.class">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-1">给</label>
+                <div class="col-md-2">
+                    <select class="form-control" ng-model="actionTmpJob.recipient">
+                        <option ng-repeat="a in actionTmpJob.recipient_options" value="{{a}}">
+                            {{recipient[a]}}
+                        </option>
+                    </select>
+                </div>
+                <label class="control-label">{{actionTmpJob.label}}</label>
+            </div>
+            <div class="form-group">
+                <div ng-if="getType(actionTmpJob.term_type) == 'object'" ng-repeat="(key, value) in actionTmpJob.term_type"
+                    ng-switch="value.type">
+                    <label class="control-label col-md-1">{{value.label}}</label>
+                    <div class="col-md-2" ng-switch-when="number">
+                        <input class="form-control" type="number" min="0" ng-model="value.value">
+                    </div>
+                    <div class="col-md-2" ng-switch-when="int">
+                        <input class="form-control" type="number" min="0" ng-model="value.value">
+                    </div>
+                    <div class="col-md-3" ng-switch-when="select">
+                        <div ng-if="key == 'ticketTemplateId'">
+                            <select class="form-control" ng-model="value.value"
+                                ng-options="a.id as a.title group by a.card_type for a in actionTicketList">
+                            </select>
+                        </div>
+                        <div ng-if="key == 'propertyTemplateId'">
+                            <select class="form-control" ng-model="value.value"
+                                ng-options="a.id as a.title for a in actionPropertyTemplateList">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-8" ng-switch-when="commission">
+                        <label class="control-label col-md-3">
+                            <input type="radio" name="commissions" ng-click="commission = 1" min="0">
+                            返佣百分比
+                        </label>
+                        <label class="control-label col-md-3">
+                            <input type="radio" name="commissions" ng-click="commission = 2" min="0">
+                            返佣金额
+                        </label>
+                        <div class="col-md-6" ng-if="commission == 1">
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" ng-model="value.value*100">
+                            </div>
+                            <span style="line-height: 27px;">%</span>
+                        </div>
+                        <div class="col-md-6" ng-if="commission == 2">
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" ng-model="value.value">
+                            </div>
+                            <span style="line-height: 27px;">元</span>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="getType(actionTmpJob.term_type) != 'object'" ng-switch="actionTmpJob.term_type">
+                    <label class="control-label col-md-1">{{actionTmpJob.label}}</label>
+                    <div class="col-md-2" ng-switch-when="number">
+                        <input class="form-control" type="number" ng-model="actionTmpJob.value">
+                    </div>
+                    <div class="col-md-2" ng-switch-when="int">
+                        <input class="form-control" type="number" ng-model="actionTmpJob.value">
+                    </div>
+                </div>
+                <div style="float:left;">
+                    <button type="button" class="btn btn-info" ng-click="actionSaveJob();">{{actionTmpJob.$$hashKey?'修改':'添加'}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

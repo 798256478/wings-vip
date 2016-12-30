@@ -1,0 +1,253 @@
+<link rel="stylesheet" href="/marketer/css/order.css">
+
+<div class="row" id="order" ng-controller="OrderController">
+	<div class="col-md-12" ng-show="isShow=='list'">
+		<rd-widget>
+			<rd-widget-body classes="no-padding">
+				<div class="row" ng-style="widget_height">
+					<!--筛选-->
+					<div class="col-md-12" style="margin-top: 15px;">
+						<form class="form form-horizontal screen">
+							<!--<div class="row">-->
+							<label class="control-label ">订单状态</label>
+							<div class="col-md-1">
+								<select class="form-control" ng-options="key as value for (key, value) in sort.state.list"
+								        ng-model="sort.state.sel"></select>
+							</div>
+							<label class="control-label ">订单类型</label>
+							<div class="col-md-1">
+								<select class="form-control" ng-options="key as value for (key, value) in sort.type.list"
+								        ng-model="sort.type.sel"></select>
+							</div>
+							<label class="control-label ">订单渠道</label>
+							<div class="col-md-1">
+								<select class="form-control" ng-options="key as value for (key, value) in sort.channel.list"
+								        ng-model="sort.channel.sel"></select>
+							</div>
+							<!--</div>-->
+							<!--<div class="row">-->
+							<label class="control-label ">订单编号</label>
+							<div class="col-md-1">
+								<input type="text" class="form-control" ng-model="sort.number.sel">
+							</div>
+							<label class="control-label ">下单时间</label>
+							<div class="time-div">
+								<div class="input-group">
+									<input class="form-control" type="text"
+									       uib-datepicker-popup="{{datePicker.format}}" min-date="datePicker.minDate"
+									       datepicker-options="datePicker.dateOptions" is-open="startTime.opened"
+									       current-text="今天" clear-text="清除" close-text="关闭"
+									       ng-required="true" ng-model="sort.time.start" readonly>
+	                                <span class="input-group-btn">
+	                                    <button type="button" class="btn btn-default" ng-click="selectStartTime()">
+		                                    <i class="fa fa-calendar"></i>
+	                                    </button>
+	                                </span>
+								</div>
+							</div>
+							<span class="control-label start-finish">—</span>
+							<div class="time-div">
+								<div class="input-group">
+									<input class="form-control" type="text"
+									       uib-datepicker-popup="{{datePicker.format}}" min-date="datePicker.minDate"
+									       datepicker-options="datePicker.dateOptions" is-open="finishTime.opened"
+									       current-text="今天" clear-text="清除" close-text="关闭"
+									       ng-required="true" ng-model="sort.time.finish" readonly>
+	                                <span class="input-group-btn">
+	                                    <button type="button" class="btn btn-default" ng-click="selectFinishTime()">
+		                                    <i class="fa fa-calendar"></i>
+	                                    </button>
+	                                </span>
+								</div>
+							</div>
+							<button class="btn btn-default search" ng-click="search()">搜索</button>
+							<!--</div>-->
+						</form>
+					</div>
+					<!--批量-->
+					<div class="col-md-12">
+						<label for="is-all-batch-1" class="checkbox-inline" ng-class="{'disabled':batch.isNull}">
+							<input id="is-all-batch-1" type="checkbox" ng-model="batch.isAllBatch" ng-disabled="batch.isNull">
+							<span class="batch-key">全选</span>
+						</label>
+						<span class="batch-operation-deliver" ng-click="batchDeliver()">批量发货</span>
+						<label for="not-show-close-order" class="isShowCloseOrder checkbox-inline">
+							<input type="checkbox" id="not-show-close-order" ng-model="sort.isShow.closeOrder" ng-change="notShowCloseOrder()" ng-true-value="'CLOSED'" >
+							<span>不显示已关闭订单</span>
+						</label>
+						<span class="order-count-val">{{pages.orderTotal}}</span>
+						<span class="order-count-key">订单数:</span>
+					</div>
+					<!--订单列表-->
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+							<tr>
+								<th>商品</th>
+								<th>单价</th>
+								<th>数量</th>
+								<th>买家</th>
+								<th>实付款</th>
+								<th>类型</th>
+								<th>状态</th>
+								<th>渠道</th>
+								<th>操作</th>
+							</tr>
+							</thead>
+							<tbody ng-repeat="a in orderList" on-finish-render class="one-order-tbody">
+								<tr >
+									<td class="tr-margin" colspan="9"></td>
+								</tr>
+								<tr class="one-order-title">
+									<td colspan="9">
+										<span class="order-input-span">
+											<input type="checkbox" ng-if="a.is_need_delivery && a.state=='PAY_SUCCESS'"
+										             ng-model="batch.sel[a.id]" ng-true-value="{{a.id}}">
+										</span>
+										<span class="order-number-key" >订单号:</span>
+										<span class="order-number-val">{{a.number}}</span>
+										<span class="order-time-key">下单时间:</span>
+										<span class="order-time-val">{{a.created_at}}</span>
+									</td>
+								</tr>
+								<tr class="one-order-content" ng-repeat="b in a.order_details" on-finish-render>
+									<td class="clearfix">
+										<div class="commodity-img-div">
+											<img ng-src="{{b.commodity_specification_history.commodity_history.image.length>0 ? b.commodity_specification_history.commodity_history.image[0]:'/common/imgs/noimg.png'}}" alt="">
+										</div>
+										<div class="commodity-name-div">
+											<span class="commodity-name">
+												{{b.commodity_specification_history.commodity_history.name}}
+												<span class="refund" >
+													{{b.is_refund && b.refund.length>0?'('+ refundState[b.refund[0].state]+')':''}}
+												</span>
+											</span>
+											<span class="commodity-specification-span" ng-if="b.commodity_specification_history.name">
+												<span class="commodity-specification-key">规格:</span>
+												<span class="commodity-specification-val">{{b.commodity_specification_history.name}}</span>
+											</span>
+										</div>
+									</td>
+									<td class="price-td">
+										<span ng-if="b.commodity_specification_history.price>0">
+                                            <i class="fa fa-cny"></i>{{b.commodity_specification_history.price | currency:""}}
+                                        </span>
+                                        <span ng-if="b.commodity_specification_history.price>0 && b.commodity_specification_history.bonus_require>0">
+                                            +
+                                        </span>
+                                        <span ng-if="b.commodity_specification_history.bonus_require>0">
+                                            <i class="fa fa-btc"></i>{{b.commodity_specification_history.bonus_require}}
+                                        </span>
+									</td>
+									<td class="amount-td">{{b.amount}}</td>
+
+									<td class="one-order-merger-td" ng-if="$first" rowspan="{{a.order_details.length}}">{{a.card.nickname}}({{a.card.card_code}})</td>
+									<td class="one-order-merger-td" ng-if="$first" rowspan="{{a.order_details.length}}">
+										<span ng-if="a.state!='NOT_PAY'&& a.state!='CLOSED'">
+											<span ng-if="a.total.price>0">
+	                                            <i class="fa fa-cny"></i>{{a.total.price | currency:""}}
+	                                        </span>
+	                                        <span ng-if="a.total.price>0 && a.total.bonus>0">
+	                                            +
+	                                        </span>
+	                                        <span ng-if="a.total.bonus>0">
+	                                            <i class="fa fa-btc"></i>{{a.total.bonus}}
+	                                        </span>
+											<small ng-if="a.total.deduction.bonus">
+												(其中{{a.total.deduction.bonus}}积分抵扣{{a.total.deduction.price}}元)
+											</small>
+										</span>
+									</td>
+									<td class="one-order-merger-td" ng-if="$first" rowspan="{{a.order_details.length}}">
+										{{sort.type.list[a.type]}}
+									</td>
+									<td class="one-order-merger-td" ng-if="$first" rowspan="{{a.order_details.length}}">
+										{{sort.state.list[a.state]}}</td>
+									<td class="one-order-merger-td" ng-if="$first" rowspan="{{a.order_details.length}}">
+										{{sort.channel.list[a.channel]}}</td>
+									<td class="one-order-merger-td operation-td" ng-if="$first" rowspan="{{a.order_details.length}}">
+										<span ng-if="a.is_need_delivery && a.state=='PAY_SUCCESS'" ng-click="deliver([a.id])">发货</span>
+										<span ng-if="a.state!='CLOSED'" ng-click="detail(a.id)">详情</span>
+								</tr>
+								<!--没有商品-->
+								<tr class="one-order-content" ng-if="a.order_details.length<=0">
+									<td class="clearfix">
+										<div class="commodity-img-div">
+											<img src="/common/imgs/noimg.png" alt="">
+										</div>
+										<div class="commodity-name-div">
+											<span class=" no-commodity-name">{{a.body}}</span>
+										</div>
+									</td>
+									<td class="price-td">
+										<span ng-if="a.money_pay_amount>0">
+                                            <i class="fa fa-cny"></i>{{a.money_pay_amount | currency:""}}
+                                        </span>
+                                        <span ng-if="a.money_pay_amount>0 && a.bonus_pay_amount>0">
+                                            +
+                                        </span>
+                                        <span ng-if="a.bonus_pay_amount>0">
+                                            <i class="fa fa-btc"></i>{{a.bonus_pay_amount}}
+                                        </span>
+									</td>
+									<td class="amount-td">1</td>
+									<td class="one-order-merger-td" >{{a.card.nickname}}({{a.card.card_code}})</td>
+									<td class="one-order-merger-td" >
+										<span ng-if="a.state!='NOT_PAY'&& a.state!='CLOSED'">
+											<span ng-if="a.money_pay_amount>0">
+	                                            <i class="fa fa-cny"></i>{{a.money_pay_amount | currency:""}}
+	                                        </span>
+	                                        <span ng-if="a.money_pay_amount>0 && a.bonus_pay_amount>0">
+	                                            +
+	                                        </span>
+	                                        <span ng-if="a.bonus_pay_amount>0">
+	                                            <i class="fa fa-btc"></i>{{a.bonus_pay_amount}}
+	                                        </span>
+										</span>
+									</td>
+									<td class="one-order-merger-td" >
+										{{sort.type.list[a.type]}}
+									</td>
+									<td class="one-order-merger-td" >
+										{{sort.state.list[a.state]}}</td>
+									<td class="one-order-merger-td" >
+										{{sort.channel.list[a.channel]}}</td>
+									<td class="one-order-merger-td operation-td" >
+										<span ng-if="a.state!='CLOSED'" ng-click="detail(a.id)">详情</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!--暂无订单-->
+					<div class="col-md-12 no-order-div" ng-if="orderList.length<=0">
+						<span class="no-order-span">暂无订单</span>
+					</div>
+					<!--分页以及批量-->
+					<div class="col-md-12">
+						<label for="is-all-batch-2" class="checkbox-inline" ng-class="{'disabled':batch.isNull}">
+							<input type="checkbox" ng-model="batch.isAllBatch" id="is-all-batch-2" ng-disabled="batch.isNull">
+							<span class="batch-key">全选</span>
+						</label>
+						<span class="batch-operation-deliver" ng-click="batchDeliver()">批量发货</span>
+						<div class="table-page ">
+							<paging
+									page="pages.nowPage"
+									page-size="6"
+									total="pages.orderTotal"
+									scroll-top="true"
+									hide-if-empty="true"
+									show-prev-next="true"
+									text-next="下一页"
+									text-prev="上一页"
+									text-title-page="第 {page} 页"
+									text-title-next="下一页"
+									text-title-prev="上一页">
+							</paging>
+						</div>
+					</div>
+				</div>
+			</rd-widget-body>
+		</rd-widget>
+	</div>
+</div>

@@ -1,0 +1,87 @@
+<div class="mall" ng-controller="MallController" >
+    <div class="commodities-wrapper" ng-show="show_content == 'commodity'">
+        <div class="search-commodity-div" > 
+            <input  mnk-input class="search-commodity-input"  shortcut-group="search_commodity" type="text"  ng-model="conditions.code" placeholder="根据编码查询"> 
+            <span  class="search-commodity-img" ng-click="search()"> <i class="fa fa-search fa-2x"></i></span>
+        </div>
+        <div class="commodities-list" >
+            <h4 id="property">服务</h4>
+            <div class="propertys">
+                <div class="commodity-div" ng-repeat="commodity in commodities|filter:{sellable_type:'App\\Models\\propertyTemplate'}">
+                    <div  ng-include="'partials/commodity.html'"></div>
+                </div>
+            </div>
+            <h4 id="ticket">券</h4>
+            <div class="tickets">
+                <div class="commodity-div" ng-repeat="commodity in commodities|filter:{sellable_type:'App\\Models\\TicketTemplate'}">
+                   <div  ng-include="'partials/commodity.html'"></div>
+                </div>
+            </div>
+            
+            <h4 id="product">商品</h4>
+            <div class="products">
+                <div class="commodity-div" ng-repeat="commodity in commodities|filter:{sellable_type:'commodity'}">
+                   <div ng-include="'partials/commodity.html'"></div>
+                </div>
+            </div>
+            <h4 id="suit">套装</h4>
+             <div class="suits">
+                <div class="commodity-div" ng-repeat="commodity in commodities|filter:{sellable_type:'suit'}">
+                   <div  ng-include="'partials/commodity.html'"></div>
+                </div>
+            </div>
+        </div>
+        <div class="cart-empty-div" ng-show="cart_count==0"> 购物车是空的</div>
+        <div class="cart-short-div" ng-show="cart_count>0 ">
+            <span class="price">合计：￥<span ng-bind="order.total_price"></span>+<span ng-bind="order.total_bonus"></span>积分</span>
+            <span class="to_settle" ng-click="change_show('cart')">去结算</span>
+        </div>
+    </div>
+   
+    <div class="cart-detail-div"  ng-show="cart_count>0&&show_content!='commodity'">
+        <div class="cart-title">
+            <i class="fa fa-reply fa-2x" ng-click="change_show('commodity')"></i>
+            <span class="cart-span lg-price">合计：￥<span ng-bind="order.total_price"></span>+<span ng-bind="order.total_bonus"></span>积分</span>
+            <i class="fa fa-trash-o fa-2x" ng-click="clear()"></i>
+        </div>
+        <div class="cart-items">
+            <h4 >所选商品</h4>
+            <div class="cart-item" ng-repeat="(key,item) in carts">
+                <div class="left"><span ng-bind="item.specification.full_name"></span></div>
+                <div class="button-group">
+                    <span class="price" ng-bind="item.specification.price*item.num"></span>
+                    <i class="fa fa-minus fa-x "  ng-click="reduction(item.specification.id) " ng-show="item.num>0" ></i>
+                    <span ng-bind="item.num>0?item.num:''"></span>
+                    <i class="fa fa-plus fa-x" ng-click="add(item.commodity,item.specification)"></i>
+                </div>
+            </div>
+        </div>
+        <form name="mall_form">
+            <div>
+                <h4>实付金额<h4>
+                <input mnk-input  shortcut-group="jiezhang" id="money_pay_amount" name="money_pay_amount"  type="text"  class="form-control" 
+                    ng-model="order.money_pay_amount" ng-pattern="/^0|([1-9][0-9]*[.0-9]*|0.[0-9]*[1-9])$/"/>
+                <span class="error" ng-show="mall_form.money_pay_amount.$dirty&&mall_form.money_pay_amount.$invalid">金额必须为正数</span>
+            </div>
+            <div>
+                <h4>实付积分<h4>
+                <input mnk-input  shortcut-group="jiezhang" name="bonus_pay_amount"  type="text"  class="form-control" 
+                    ng-model="order.bonus_pay_amount" ng-pattern="/^[1-9][0-9]*[.0-9]*|0.[0-9]*[1-9]|0$/"/>
+                <span class="error" ng-show="mall_form.bonus_pay_amount.$dirty&&mall_form.bonus_pay_amount.$invalid">积分必须为整数</span>
+            </div>
+            <div class="cart-payment">
+                <h4>支付方式：<small style="font-weight:400">(1积分抵扣{{bonus_rule.exchange}}元钱)</small></h4>
+                <payment debt="debt"  amount="order.money_pay_amount" payment='payments["goods"]'  bonusrule="bonus_rule" paymentselects="paymentselects"   qualitydata="qualitydata"  operation="submit(isValid)"></payment>
+            </div>
+            <div class="form-group">
+                <h4>备注：</h4>
+                <input type="text" class="form-control"  ng-model="order.remark" />
+            </div>
+            <div class="cart-submit-div">
+                <button class="btn btn-primary btn-lg submit-button" ng-click="submit()"  ng-show="debt==0">提交</button>
+                <span class="btn btn-danger btn-lg submit-button"  ng-show="debt!=0">尚余{{debt}}未结清</span>
+            </div>
+        </form>
+    </div>
+</div>
+

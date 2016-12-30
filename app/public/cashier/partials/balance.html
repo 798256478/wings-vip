@@ -1,0 +1,8 @@
+<div class="balance_div"  ng-controller="BalanceController">
+    <div class="select-controll-div">
+        <span class="{{type == 0?'select':''}}" ng-click="changeType(0)">充值</span>
+        <span class="{{type == 1?'select':''}}" ng-click="changeType(1)">积分兑换</span> 
+    </div>
+    <div class="balance_buy_div"  ng-show="type==0"  ng-include="'partials/balance_buy.html'"></div>
+    <div class="balance_exchange_div"  ng-show="type==1"  ng-include="'partials/balance_exchange.html'"></div>
+</div>

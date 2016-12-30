@@ -1,0 +1,16 @@
+<div class="row" id="setting" ng-controller="BackupController">
+    <div class="col-md-12">
+        <rd-widget>
+            <rd-widget-header icon="fa-gift" title="备份"></rd-widget-header>
+            <rd-widget-body classes="large-xx no-padding">
+                <div>
+                    <div ng-if="time != false">
+                        <span ng-if="aa.time != ''">{{'上次备份时间：'+ aa.time}}</span>
+                        <span ng-if="aa.time == ''">{{'暂无备份历史'}}</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary" ng-click="getBackup();">获取备份</button>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>
