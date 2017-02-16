@@ -37,7 +37,7 @@ Route::group(['middleware' => ['web', 'test']], function () {
 
 Route::group(['prefix' => 'wechat', 'namespace'=>'Wechat', 'middleware' => ['web','wechat.auth']], function () {
 
-    //TODO:李广
+    //TODO:李广义
     Route::get('/', 'CardController@showCard');//首页
     Route::get('/balance', 'CardController@showBalance');//余额页
     Route::get('/bonus', 'CardController@showBonus');//积分页
